@@ -1,5 +1,6 @@
 var net = require('net');
 var ircSocket = new net.Socket();
+var __ = require('underscore');
 var options, callbacks;
 /*options = {
  * logger: fn,
@@ -8,9 +9,16 @@ var options, callbacks;
  * username: string,
  * password: string,
  * autoJoinChannelList: []
- * }*/
+ * }
+ * 
+ * callbacks = {
+ * loginSuccess: fn()
+ *
+ * }
+ *
+ * */
 
-function log(context, logType){
+function log(logType, context){
     var prefix;
     switch(logType){
         case 'send':
@@ -37,18 +45,63 @@ function log(context, logType){
     }
 }
 
+function invokeCallback(callbackName, argList){
+    if(typeof callbacks[callbackName] === "function"){
+        callbacks[callbackName].apply(null, argList);
+    }
+}
+
+function parseMessage(message){
+    //get rid of heading spaces
+    while(message.length>0 && message.charAt(0) !== ':' && message.charAt(0) !== 'P'){
+        message = message.substr(1);
+    }
+
+    if(message.length == 0){
+        return;
+    }
+    
+    if(message.indexOf("PING") === 0){
+        var args = message.split(' ');
+        var pong='';
+        if(args.length>=2){
+            pong = args[1];
+        }
+        send('PONG', pong);
+        return;
+    }
+
+
+    var args = message.split(' ');
+    var callbackName = args[1], argList=[];
+    switch(args[1]){
+        case '001':
+            callbackName = 'onLoginSuccess';
+            send("JOIN","#tetristhegrandmaster3");
+            break;
+        default:
+            return;
+    }
+    invokeCallback(callbackName, argList);
+}
+
 function send(command, message){
     message = command + ' ' + message + '\r\n';
-    log(message, 'send');
+    log('send', message);
     ircSocket.write(message,'utf8');
 }
 
 function onReceive(message){
-    log(message, 'receive');
+    message = message.toString();
+    log('receive', message);
+    var messages = message.split('\r\n');
+    __.each(messages, function(message){
+        parseMessage(message);
+    });
 }
 
 function onConnect(){
-    log("connected", "sys");
+    log("sys", "connected");
     send('PASS',options.password);
     send('NICK',options.username);
     send('USER','JtChat2');
@@ -56,11 +109,11 @@ function onConnect(){
 }
 
 function onClose(){
-    log('closed', 'sys');
+    log('sys', 'closed');
 }
 
 function onError(error){
-    log("error", "sys");
+    log("sys", "error");
 }
 
 function init(r_options, r_callbacks){
@@ -77,6 +130,7 @@ function connect(){
 
 module.exports = {
     init: init,
-    connect: connect
+    connect: connect,
+    send: send
 };
 

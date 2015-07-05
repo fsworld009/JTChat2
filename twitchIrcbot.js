@@ -3,14 +3,21 @@ var ircbot = require('./ircbot.js');
 var options, callbacks;
 var channelMap;
 
-function init(r_options, r_callbacks){
+function init(r_options){
     options = r_options;
-    callbacks = r_callbacks;
     ircbot.init(options, callbacks);       
 }
 
 function connect(){
     ircbot.connect();
+}
+
+function onLoginSuccess(){
+    console.log('loginSuccess');
+}
+
+callbacks = {
+    onLoginSuccess: onLoginSuccess
 }
 
 

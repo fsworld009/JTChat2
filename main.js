@@ -9,7 +9,7 @@ function afterLoadConfig(){
         
     var callbacks = {};
 
-    twitchIrcbot.init(config, callbacks);
+    twitchIrcbot.init(config);
     twitchIrcbot.connect();
 }
 
