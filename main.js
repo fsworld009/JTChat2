@@ -1,5 +1,6 @@
 console.log("main.js");
-var twitchIrcbot = require('./twitchIrcbot.js');
+var TwitchIRCBot = require('./twitchIrcbot.js');
+var twitchIrcbot = new TwitchIRCBot();
 var fs = require('fs');
 var config;
 
@@ -7,8 +8,6 @@ function afterLoadConfig(){
     config.port = config.port || 6667;
     config.host = config.host || 'irc.twitch.tv';
         
-    var callbacks = {};
-
     twitchIrcbot.init(config);
     twitchIrcbot.connect();
 }

@@ -18,3 +18,11 @@ https://github.com/justintv/Twitch-API/blob/master/IRC.md
 :jtv MODE #j30915gary +o gameone25693
 :jtv MODE #j30915gary +o demonmelody
 :jtv MODE #j30915gary +o j30915gary
+
+
+<< :world9918.tmi.twitch.tv 353 world9918 = #ptken :kuroneko40336 zsc0100183 ptken iliya0803 summer0930 shonma gla564 vanlethal kraygaterim saup shinkon1000 xyzzerg123 nekoalis oldnoob sampae3 world9918 akitsusaki celeshuang skinegg severol2014 aznnyxus demonslayer50463 sonic781021 kamizaki0727 kuma02 wwweei1 ezizi0617 dick30501 43164910 masaki164520 calvin040297 kurosiro2346
+:world9918.tmi.twitch.tv 366 world9918 #ptken :End of /NAMES list
+:jtv MODE #ptken +o oldnoob
+:jtv MODE #ptken +o ptken
+:jtv MODE #ptken +o 43164910
+:jtv MODE #ptken +o world9918
