@@ -8,7 +8,7 @@ var options, callbacks;
  * host: string,
  * username: string,
  * password: string,
- * autoJoinChannelList: []
+ * autoJoinChannels: []
  * }
  * 
  * callbacks = {
@@ -51,6 +51,14 @@ function invokeCallback(callbackName, argList){
     }
 }
 
+function getSenderNickname(sender){
+    var exclamationMarkPos = sender.indexOf('!');
+    if(exclamationMarkPos === -1){
+        return sender;
+    }
+    return sender.substr(0,exclamationMarkPos ).replace(':','');
+}
+
 function parseMessage(message){
     //get rid of heading spaces
     while(message.length>0 && message.charAt(0) !== ':' && message.charAt(0) !== 'P'){
@@ -72,23 +80,60 @@ function parseMessage(message){
     }
 
 
-    var args = message.split(' ');
-    var callbackName = args[1], argList=[];
-    switch(args[1]){
+    var args = message.split(' ',4);
+    var sender  = args[0]? args[0]: '';
+    sender = getSenderNickname(sender);
+    var command = args[1]? args[1]: '';
+    var target  = args[2]? args[2]: '';
+    var context = args[3]? args[3]: '';
+
+
+
+    var callbackName, argList=[];
+    switch(command){
         case '001':
             callbackName = 'onLoginSuccess';
-            send("JOIN","#tetristhegrandmaster3");
+            break;
+        case '421':
+            callbackName = 'onUnknownCommand';
+            break;
+        case 'JOIN':
+            if(sender === options.username){
+                enterChannel(target);
+                callbackName = 'onJoinChannel';
+                send("NAMES", target);
+            }
+            break;
+        case 'PRIVMSG':
+            if(target.indexOf('#') > -1){
+                callbackName = 'onChatMessage';
+            }
             break;
         default:
             return;
     }
-    invokeCallback(callbackName, argList);
+    if(typeof callbackName !== 'undefined'){
+        invokeCallback(callbackName, argList);
+    }
+    if(command == '001' && options.autoJoinChannels instanceof Array){
+        __.each(options.autoJoinChannels, function(channel){
+            joinChannel(channel);
+        });
+    }
+}
+
+
+function sendRaw(message){
+    if(message.indexOf('\r\n') < 0){
+        message = message+'\r\n';
+    }
+    log('send', message);
+    ircSocket.write(message,'utf8');
 }
 
 function send(command, message){
-    message = command + ' ' + message + '\r\n';
-    log('send', message);
-    ircSocket.write(message,'utf8');
+    message = command + ' ' + message;
+    sendRaw(message);
 }
 
 function onReceive(message){
@@ -102,6 +147,7 @@ function onReceive(message){
 
 function onConnect(){
     log("sys", "connected");
+    channelMap={};
     send('PASS',options.password);
     send('NICK',options.username);
     send('USER','JtChat2');
@@ -117,8 +163,8 @@ function onError(error){
 }
 
 function init(r_options, r_callbacks){
-    options = r_options;
-    callbacks = r_callbacks;
+    options = __.extend({},r_options);
+    callbacks = __.extend({},r_callbacks);
     ircSocket.on("error", onError);
     ircSocket.on("close", onClose);
     ircSocket.on("data", onReceive);
@@ -128,9 +174,30 @@ function connect(){
     ircSocket.connect(options.port, options.host, onConnect);
 }
 
+
+var channelMap={};
+
+function enterChannel(channelName){
+    delete channelMap[channelName];
+    channelMap[channelName]={
+        
+        userList: [],
+        opList: []
+    }
+}
+
+
+//irc actions
+function joinChannel(channelName){
+    send("JOIN","#"+channelName);
+}
+
+
+
 module.exports = {
     init: init,
     connect: connect,
-    send: send
+    send: send,
+    sendRaw: sendRaw
 };
 

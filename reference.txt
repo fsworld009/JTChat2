@@ -1,0 +1,20 @@
+https://www.alien.net.au/irc/irc2numerics.html
+https://github.com/justintv/Twitch-API/blob/master/IRC.md
+
+
+<< :world9918.tmi.twitch.tv 353 world9918 = #tetristhegrandmaster3 :lire6565 cake4569 hxxjack007 e04a950h111 like6610 st6601 boxon_1012 julian1537 ksbstwbeer gkzz ganganshe allenpppp axcea wayne8325 square07 foxhound116 kurosiro2346 yunla a297711912002 raja47447398 mengxiang rbot123 betrayers1122 tetristhegrandmaster3 tonikang i60455115 andiliwey tsaisan asc999k jackykkkky devilsliver closehide circlecon bnw724 ck_live andyxxxxx jasyeh bg12312366 seki_man cdy790424 qdxgrl
+:world9918.tmi.twitch.tv 353 world9918 = #tetristhegrandmaster3 :wudc7915 lei9937 ufoi001 k0815314 smilexd zin10431 taeyeonbobo qazw2244087 sk3isbad my7357405 ejijp6cl6 us585000 ryoiori8 kcae zero751210 creno624 f6bfb5 lit0909 thsimoe clesswu devil740613 poiu2265 yeh204635 keioio06 vincenthoho haagendazss arthur407 px22266 iseesky ym78305 jaxisme world9918 liangguest ssmabi nm1737 iiitf109 append saar815127 shax912 allwaysme71 asd7721281 kashiwanuki shann528 alvissphone
+:world9918.tmi.twitch.tv 353 world9918 = #tetristhegrandmaster3 :xl3z0466 ookamee asam6666
+:world9918.tmi.twitch.tv 366 world9918 #tetristhegrandmaster3 :End of /NAMES list
+
+
+<< :kokurayoh!kokurayoh@kokurayoh.tmi.twitch.tv JOIN #tetristhegrandmaster3
+:h122kk456!h122kk456@h122kk456.tmi.twitch.tv JOIN #tetristhegrandmaster3
+:matthewtheghost!matthewtheghost@matthewtheghost.tmi.twitch.tv PART #tetristhegrandmaster3
+:blackwan!blackwan@blackwan.tmi.twitch.tv PART #tetristhegrandmaster3
+
+
+:jtv MODE #j30915gary +o aark5566
+:jtv MODE #j30915gary +o gameone25693
+:jtv MODE #j30915gary +o demonmelody
+:jtv MODE #j30915gary +o j30915gary

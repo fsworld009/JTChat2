@@ -14,6 +14,7 @@ function connect(){
 
 function onLoginSuccess(){
     console.log('loginSuccess');
+    ircbot.sendRaw('CAP REQ :twitch.tv/membership');
 }
 
 callbacks = {
