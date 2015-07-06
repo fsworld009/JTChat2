@@ -6,7 +6,8 @@ var TwitchIRCBot = function(){
     this._ircbot = new IRCBot();
     this._callbacks = {
         onLoginSuccess: this._onLoginSuccess,
-        onUnknownMessage: this._onUnknownMessage
+        onUnknownMessage: this._onUnknownMessage,
+        onUserJoinChannel: this._onUserJoinChannel
     }
 }
 
@@ -28,4 +29,7 @@ TwitchIRCBot.prototype._onLoginSuccess = function(){
 TwitchIRCBot.prototype._onUnknownMessage = function(message){
 }
 
+TwitchIRCBot.prototype._onUserJoinChannel = function(channel,user){
+    console.log('!JOIN',user,channel)
+}
 module.exports = TwitchIRCBot;
