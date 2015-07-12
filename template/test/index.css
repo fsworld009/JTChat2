@@ -1,0 +1,6 @@
+.chat-msg-outer {
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+

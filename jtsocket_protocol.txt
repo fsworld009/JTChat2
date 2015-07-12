@@ -1,0 +1,13 @@
+MSG sender message
+
+COMMAND command
+
+NAMES BEGIN
+NAMES (a) (b) (c)
+NAMES END
+
+COLOR account color
+BAN account
+UNBAN account
+MOD account
+UNMOD account
