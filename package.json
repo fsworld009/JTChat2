@@ -1,0 +1,9 @@
+{
+  "name": "jtchat2",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "nodejs-websocket": "git://github.com/sitegui/nodejs-websocket.git",
+    "underscore": "~1.8.3"
+  }
+}
