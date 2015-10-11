@@ -1,5 +1,5 @@
 console.log("main.js");
-var TwitchIRCBot = require('./twitchIrcbot.js');
+var TwitchIRCBot = require('./TwitchIRCbot.js');
 var twitchIrcbot = new TwitchIRCBot();
 var fs = require('fs');
 var config;
@@ -7,7 +7,7 @@ var config;
 function afterLoadConfig(){
     config.port = config.port || 6667;
     config.host = config.host || 'irc.twitch.tv';
-        
+
     twitchIrcbot.init(config);
     twitchIrcbot.connect();
 }
@@ -21,8 +21,3 @@ fs.readFile('./profile/twitchIrcbot_config.json', 'utf8', function (err,data) {
     config = JSON.parse(data);
     afterLoadConfig();
 });
-
-
-
-
-

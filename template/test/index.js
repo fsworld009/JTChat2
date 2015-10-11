@@ -16,7 +16,8 @@ $(function(){
         };
         this._webSocket.onmessage = function(event){
             console.log('receive',event,event.data,$chatMsg);
-            $chatMsg.html($chatMsg.html() + '<br/>' + event.data);
+            $chatMsg.html( $chatMsg.html() + '[Recv] << ' + event.data + '<br/>' );
+            $chatInput.val('');
         };
     };
 
@@ -34,6 +35,7 @@ $(function(){
 
     $('.chat-submit').off('click').on('click', function(ev){
         var message = $chatInput.val();
+        $chatMsg.html($chatMsg.html() + '[Send]>> ' + message + '<br/>');
         jtChat2Client.send(message);
     });
 });

@@ -1,4 +1,4 @@
-var IRCBot = require('./ircbot.js');
+var IRCBot = require('./IRCBot.js');
 
 
 var TwitchIRCBot = function(){
