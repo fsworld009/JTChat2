@@ -1,35 +1,32 @@
 var IRCBot = require('./IRCBot.js');
-
+var util = require("util");
 
 var TwitchIRCBot = function(){
+    TwitchIRCBot.super_.apply(this);
     this._options = undefined;
-    this._ircbot = new IRCBot();
-    this._callbacks = {
-        onLoginSuccess: this._onLoginSuccess,
-        onUnknownMessage: this._onUnknownMessage,
-        onUserJoinChannel: this._onUserJoinChannel
-    };
 };
+util.inherits(TwitchIRCBot, IRCBot);
 
-TwitchIRCBot.prototype.init = function(r_options){
-    this._options = r_options;
-    this._ircbot.init(this._options, this._callbacks, this);
-};
+// TwitchIRCBot.prototype.init = function(r_options){
+//
+// };
 
-TwitchIRCBot.prototype.connect = function(){
-    this._ircbot.connect();
-};
-
-TwitchIRCBot.prototype._onLoginSuccess = function(){
+//IRCBot callbacks
+TwitchIRCBot.prototype.onLoginSuccess = function(){
     console.log('loginSuccess');
-    this._ircbot.sendRaw('CAP REQ :twitch.tv/membership');
+    this.sendRaw('CAP REQ :twitch.tv/membership');
 };
 
 
-TwitchIRCBot.prototype._onUnknownMessage = function(message){
+TwitchIRCBot.prototype.onUnknownMessage = function(message){
 };
 
-TwitchIRCBot.prototype._onUserJoinChannel = function(channel,user){
+TwitchIRCBot.prototype.onUserJoinChannel = function(channel,user){
     console.log('!JOIN',user,channel);
 };
+
+TwitchIRCBot.prototype.onChatMessage = function(sender, message){
+    console.log('!TwitchIRCBot receives',sender,message);
+};
+
 module.exports = TwitchIRCBot;

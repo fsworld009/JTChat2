@@ -1,6 +1,9 @@
 var net = require('net');
 var __ = require('underscore');
-/*options = {
+var util = require("util");
+var JTChat2_Socket = require('./JTChat2_Socket.js');
+/*
+ * options = {
  * logger: fn,
  * port: number,
  * host: string,
@@ -9,7 +12,7 @@ var __ = require('underscore');
  * autoJoinChannels: []
  * }
  *
- * callbacks = {
+ * callbacks:
  * loginSuccess: fn()
  *
  * }
@@ -18,13 +21,11 @@ var __ = require('underscore');
 
 function IRCBot(){
     this._options = undefined;
-    this._callbacks = undefined;
-    this._callbackThisRef = undefined;
     this._channelUserMap = undefined;
     this._ircSocket = new net.Socket();
-    this._ircSocket._this_ = this;
-
+    this._ircSocket._botObject = this;
 }
+util.inherits(IRCBot, JTChat2_Socket);
 
 IRCBot.prototype._log = function(logType, context){
     var prefix;
@@ -54,8 +55,8 @@ IRCBot.prototype._log = function(logType, context){
 };
 
 IRCBot.prototype._invokeCallback = function(callbackName, argList){
-    if(typeof this._callbacks[callbackName] === "function"){
-        this._callbacks[callbackName].apply(this._callbackThisRef, argList);
+    if(typeof this[callbackName] === "function"){
+        this[callbackName].apply(this, argList);
     }
 };
 
@@ -119,13 +120,13 @@ IRCBot.prototype._parseMessage = function(message){
             }
             break;
         case '366':
-            var channel = context.substring(0, context.indexOf(' '));
+            var channel = context.substr(0, context.indexOf(' '));
             callbackArgList=[channel];
             console.log('!!Names of', channel, this._channelUserMap[channel]);
             break;
         case 'JOIN':
             if(sender === this._options.username){
-                this._onEnterChannel(target);
+                this._initChannelUserMap(target);
                 callbackName = 'onJoinChannel';
                 callbackArgList.push(channel);
                 this.send("NAMES", target);
@@ -137,7 +138,7 @@ IRCBot.prototype._parseMessage = function(message){
             break;
         case 'PART':
             if(sender === this._options.username){
-                this._onLeaveChannel(target);
+                this._removeChannelUserMap(target);
                 callbackName = 'onLeaveChannel';
                 callbackArgList.push(channel);
             }else{
@@ -149,6 +150,7 @@ IRCBot.prototype._parseMessage = function(message){
         case 'PRIVMSG':
             if(target.indexOf('#') > -1){
                 callbackName = 'onChatMessage';
+                callbackArgList=[sender,context.substr(1)];
             }
             break;
         default:
@@ -179,8 +181,8 @@ IRCBot.prototype.send = function(command, message){
     this.sendRaw(message);
 };
 
-IRCBot.prototype._onReceive = function(message){
-    var self = this._this_;
+IRCBot.prototype._Socket__onReceive = function(message){
+    var self = this._botObject;
     message = message.toString();
     self._log('receive', message);
     var messages = message.split('\r\n');
@@ -189,8 +191,8 @@ IRCBot.prototype._onReceive = function(message){
     });
 };
 
-IRCBot.prototype._onConnect = function(){
-    var self = this._this_;
+IRCBot.prototype._Socket__onConnect = function(){
+    var self = this._botObject;
     self._log("sys", "connected");
     self._channelUserMap={};
     self.send('PASS',self._options.password);
@@ -199,27 +201,26 @@ IRCBot.prototype._onConnect = function(){
     //ircSocket.destroy();
 };
 
-IRCBot.prototype._onClose = function(){
-    var self = this._this_;
+IRCBot.prototype._Socket__onClose = function(){
+    var self = this._botObject;
     self._log('sys', 'closed');
 };
 
-IRCBot.prototype._onError = function(error){
-    var self = this._this_;
+IRCBot.prototype._Socket__onError = function(error){
+    var self = this._botObject;
     self._log("sys", "error");
 };
 
-IRCBot.prototype.init = function(r_options, r_callbacks, r_callbakThisRef){
+IRCBot.prototype.init = function(r_options){
     this._options = __.extend({},r_options);
-    this._callbacks = __.extend({},r_callbacks);
-    this._callbackThisRef = r_callbakThisRef;
-    this._ircSocket.on("error", this._onError);
-    this._ircSocket.on("close", this._onClose);
-    this._ircSocket.on("data", this._onReceive);
+    this._ircSocket.on("error", this._Socket__onError);
+    this._ircSocket.on("close", this._Socket__onClose);
+    this._ircSocket.on("data", this._Socket__onReceive);
 };
 
 IRCBot.prototype.connect = function(){
-    this._ircSocket.connect(this._options.port, this._options.host, this._onConnect);
+    console.log('connect options',this._options,this._ircSocket);
+    this._ircSocket.connect(this._options.port, this._options.host, this._Socket__onConnect);
 };
 
 IRCBot.prototype._addToNameList = function(channel, names){
@@ -242,12 +243,12 @@ IRCBot.prototype._removeFromNameList = function(channel, names){
     }
 };
 
-IRCBot.prototype._onEnterChannel = function(channelName){
+IRCBot.prototype._initChannelUserMap = function(channelName){
     delete this._channelUserMap[channelName];
     this._channelUserMap[channelName]={};
 };
 
-IRCBot.prototype._onLeaveChannel = function(channelName){
+IRCBot.prototype._removeChannelUserMap = function(channelName){
     delete this._channelUserMap[channelName];
 };
 

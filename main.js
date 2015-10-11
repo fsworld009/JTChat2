@@ -7,7 +7,6 @@ var config;
 function afterLoadConfig(){
     config.port = config.port || 6667;
     config.host = config.host || 'irc.twitch.tv';
-
     twitchIrcbot.init(config);
     twitchIrcbot.connect();
 }
