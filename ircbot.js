@@ -8,7 +8,7 @@ var __ = require('underscore');
  * password: string,
  * autoJoinChannels: []
  * }
- * 
+ *
  * callbacks = {
  * loginSuccess: fn()
  *
@@ -51,13 +51,13 @@ IRCBot.prototype._log = function(logType, context){
     }else{
         process.stdout.write(logText);
     }
-}
+};
 
 IRCBot.prototype._invokeCallback = function(callbackName, argList){
     if(typeof this._callbacks[callbackName] === "function"){
         this._callbacks[callbackName].apply(this._callbackThisRef, argList);
     }
-}
+};
 
 IRCBot.prototype._getSenderNickname = function(sender){
     var exclamationMarkPos = sender.indexOf('!');
@@ -65,7 +65,7 @@ IRCBot.prototype._getSenderNickname = function(sender){
         return sender.substr(1);
     }
     return sender.substr(0,exclamationMarkPos ).replace(':','');
-}
+};
 
 IRCBot.prototype._parseMessage = function(message){
     //get rid of heading spaces
@@ -76,7 +76,7 @@ IRCBot.prototype._parseMessage = function(message){
     if(message.length == 0){
         return;
     }
-    
+
     if(message.indexOf("PING") === 0){
         var args = message.split(' ');
         var pong='';
@@ -130,7 +130,7 @@ IRCBot.prototype._parseMessage = function(message){
                 callbackArgList.push(channel);
                 this.send("NAMES", target);
             }else{
-                this._addToNameList(target, sender);               
+                this._addToNameList(target, sender);
                 callbackName = 'onUserJoinChannel';
                 callbackArgList=[target,sender];
             }
@@ -141,7 +141,7 @@ IRCBot.prototype._parseMessage = function(message){
                 callbackName = 'onLeaveChannel';
                 callbackArgList.push(channel);
             }else{
-                this._removeFromNameList(target, sender);               
+                this._removeFromNameList(target, sender);
                 callbackName = 'onUserLeaveChannel';
                 callbackArgList=[target,sender];
             }
@@ -164,7 +164,7 @@ IRCBot.prototype._parseMessage = function(message){
             this.joinChannel(channel);
         }, this);
     }
-}
+};
 
 IRCBot.prototype.sendRaw = function(message){
     if(message.indexOf('\r\n') < 0){
@@ -172,12 +172,12 @@ IRCBot.prototype.sendRaw = function(message){
     }
     this._log('send', message);
     this._ircSocket.write(message,'utf8');
-}
+};
 
 IRCBot.prototype.send = function(command, message){
     message = command + ' ' + message;
     this.sendRaw(message);
-}
+};
 
 IRCBot.prototype._onReceive = function(message){
     var self = this._this_;
@@ -187,7 +187,7 @@ IRCBot.prototype._onReceive = function(message){
     __.each(messages, function(message){
         self._parseMessage(message);
     });
-}
+};
 
 IRCBot.prototype._onConnect = function(){
     var self = this._this_;
@@ -197,17 +197,17 @@ IRCBot.prototype._onConnect = function(){
     self.send('NICK',self._options.username);
     self.send('USER','JtChat2');
     //ircSocket.destroy();
-}
+};
 
 IRCBot.prototype._onClose = function(){
     var self = this._this_;
     self._log('sys', 'closed');
-}
+};
 
 IRCBot.prototype._onError = function(error){
     var self = this._this_;
     self._log("sys", "error");
-}
+};
 
 IRCBot.prototype.init = function(r_options, r_callbacks, r_callbakThisRef){
     this._options = __.extend({},r_options);
@@ -216,11 +216,11 @@ IRCBot.prototype.init = function(r_options, r_callbacks, r_callbakThisRef){
     this._ircSocket.on("error", this._onError);
     this._ircSocket.on("close", this._onClose);
     this._ircSocket.on("data", this._onReceive);
-}
+};
 
 IRCBot.prototype.connect = function(){
     this._ircSocket.connect(this._options.port, this._options.host, this._onConnect);
-}
+};
 
 IRCBot.prototype._addToNameList = function(channel, names){
     console.log('add to channel',channel, names);
@@ -231,7 +231,7 @@ IRCBot.prototype._addToNameList = function(channel, names){
             }
         }, this);
     }
-}
+};
 
 IRCBot.prototype._removeFromNameList = function(channel, names){
     console.log('remove from channel',channel, names);
@@ -240,23 +240,22 @@ IRCBot.prototype._removeFromNameList = function(channel, names){
             delete this._channelUserMap[channel][name];
         }, this);
     }
-}
+};
 
 IRCBot.prototype._onEnterChannel = function(channelName){
     delete this._channelUserMap[channelName];
     this._channelUserMap[channelName]={};
-}
+};
 
 IRCBot.prototype._onLeaveChannel = function(channelName){
     delete this._channelUserMap[channelName];
-}
+};
 
 //irc actions
 IRCBot.prototype.joinChannel = function(channelName){
     this.send("JOIN","#"+channelName);
-}
+};
 
 
 
 module.exports = IRCBot;
-
