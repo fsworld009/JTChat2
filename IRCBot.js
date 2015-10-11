@@ -20,12 +20,20 @@ var JTChat2_Socket = require('./JTChat2_Socket.js');
  * */
 
 function IRCBot(){
-    this._options = undefined;
+
+}
+util.inherits(IRCBot, JTChat2_Socket);
+
+IRCBot.prototype.init = function(r_options){
+    this._options = __.extend({},r_options);
     this._channelUserMap = undefined;
     this._ircSocket = new net.Socket();
     this._ircSocket._botObject = this;
-}
-util.inherits(IRCBot, JTChat2_Socket);
+    this._ircSocket.on("error", this._Socket__onError);
+    this._ircSocket.on("close", this._Socket__onClose);
+    this._ircSocket.on("data", this._Socket__onReceive);
+};
+
 
 IRCBot.prototype._log = function(logType, context){
     var prefix;
@@ -209,13 +217,6 @@ IRCBot.prototype._Socket__onClose = function(){
 IRCBot.prototype._Socket__onError = function(error){
     var self = this._botObject;
     self._log("sys", "error");
-};
-
-IRCBot.prototype.init = function(r_options){
-    this._options = __.extend({},r_options);
-    this._ircSocket.on("error", this._Socket__onError);
-    this._ircSocket.on("close", this._Socket__onClose);
-    this._ircSocket.on("data", this._Socket__onReceive);
 };
 
 IRCBot.prototype.connect = function(){
