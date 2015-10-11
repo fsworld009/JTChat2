@@ -1,7 +1,7 @@
 var net = require('net');
 var __ = require('underscore');
 var util = require("util");
-var JTChat2_Socket = require('./JTChat2_Socket.js');
+var JTChat2_SocketObj = require('./JTChat2_SocketObj.js');
 /*
  * options = {
  * logger: fn,
@@ -22,7 +22,7 @@ var JTChat2_Socket = require('./JTChat2_Socket.js');
 function IRCBot(){
 
 }
-util.inherits(IRCBot, JTChat2_Socket);
+util.inherits(IRCBot, JTChat2_SocketObj);
 
 IRCBot.prototype.init = function(r_options){
     this._options = __.extend({},r_options);
@@ -82,7 +82,7 @@ IRCBot.prototype._parseMessage = function(message){
         message = message.substr(1);
     }
 
-    if(message.length == 0){
+    if(message.length === 0){
         return;
     }
 

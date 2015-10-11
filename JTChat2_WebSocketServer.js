@@ -11,12 +11,12 @@ var JTChat2_WebSocketServer = function(){
 
 JTChat2_WebSocketServer.prototype.init = function(options){
 
-    this._serverSocket = websocket.createServer(function(conn){
+    this._serverSocket = websocket.createServer(function(websocket){
         console.log('serversocket',this);
-            conn.on("text", function (str) {
+            websocket.on("text", function (str) {
             console.log("Received "+str);
             console.log('send',str);
-            conn.sendText(str);
+            websocket.sendText(str);
         });
     });
 };

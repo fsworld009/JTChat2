@@ -7,11 +7,6 @@ var TwitchIRCBot = function(){
 };
 util.inherits(TwitchIRCBot, IRCBot);
 
-// TwitchIRCBot.prototype.init = function(r_options){
-//
-// };
-
-//IRCBot callbacks
 TwitchIRCBot.prototype.onLoginSuccess = function(){
     console.log('loginSuccess');
     this.sendRaw('CAP REQ :twitch.tv/membership');
