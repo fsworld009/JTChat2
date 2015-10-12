@@ -1,5 +1,6 @@
 
 var websocket = require('nodejs-websocket');
+var JTChat2_WebSocketClient = require('./JTChat2_WebSocketClient.js');
 
 var JTChat2_WebSocketServer = function(){
     this._serverSocket = undefined;
@@ -11,12 +12,29 @@ var JTChat2_WebSocketServer = function(){
 
 JTChat2_WebSocketServer.prototype.init = function(options){
 
+    var controllerRef = options.controller;
+    this._controller = controllerRef;
+
     this._serverSocket = websocket.createServer(function(websocket){
-        console.log('serversocket',this);
-            websocket.on("text", function (str) {
+        // var clientSocketObj = new JTChat2_WebSocketClient();
+        // clientSocketObj.init(websocket);
+        websocket.on("text", function (str) {
             console.log("Received "+str);
-            console.log('send',str);
-            websocket.sendText(str);
+            var parse = str.split(' ');
+            if(parse.length !== 3){
+                //console.log('close');
+                this.close('0','init msg incorrect');
+            }else{
+                var options = {
+                    site: parse[0],
+                    username: parse[1],
+                    channel: parse[2]
+                };
+                var clientSocketObj = new JTChat2_WebSocketClient();
+                clientSocketObj.init(websocket);
+                controllerRef.registerSocketObj(clientSocketObj, options);
+            }
+            // console.log('send',str);
         });
     });
 };
@@ -26,8 +44,4 @@ JTChat2_WebSocketServer.prototype.listen = function(port){
     console.log('listen to port ',port);
 };
 
-
-
-var test = new JTChat2_WebSocketServer();
-test.init();
-test.listen(8001);
+module.exports = JTChat2_WebSocketServer;
