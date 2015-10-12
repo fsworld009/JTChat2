@@ -31,7 +31,7 @@ JTChat2_WebSocketServer.prototype.init = function(options){
                     channel: parse[2]
                 };
                 var clientSocketObj = new JTChat2_WebSocketClient();
-                clientSocketObj.init(websocket);
+                clientSocketObj.init(websocket, options);
                 controllerRef.registerSocketObj(clientSocketObj, options);
             }
             // console.log('send',str);
