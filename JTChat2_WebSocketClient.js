@@ -10,6 +10,7 @@ util.inherits(JTChat2_WebSocketClient, JTChat2_SocketObj);
 
 JTChat2_WebSocketClient.prototype.init = function(webSocket, target){
     this._target = __.extend({},target);
+    console.log('this._target ',this._target );
     this._webSocket = webSocket;
     this._webSocket._socketObject = this;
     this._webSocket.removeAllListeners('text');
@@ -18,11 +19,20 @@ JTChat2_WebSocketClient.prototype.init = function(webSocket, target){
 
 JTChat2_WebSocketClient.prototype.onReceive = function(message){
     console.log('get '+message);
-    this._socketObject.sendRaw(message);
+    // this._socketObject.sendRaw(message);
+    var socketObject = this._socketObject;
+
+    var parse = message.split(' ');
+    if(parse.length>3){
+        parse[2] = parse.splice(2).join(' ');
+    }
+
+    socketObject.emit('onClientSocketObjSend', socketObject, socketObject._target.site, socketObject._target.username, socketObject._target.channel, parse[0], parse[2]);
+
 };
 
-JTChat2_WebSocketClient.prototype.send = function(command, context){
-    this.sendRaw(command+' '+context);
+JTChat2_WebSocketClient.prototype.send = function(command, username, context){
+    this.sendRaw(command+' '+username+' '+context);
 };
 
 JTChat2_WebSocketClient.prototype.sendRaw = function(message){
@@ -32,5 +42,6 @@ JTChat2_WebSocketClient.prototype.sendRaw = function(message){
     //this._log('send', message);
     this._webSocket.sendText(message);
 };
+
 
 module.exports = JTChat2_WebSocketClient;

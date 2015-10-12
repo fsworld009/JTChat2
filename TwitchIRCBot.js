@@ -20,8 +20,9 @@ TwitchIRCBot.prototype.onUserJoinChannel = function(channel,user){
     console.log('!JOIN',user,channel);
 };
 
-TwitchIRCBot.prototype.onChatMessage = function(sender, message){
-    console.log('!TwitchIRCBot receives',sender,message);
+TwitchIRCBot.prototype.onChatMessage = function(channel, sender, message){
+    console.log('!TwitchIRCBot receives',channel, sender, message);
+    this.emit('onRemoteSocketObjReceive', this, 'Twitch', this.getLoginUser(), channel, 'MSG',  sender, message);
 };
 
 module.exports = TwitchIRCBot;

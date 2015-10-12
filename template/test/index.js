@@ -1,5 +1,6 @@
 $(function(){
     console.log(_,$);
+    var username='world9918';
     var $chatInput = $('.chat-input');
     var $chatMsg = $('.chat-msg');
 
@@ -13,6 +14,7 @@ $(function(){
         this._webSocket = new WebSocket(options.url+':'+options.port);
         this._webSocket.onopen = function(ev){
             console.log('onopen',this,ev);
+            this.send('Twitch username #channel')
         };
         this._webSocket.onmessage = function(event){
             console.log('receive',event,event.data,$chatMsg);
@@ -21,8 +23,8 @@ $(function(){
         };
     };
 
-    JTChat2_WebSocketClient.prototype.send = function(message){
-        this._webSocket.send(message);
+    JTChat2_WebSocketClient.prototype.chat = function(message){
+        this._webSocket.send('MSG ' + username + ' ' + message);
     };
 
 
@@ -36,6 +38,6 @@ $(function(){
     $('.chat-submit').off('click').on('click', function(ev){
         var message = $chatInput.val();
         $chatMsg.html($chatMsg.html() + '[Send]>> ' + message + '<br/>');
-        jtChat2Client.send(message);
+        jtChat2Client.chat(message);
     });
 });

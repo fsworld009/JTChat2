@@ -34,6 +34,9 @@ IRCBot.prototype.init = function(r_options){
     this._ircSocket.on("data", this._Socket__onReceive);
 };
 
+IRCBot.prototype.getLoginUser = function(){
+    return this._options.username;
+}
 
 IRCBot.prototype._log = function(logType, context){
     var prefix;
@@ -158,7 +161,7 @@ IRCBot.prototype._parseMessage = function(message){
         case 'PRIVMSG':
             if(target.indexOf('#') > -1){
                 callbackName = 'onChatMessage';
-                callbackArgList=[sender,context.substr(1)];
+                callbackArgList=[target, sender,context.substr(1)];
             }
             break;
         default:
@@ -255,9 +258,22 @@ IRCBot.prototype._removeChannelUserMap = function(channelName){
 
 //irc actions
 IRCBot.prototype.joinChannel = function(channelName){
-    this.send("JOIN","#"+channelName);
+    this.send("JOIN",channelName);
+};
+
+IRCBot.prototype.chat = function(channelName, message){
+    this.send("PRIVMSG",channelName+' :'+message);
 };
 
 
+IRCBot.prototype.forwardToRemote = function(site, username, channel, command, message){
+    console.log('forwardToRemote',site, username, channel, command, message);
+    var rawMessage;
+    switch(command){
+        case 'MSG':
+            this.chat(channel, message);
+            break;
+    }
+};
 
 module.exports = IRCBot;

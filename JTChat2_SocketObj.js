@@ -7,18 +7,23 @@ function JTChat2_SocketObj(){
 util.inherits(JTChat2_SocketObj, EventEmitter);
 
 //override in child objs
-JTChat2_SocketObj.prototype.toRemote = function(message){
-    return message;
+JTChat2_SocketObj.prototype.forwardToRemote = function(site, username, channel, command, message){
+
 };
 
-JTChat2_SocketObj.prototype.toClient = function(message){
-    return message;
-};
+// JTChat2_SocketObj.prototype.forwardToClient = function(rawMessage){
+// };
 
 
-JTChat2_SocketObj.prototype.registerController = function(controller){
-    this.addListener('onSend',controller.onSocketObjSend);
-    this.addListener('onReceive',controller.onSocketObjReceive);
+JTChat2_SocketObj.prototype.registerController = function(controller, type){
+    if(type=='client'){
+        console.log('register',type,this,controller);
+        this.addListener('onClientSocketObjSend',controller.onClientSocketObjSend);
+    }else{
+        //remote
+        console.log('register',type,this,controller);
+        this.addListener('onRemoteSocketObjReceive',controller.onRemoteSocketObjReceive);
+    }
 };
 
 
