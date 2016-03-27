@@ -1,2 +1,4 @@
 /profile/*.json
 /node_modules/
+/web/build/
+/semantic/dist/
