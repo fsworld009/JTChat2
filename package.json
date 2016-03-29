@@ -2,6 +2,7 @@
   "name": "jtchat2",
   "private": true,
   "dependencies": {
+    "lodash": "^4.6.1",
     "nodejs-websocket": "git://github.com/sitegui/nodejs-websocket.git",
     "underscore": "~1.8.3"
   },
