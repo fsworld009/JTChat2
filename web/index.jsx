@@ -1,7 +1,8 @@
 require("./css/semantic.css");
 
-window.jQuery = window.$ = require("jquery");
-var semantic = require("./js/semantic.js");
+//window.jQuery = window.$ = require("jquery");
+var $ = require("jquery");
+require("./js/semantic.js");
 var React = require("react");
 var ReactDOM = require("react-dom");
 
@@ -26,3 +27,5 @@ setInterval(function() {
     document.getElementById('app')
   );
 }, 500);
+
+$(".ui.radio.checkbox").checkbox();

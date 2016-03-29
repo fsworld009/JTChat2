@@ -18,6 +18,7 @@
  * http://opensource.org/licenses/MIT
  *
  */
+ var $ = jQuery = require('jquery');
 ;(function ( $, window, document, undefined ) {
 
 $.site = $.fn.site = function(parameters) {

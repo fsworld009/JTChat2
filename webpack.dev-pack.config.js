@@ -22,7 +22,10 @@ var config = {
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192' }, // inline base64 URLs for <=8k images, direct URLs for the rest
             { test: /\.woff(2)?$/,   loader: "url-loader?prefix=font/&limit=5000" },
-            { test: /\.(eot|ttf|svg)$/,    loader: "file-loader?prefix=font/" }
+            { test: /\.(eot|ttf|svg)$/,    loader: "file-loader?prefix=font/" },
+            { test: require.resolve("react"), loader: "expose?React" },
+            { test: require.resolve("react-dom"), loader: "expose?ReactDOM" },
+            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" }
         ]
     }
 };
