@@ -1,6 +1,12 @@
 {
+  "loadEagerly": [
+      "./node_modules/lodash/lodash.js",
+      "./node_modules/react/dist/react.js",
+      "./node_modules/react-dom/react-dom.js",
+      "./web/js/semantic.js"
+    ],
     "libs": [
-        "browser","jquery","underscore"
+        "browser","jquery"
     ],
     "plugins": {
         "node": true
