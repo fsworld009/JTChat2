@@ -15,7 +15,7 @@ var config = {
                 loader: 'babel-loader',
                 // exclude: /node_modules/,
                 query: {
-                  presets: ['babel-preset-react']
+                  presets: ['babel-preset-es2015','babel-preset-react']
                 }
             },
             { test: /\.json$/, loader: "json-loader" },
