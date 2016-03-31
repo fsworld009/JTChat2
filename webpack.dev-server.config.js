@@ -28,7 +28,8 @@ var config = {
             { test: /\.(eot|ttf|svg)$/,    loader: "file-loader?prefix=font/" },
             { test: require.resolve("react"), loader: "expose?React" },
             { test: require.resolve("react-dom"), loader: "expose?ReactDOM" },
-            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" }
+            { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
+            { test: require.resolve("lodash"), loader: "expose?_" }
         ]
     },
     plugins: [
