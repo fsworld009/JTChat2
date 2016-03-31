@@ -5,23 +5,36 @@ window.$ = window.jQuery = require("jquery");
 require("../js/semantic.js");
 var React = require("react");
 var ReactDOM = require("react-dom");
+var _ = require("lodash");
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 
 
+var rootPath = "/config/";
+
 var MainMenu = React.createClass({
-    componentDidMount: function(){
-        this.menu = [
-            {path: ""}
-        ];
-    },
     render: function(){
-        console.log(this.menu, this.props);
+        var menuItems = [
+            {path: "site", label: "Site"},
+            {path: "user", label: "User"},
+            {path: "theme", label: "Theme"},
+            {path: "profile", label: "Profile"}
+        ];
+        var currentPath = (this.props.currentPath || "").replace(/^\/config\/([^\/]*)(.*$)/, function(match, $1){
+            return $1;
+        });
+        var currentMenuItem = _.find(menuItems, function(menuItem){
+            return menuItem.path == currentPath;
+        });
+        if(currentMenuItem){
+            currentMenuItem.selected = true;
+        }else{
+            menuItems[0].selected = true;
+        }
         return (
             <div className="ui blue secondary pointing menu">
-                <Link className="item active" to="/config/site">Site</Link>
-                <Link className="item" to="/config/user">User</Link>
-                <Link className="item" to="/config/theme">Theme</Link>
-                <Link className="item" to="/config/profile">Profile</Link>
+                {menuItems.map(function(menuItem){
+                    return <Link key={menuItem.path} className={"item"+ (menuItem.selected? " active":"")} to={rootPath + menuItem.path}>{menuItem.label}</Link>;
+                })}
             </div>
         );
     }
@@ -72,7 +85,7 @@ var App = React.createClass({
 
 ReactDOM.render(
     <Router history={browserHistory}>
-      <Route path="/config/" component={App}>
+      <Route path={rootPath} component={App}>
         <Route path="site" component={Site}/>
         <Route path="user" component={User}/>
         <Route path="theme" component={Theme}/>
