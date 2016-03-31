@@ -17,7 +17,7 @@ var MainMenu = React.createClass({
       {path: "site", label: "Site"},
       {path: "user", label: "User"},
       {path: "theme", label: "Theme"},
-      {path: "profile", label: "Profile"}
+      {path: "profile", label: "Theme Profile"}
     ];
     var currentPath = (this.props.currentPath || "").replace(/^\/config\/([^\/]*)(.*$)/, function(match, $1){
       return $1;
