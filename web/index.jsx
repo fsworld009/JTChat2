@@ -9,8 +9,13 @@ import { Router, Route, IndexRoute, Link, browserHistory, hashHistory } from 're
 
 
 var MainMenu = React.createClass({
+    componentDidMount: function(){
+        this.menu = [
+            {path: ""}
+        ];
+    },
     render: function(){
-        console.log(this.props);
+        console.log(this.menu, this.props);
         return (
             <div className="ui blue secondary pointing menu">
                 <Link className="item active" to="/web/site">Site</Link>
@@ -73,6 +78,7 @@ ReactDOM.render(
         <Route path="user" component={User}/>
         <Route path="theme" component={Theme}/>
         <Route path="profile" component={Profile}/>
+        <Route path="*" component={Site}/>
         <IndexRoute component={Site} />
       </Route>
     </Router>,
