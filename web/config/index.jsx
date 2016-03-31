@@ -14,10 +14,12 @@ var rootPath = "/config/";
 var MainMenu = React.createClass({
   render: function(){
     var menuItems = [
+      {path: "status", label: "Status"},
       {path: "site", label: "Site"},
       {path: "user", label: "User"},
       {path: "theme", label: "Theme"},
-      {path: "profile", label: "Theme Profile"}
+      {path: "profile", label: "Theme Profile"},
+      {path: "url", label: "Url Generator"}
     ];
     var currentPath = (this.props.currentPath || "").replace(/^\/config\/([^\/]*)(.*$)/, function(match, $1){
       return $1;
@@ -64,9 +66,15 @@ var Profile = React.createClass({
   }
 });
 
-var NoMatch = React.createClass({
+var Status = React.createClass({
   render: function(){
-    return (<div>NoMatch</div>);
+    return (<div>Status</div>);
+  }
+});
+
+var UrlGenerator = React.createClass({
+  render: function(){
+    return (<div>Url Generator</div>);
   }
 });
 
@@ -90,8 +98,9 @@ ReactDOM.render(
     <Route path="user" component={User}/>
     <Route path="theme" component={Theme}/>
     <Route path="profile" component={Profile}/>
-    <Route path="*" component={Site}/>
-    <IndexRoute component={Site} />
+    <Route path="url" component={UrlGenerator}/>
+    <Route path="*" component={Status}/>
+    <IndexRoute component={Status} />
     </Route>
   </Router>,
   document.getElementById('app')
