@@ -2,11 +2,14 @@ var path = require('path');
 var webpack = require('webpack');
 
 var config = {
-    entry: ['webpack/hot/dev-server', path.resolve(__dirname, 'web/index.jsx')],
+    entry: {
+        config: ['webpack/hot/dev-server', path.resolve(__dirname, 'web/config/index.jsx')]
+    },
     output: {
-        path: path.resolve(__dirname, 'web/build/'),
-        publicPath: "/web/build/",
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, 'web/bundle/'),
+        publicPath: "/bundle/",
+        filename: "[name].bundle.js",
+        chunkFilename: "[id].chunk.js"
     },
     module: {
         loaders: [
@@ -32,11 +35,12 @@ var config = {
       new webpack.NoErrorsPlugin()
   ],
   devServer: {
+      contentBase: './web/',
       port: 3000,
       historyApiFallback: {
             index: '/',
             rewrites: [
-              { from: /\/web\/*/, to: '/web/'}
+              { from: /^\/config\/*/, to: '/config/'}
           ]
       }
   }

@@ -1,11 +1,11 @@
-require("./css/semantic.css");
+require("../css/semantic.css");
 
 //window.jQuery = window.$ = require("jquery");
 window.$ = window.jQuery = require("jquery");
-require("./js/semantic.js");
+require("../js/semantic.js");
 var React = require("react");
 var ReactDOM = require("react-dom");
-import { Router, Route, IndexRoute, Link, browserHistory, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 
 
 var MainMenu = React.createClass({
@@ -18,10 +18,10 @@ var MainMenu = React.createClass({
         console.log(this.menu, this.props);
         return (
             <div className="ui blue secondary pointing menu">
-                <Link className="item active" to="/web/site">Site</Link>
-                <Link className="item" to="/web/user">User</Link>
-                <Link className="item" to="/web/theme">Theme</Link>
-                <Link className="item" to="/web/profile">Profile</Link>
+                <Link className="item active" to="/config/site">Site</Link>
+                <Link className="item" to="/config/user">User</Link>
+                <Link className="item" to="/config/theme">Theme</Link>
+                <Link className="item" to="/config/profile">Profile</Link>
             </div>
         );
     }
@@ -70,10 +70,9 @@ var App = React.createClass({
 
 });
 
-window.rootPath = "/web/";
 ReactDOM.render(
     <Router history={browserHistory}>
-      <Route path="/web/" component={App}>
+      <Route path="/config/" component={App}>
         <Route path="site" component={Site}/>
         <Route path="user" component={User}/>
         <Route path="theme" component={Theme}/>

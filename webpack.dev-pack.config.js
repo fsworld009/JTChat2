@@ -2,11 +2,15 @@ var path = require('path');
 var webpack = require('webpack');
 
 var config = {
-    entry: './web/index.jsx',
+    entry: {
+        config: path.resolve(__dirname, 'web/config/index.jsx')
+    },
     output: {
-        path: path.resolve(__dirname, 'web/build/'),
-        publicPath: "./build/", // relative path for github pages
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, 'web/bundle/'),
+        publicPath: "./bundle/", // relative path for github pages
+        filename: 'bundle.js',
+        filename: "[name].bundle.js",
+        chunkFilename: "[id].chunk.js"
     },
     module: {
         loaders: [
