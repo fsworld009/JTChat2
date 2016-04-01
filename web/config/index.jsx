@@ -18,63 +18,9 @@ var actions = require('./actions.js');
 var reducers = require('./reducers.js');
 
 var data = require("./defaultSetting.js");
-console.log("data",data);
 
-const store = createStore(combineReducers(
-    _.assign({},reducers,{routing: routerReducer})
-  ),{
-  "sites": [
-    {
-      "id": 1,
-      "urlId": "twitch",
-      "displayName": "Twitch (Port 6667)",
-      "icon": "twitch",
-      "host": "irc.chat.twitch.tv",
-      "port": "6667"
-    },
-    {
-      "id": 2,
-      "urlId": "twitch-80",
-      "displayName": "Twitch (Port 80)",
-      "icon": "twitch",
-      "host": "irc.chat.twitch.tv",
-      "port": "80"
-    }
-  ],
-
-  "users": [
-    {
-      "id": 1,
-      "siteId": 1,
-      "urlId": "none",
-      "displayName": "(Anonymous)",
-      "username": "justinfan123",
-      "password": "kappa"
-    }
-  ],
-
-  "themes": [
-    {
-      "id": 1,
-      "urlId": "default",
-      "displayName" :"Theme 1",
-      "userTheme": false,
-      "path" : "/"
-    }
-  ],
-
-  "profiles": [
-    {
-      "id" : 1,
-      "urlId": "profile1",
-      "themeId": 1,
-      "options": {
-
-      }
-    }
-  ]
-}
-);
+console.log("store",data.store);
+const store = createStore(combineReducers(reducers), data.store);
 
 const history = syncHistoryWithStore(browserHistory, store);
 

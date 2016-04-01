@@ -2,6 +2,7 @@
   "name": "jtchat2",
   "private": true,
   "dependencies": {
+    "immutable": "^3.7.6",
     "lodash": "^4.6.1",
     "nodejs-websocket": "git://github.com/sitegui/nodejs-websocket.git",
     "react-redux": "^4.4.1",
