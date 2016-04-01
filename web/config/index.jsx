@@ -5,23 +5,13 @@ require("../css/semantic.css");
 var _ = require("lodash");
 require("../js/semantic.js");
 
-
 var React = require("react");
 var ReactDOM = require("react-dom");
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
-
-import { createStore, combineReducers } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-var actions = require('./actions.js');
-var reducers = require('./reducers.js');
-
-var data = require("./defaultSetting.js");
-
-console.log("store",data.store);
-const store = createStore(combineReducers(reducers), data.store);
-
+const store = require("./store.js");
 const history = syncHistoryWithStore(browserHistory, store);
 
 var rootPath = "/config/";

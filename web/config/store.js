@@ -1,4 +1,6 @@
 var _ = require("lodash");
+var reducers = require('./reducers.js');
+import { createStore, combineReducers } from 'redux';
 
 function parseValue(value){
     if(typeof value == "object" && value.id){
@@ -75,8 +77,6 @@ var data = {
 };
 
 parseStore(data);
+const store = createStore(combineReducers(reducers), data.store);
 
-module.exports = {
-    store: data,
-    parseStore: parseStore
-};
+module.exports = store;
