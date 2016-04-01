@@ -2,22 +2,13 @@
   "sites": [
     {
       "id": 1,
+      "remoteSocketObj": "TwitchIRCBot",
       "urlId": "twitch",
-      "displayName": "Twitch (Port 6667)",
-      "icon": "twitch",
-      "host": "irc.chat.twitch.tv",
-      "port": "6667"
-    },
-    {
-      "id": 2,
-      "urlId": "twitch-80",
-      "displayName": "Twitch (Port 80)",
-      "icon": "twitch",
-      "host": "irc.chat.twitch.tv",
-      "port": "80"
+      "displayName": "Twitch",
+      "hosts": ["irc.chat.twitch.tv"],
+      "ports": [6667, 80]
     }
   ],
-
   "users": [
     {
       "id": 1,

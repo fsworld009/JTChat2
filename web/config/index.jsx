@@ -16,7 +16,9 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 var actions = require('./actions.js');
 var reducers = require('./reducers.js');
-console.log("reducers",reducers,actions);
+
+var data = require("./defaultSetting.js");
+console.log("data",data);
 
 const store = createStore(combineReducers(
     _.assign({},reducers,{routing: routerReducer})
