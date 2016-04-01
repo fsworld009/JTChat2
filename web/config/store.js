@@ -1,6 +1,7 @@
 var _ = require("lodash");
-var reducers = require('./reducers.js');
+var reducer = require('./reducer.js');
 import { createStore, combineReducers } from 'redux';
+var Immutable = require('immutable');
 
 function parseValue(value){
     if(typeof value == "object" && value.id){
@@ -77,6 +78,7 @@ var data = {
 };
 
 parseStore(data);
-const store = createStore(combineReducers(reducers), data.store);
-
+//console.log("Immu",)
+const store = createStore(reducer, data);
+//console.log("store",store,store.getState().get("sites"));
 module.exports = store;
