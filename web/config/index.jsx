@@ -1,7 +1,7 @@
 require("../css/semantic.css");
 
 //window.jQuery = window.$ = require("jquery");
-window.$ = window.jQuery = require("jquery");
+//window.$ = window.jQuery = require("jquery");
 var _ = require("lodash");
 require("../js/semantic.js");
 
