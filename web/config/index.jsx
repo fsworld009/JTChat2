@@ -7,8 +7,9 @@ require("../js/semantic.js");
 
 var React = require("react");
 var ReactDOM = require("react-dom");
+
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 const store = require("./store.js");
@@ -17,6 +18,17 @@ const history = syncHistoryWithStore(browserHistory, store, {
     return state.get("routing").toJS();
   }
 });
+
+var Status = require("./Status.jsx");
+var Site = require("./Site.jsx");
+var User = require("./User.jsx");
+var Theme = require("./Theme.jsx");
+var Profile = require("./Profile.jsx");
+var UrlGenerator = require("./UrlGenerator.jsx");
+
+
+
+
 
 var rootPath = "/config/";
 
@@ -50,55 +62,7 @@ var MainMenu = React.createClass({
     );
   }
 });
-function mapStateToProps(state){
-  return {sites: state.sites};
-}
 
-function mapDispatchToProps(dispatch){
-  return {};
-}
-
-
-
-var Site = React.createClass({
-  render: function(){
-    console.log(this.props);
-    return (<div>Site</div>);
-  }
-});
-
-var SiteContainer = connect(mapStateToProps, mapDispatchToProps)(Site);
-
-
-var User = React.createClass({
-  render: function(){
-    return (<div>User</div>);
-  }
-});
-
-var Theme = React.createClass({
-  render: function(){
-    return (<div>Theme</div>);
-  }
-});
-
-var Profile = React.createClass({
-  render: function(){
-    return (<div>Profile</div>);
-  }
-});
-
-var Status = React.createClass({
-  render: function(){
-    return (<div>Status</div>);
-  }
-});
-
-var UrlGenerator = React.createClass({
-  render: function(){
-    return (<div>Url Generator</div>);
-  }
-});
 
 var App = React.createClass({
   render: function(){
@@ -116,14 +80,14 @@ var App = React.createClass({
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path={rootPath} component={App}>
-      <Route path="site" component={SiteContainer}/>
-      <Route path="user" component={User}/>
-      <Route path="theme" component={Theme}/>
-      <Route path="profile" component={Profile}/>
-      <Route path="url" component={UrlGenerator}/>
-      <Route path="*" component={Status}/>
-      <IndexRoute component={Status} />
+        <Route path={rootPath} component={App}>
+        <Route path="site" component={Site}/>
+        <Route path="user" component={User}/>
+        <Route path="theme" component={Theme}/>
+        <Route path="profile" component={Profile}/>
+        <Route path="url" component={UrlGenerator}/>
+        <Route path="*" component={Status}/>
+        <IndexRoute component={Status} />
       </Route>
     </Router>
   </Provider>,
