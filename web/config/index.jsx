@@ -1,4 +1,5 @@
 require("../css/semantic.css");
+require("../css/font-awesome.css");
 
 //window.jQuery = window.$ = require("jquery");
 //window.$ = window.jQuery = require("jquery");
@@ -69,7 +70,7 @@ var App = React.createClass({
     return (
       <div>
         <div style={{margin:"5px"}}>
-          <h1 className="ui header">JTChat2 Configuration</h1>
+          <h1 className="ui header">JTChat2 Configuration <i className="fa fa-plus"></i></h1>
         </div>
         <MainMenu currentPath={this.props.location.pathname}/>
         <div style={{margin:"5px"}}>
