@@ -70,10 +70,10 @@ var App = React.createClass({
     return (
       <div>
         <div style={{margin:"5px"}}>
-          <h1 className="ui header">JTChat2 Configuration <i className="fa fa-plus"></i></h1>
+          <h1 className="ui header">JTChat2 Configuration</h1>
         </div>
         <MainMenu currentPath={this.props.location.pathname}/>
-        <div style={{margin:"5px"}}>
+        <div style={{margin:"5px","maxWidth":"800px"}}>
           {this.props.children}
         </div>
       </div>

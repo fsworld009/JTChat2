@@ -5,7 +5,7 @@ var Immutable = require('immutable');
 
 function parseValue(value){
     if(typeof value == "object" && value.id){
-        return value.id;
+        return "_" + value.id;
     }else{
         return value;
     }
