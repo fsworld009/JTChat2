@@ -1,6 +1,7 @@
 
 var React = require("react");
 import { connect } from 'react-redux';
+import {Segment} from "./Semantic.jsx";
 
 function mapStateToProps(state){
   return {sites: state};
@@ -14,8 +15,13 @@ function mapDispatchToProps(dispatch){
 
 var Site = React.createClass({
   render: function(){
-    console.log(this.props);
-    return (<div>Site</div>);
+    //console.log(this.props);
+    //return (<div>Site</div>);
+    return (
+      <Segment title="Site">
+        <div>123</div>
+      </Segment>
+    );
   }
 });
 

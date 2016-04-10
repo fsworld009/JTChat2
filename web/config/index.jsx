@@ -68,9 +68,13 @@ var App = React.createClass({
   render: function(){
     return (
       <div>
-        <h1 className="ui header">JTChat2 Configuration</h1>
+        <div style={{margin:"5px"}}>
+          <h1 className="ui header">JTChat2 Configuration</h1>
+        </div>
         <MainMenu currentPath={this.props.location.pathname}/>
-        {this.props.children}
+        <div style={{margin:"5px"}}>
+          {this.props.children}
+        </div>
       </div>
     );
   }
