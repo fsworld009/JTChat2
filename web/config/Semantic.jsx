@@ -96,6 +96,11 @@ SemanticUI.Modal = React.createClass({
       console.log("initialized");
       options =  {
         detachable: false,
+        closable: false,
+        selector: {
+          approve  : '.actions .confirm',
+          deny: '.actions .deny'
+        },
         onVisible: function(){
           console.log("onVisible");
           reactComponent.setState({
@@ -109,6 +114,13 @@ SemanticUI.Modal = React.createClass({
             initialized: true,
             visible: false
           });
+        },
+        onApprove: function(){
+          console.log("onApprove", arguments);
+          return false;
+        },
+        onDeny: function(){
+          console.log("onDeny", arguments);
         }
       };
       $this.modal(options);

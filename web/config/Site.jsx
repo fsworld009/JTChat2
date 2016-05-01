@@ -24,7 +24,21 @@ var EditSiteModal = React.createClass({
   render: function(){
     return (
       <Modal ref="modal">
-        <h2>Hello Modal</h2>
+          <div className="header">
+            Profile Picture
+          </div>
+          <div className="content">
+              <div className="ui header">We've auto-chosen a profile image for you.</div>
+              <p>Is it okay to use this photo?</p>
+          </div>
+          <div className="actions">
+            <div className="ui red deny button">
+              Cancel
+            </div>
+            <div className="ui right confirm blue button">
+              Save
+            </div>
+          </div>
       </Modal>
     );
   }
