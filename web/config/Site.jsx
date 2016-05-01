@@ -18,13 +18,12 @@ function mapDispatchToProps(dispatch){
 
 var EditSiteModal = React.createClass({
   show: function(){
-    var $this = util.getJqueryDom(this);
-    console.log($this);
+    this.refs.modal.show({});
   },
 
   render: function(){
     return (
-      <Modal>
+      <Modal ref="modal">
         <h2>Hello Modal</h2>
       </Modal>
     );
@@ -74,7 +73,7 @@ var Site = React.createClass({
             <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" onClick={this.editSite}></IconButton>
           </div>
         </div>
-        <EditSiteModal ref="editModal" />
+        <EditSiteModal ref="editModal" state={site}/>
       </div>
     );
   }

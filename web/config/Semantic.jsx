@@ -82,11 +82,56 @@ SemanticUI.BulletedList = React.createClass({
 SemanticUI.Modal = React.createClass({
   propTypes:{},
 
-  show: function(){
-
+  getInitialState() {
+    return {
+        initialized: false,
+        visible: false,
+    };
   },
 
+  show: function(options){
+    var $this = util.getJqueryDom(this);
+    var reactComponent = this;
+    if(!this.state.initialized){
+      console.log("initialized");
+      options =  {
+        detachable: false,
+        onVisible: function(){
+          console.log("onVisible");
+          reactComponent.setState({
+            initialized: true,
+            visible: true
+          });
+        },
+        onHidden: function(){
+          console.log("onHidden");
+          reactComponent.setState({
+            initialized: true,
+            visible: false
+          });
+        }
+      };
+      $this.modal(options);
+    }
+    $this.modal("show");
+    //this.setState();
+  },
 
+  componentDidMount: function(){
+    console.log("componentDidMount");
+  },
+
+  componentDidUpdate: function(){
+    console.log("componentDidUpdate");
+    var $this = util.getJqueryDom(this);
+    $this.modal("refresh");
+  },
+
+  componentWillUnmount: function(){
+    console.log("componentWillUnmount");
+    var $this = util.getJqueryDom(this);
+    $this.modal("hide");
+  },
 
   render: function(){
     return (
