@@ -27,7 +27,7 @@ SemanticUI.IconButton = React.createClass({
 
   componentDidMount: function(){
     var $this = $(ReactDOM.findDOMNode(this));
-    console.log($this);
+    //console.log($this);
     $this.popup({
       inline: true
     });

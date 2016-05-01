@@ -32,15 +32,7 @@ var data = {
       "remoteSocketObj": "TwitchIRCBot",
       "urlId": "twitch",
       "displayName": "Twitch",
-      "hosts": [
-          {
-              "id": 1,
-              "host":"irc.chat.twitch.tv"
-          },{
-              "id": 2,
-              "host":"irc.twitch.tv"
-          }
-      ],
+      "hosts": ["irc.chat.twitch.tv","irc.twitch.tv"],
       "ports": [6667, 80]
     }
   ],

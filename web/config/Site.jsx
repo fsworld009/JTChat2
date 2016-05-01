@@ -18,8 +18,8 @@ function mapDispatchToProps(dispatch){
 var Site = React.createClass({
   render: function(){
     var site = this.props.site;
-    var hosts = site.get("hosts").toArray();
-    var hostList = [];
+    // var hosts = site.get("hosts").toArray();
+    // var hostList = [];
 
 
     return (
@@ -38,7 +38,7 @@ var Site = React.createClass({
                 </div>
                 <div className="column">
                   Hosts
-                  <BulletedList items={_.map(site.get("hostsById").toObject(), function(host){return host.get("host");})} />
+                  <BulletedList items={site.get("hosts").toArray()} />
                 </div>
                 <div className="column">
                   Ports
