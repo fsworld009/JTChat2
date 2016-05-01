@@ -15,6 +15,14 @@ function mapDispatchToProps(dispatch){
   return {};
 }
 
+var EditSiteModal = React.createClass({
+
+
+  render: function(){
+
+  }
+});
+
 var Site = React.createClass({
   render: function(){
     var site = this.props.site;
@@ -48,7 +56,7 @@ var Site = React.createClass({
             </div>
           </div>
           <div className="extra">
-            <IconButton iconClass="fa fa-pencil" extraClass="green" pull-right="true" popup-content="Edit"></IconButton>
+            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit"></IconButton>
           </div>
         </div>
       </div>

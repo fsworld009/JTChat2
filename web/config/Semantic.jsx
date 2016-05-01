@@ -1,5 +1,6 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
+var Semantic_utility = require("./Semantic_utility.js");
 
 //Common semantic components for this project
 var SemanticUI={};
@@ -45,14 +46,9 @@ SemanticUI.IconButton = React.createClass({
 
 
   render: function(){
-    var className = "ui circular icon button";
-    if(this.props.extraClass){
-      className = className + " " + this.props.extraClass;
-    }
-    if(this.props["pull-right"]==="true"){
-      className = className + " right floated";
-    }
-
+    var className = Semantic_utility.mergeClassName(this, "ui circular icon button", {
+      "pull-right": {"true":"right floated"}
+    });
     return (
       <button className={className} data-content={this.props["popup-content"]}>
         <i className={this.props.iconClass}></i>
@@ -76,6 +72,15 @@ SemanticUI.BulletedList = React.createClass({
           })
         }
       </ul>
+    );
+  }
+});
+
+SemanticUI.Modal = React.createClass({
+  propTypes:{},
+  render: function(){
+    return (
+      <div className=""></div>
     );
   }
 });
