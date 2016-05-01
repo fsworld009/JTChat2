@@ -17,19 +17,33 @@ function mapDispatchToProps(dispatch){
 }
 
 var EditSiteModal = React.createClass({
-  show: function(){
+  getInitialState() {
+    return {
+        site: null
+    };
+  },
+
+  // componentDidUpdate: function(){
+  //   console.log("EditSiteModal updatet");
+  // },
+
+  show: function(siteProp){
     this.refs.modal.show({});
+    this.setState({site: siteProp});
   },
 
   render: function(){
-    return (
-      <Modal ref="modal">
+    var modalContent;
+    if(this.state.site){
+      modalContent = (
+        <Modal ref="modal">
           <div className="header">
-            Profile Picture
+            Edit Site
           </div>
           <div className="content">
-              <div className="ui header">We've auto-chosen a profile image for you.</div>
-              <p>Is it okay to use this photo?</p>
+              <div className="ui header">Edit Site</div>
+              <p>(Forms)</p>
+              <p>You're now editing {this.state.site.get("displayName")}</p>
           </div>
           <div className="actions">
             <div className="ui red deny button">
@@ -39,17 +53,22 @@ var EditSiteModal = React.createClass({
               Save
             </div>
           </div>
-      </Modal>
-    );
+        </Modal>
+      );
+    }else{
+      modalContent = (
+        <Modal ref="modal">
+          <div>No site</div>
+        </Modal>
+      );
+    }
+    return modalContent;
   }
 });
 
 var Site = React.createClass({
   editSite: function(){
-    console.log(this, arguments);
-    console.log("id", this.props.site.get("id"));
-    console.log(this.refs)
-    this.refs.editModal.show();
+    this.props.onEdit(this.props.site);
   },
 
   render: function(){
@@ -87,25 +106,30 @@ var Site = React.createClass({
             <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" onClick={this.editSite}></IconButton>
           </div>
         </div>
-        <EditSiteModal ref="editModal" state={site}/>
       </div>
     );
   }
 });
 
 var Sites = React.createClass({
+  editSite: function(siteProp){
+    this.refs.editModal.show(siteProp);
+  },
+
   render: function(){
     var siteMap = this.props.sitesById;
+    var view = this;
     return (
       <Segment title="Site">
         <div className="ui divided items">
           {
             this.props.sites.toArray().map(function(id){
               var site = siteMap.get(id);
-              return (<Site key={id} site={site}/>);
+              return (<Site key={id} site={site} onEdit={view.editSite}/>);
             })
           }
         </div>
+        <EditSiteModal ref="editModal"/>
       </Segment>
     );
   }

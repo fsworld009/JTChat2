@@ -89,11 +89,11 @@ SemanticUI.Modal = React.createClass({
     };
   },
 
-  show: function(options){
+  show: function(options, eidtComponent){
     var $this = util.getJqueryDom(this);
     var reactComponent = this;
     if(!this.state.initialized){
-      console.log("initialized");
+      console.log("Modal initialized");
       options =  {
         detachable: false,
         closable: false,
@@ -102,21 +102,21 @@ SemanticUI.Modal = React.createClass({
           deny: '.actions .deny'
         },
         onVisible: function(){
-          console.log("onVisible");
+          console.log("Modal onVisible");
           reactComponent.setState({
             initialized: true,
             visible: true
           });
         },
         onHidden: function(){
-          console.log("onHidden");
+          console.log("Modal onHidden");
           reactComponent.setState({
             initialized: true,
             visible: false
           });
         },
         onApprove: function(){
-          console.log("onApprove", arguments);
+          console.log("Modal onApprove", arguments);
           return false;
         },
         onDeny: function(){
@@ -130,17 +130,14 @@ SemanticUI.Modal = React.createClass({
   },
 
   componentDidMount: function(){
-    console.log("componentDidMount");
   },
 
   componentDidUpdate: function(){
-    console.log("componentDidUpdate");
     var $this = util.getJqueryDom(this);
     $this.modal("refresh");
   },
 
   componentWillUnmount: function(){
-    console.log("componentWillUnmount");
     var $this = util.getJqueryDom(this);
     $this.modal("hide");
   },

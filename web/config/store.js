@@ -34,7 +34,15 @@ var data = {
       "displayName": "Twitch",
       "hosts": ["irc.chat.twitch.tv","irc.twitch.tv"],
       "ports": [6667, 80]
-    }
+  },
+  {
+    "id": 2,
+    "remoteSocketObj": "TwitchIRCBot",
+    "urlId": "twitch2",
+    "displayName": "Twitch 2",
+    "hosts": ["irc.chat.twitch.tv2","irc.twitch.tv2"],
+    "ports": [66672, 802]
+  }
   ],
   "users": [
     {
