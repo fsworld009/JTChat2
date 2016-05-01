@@ -1,6 +1,6 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
-var Semantic_utility = require("./Semantic_utility.js");
+var util = require("./util.js");
 
 //Common semantic components for this project
 var SemanticUI={};
@@ -23,7 +23,8 @@ SemanticUI.IconButton = React.createClass({
     extraClass: React.PropTypes.string,
     "pull-right": React.PropTypes.string,
     "popup-content": React.PropTypes.string,
-    iconClass: React.PropTypes.string.isRequired
+    iconClass: React.PropTypes.string.isRequired,
+    onClick: React.PropTypes.func
   },
 
   componentDidMount: function(){
@@ -46,11 +47,11 @@ SemanticUI.IconButton = React.createClass({
 
 
   render: function(){
-    var className = Semantic_utility.mergeClassName(this, "ui circular icon button", {
+    var className = util.mergeClassName(this, "ui circular icon button", {
       "pull-right": {"true":"right floated"}
     });
     return (
-      <button className={className} data-content={this.props["popup-content"]}>
+      <button className={className} data-content={this.props["popup-content"]} onClick={this.props.onClick}>
         <i className={this.props.iconClass}></i>
       </button>
     );
@@ -68,7 +69,9 @@ SemanticUI.BulletedList = React.createClass({
         {
           this.props.items.map(function(item){
             counter++;
-            return (<li key={counter}>{item}</li>);
+            return (
+              <li key={counter}>{item}</li>
+            );
           })
         }
       </ul>
@@ -78,9 +81,18 @@ SemanticUI.BulletedList = React.createClass({
 
 SemanticUI.Modal = React.createClass({
   propTypes:{},
+
+  show: function(){
+
+  },
+
+
+
   render: function(){
     return (
-      <div className=""></div>
+      <div className="ui modal">
+        {this.props.children};
+      </div>
     );
   }
 });

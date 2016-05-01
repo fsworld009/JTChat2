@@ -1,7 +1,9 @@
 var _ = require("lodash");
-var utility = {};
+var $ = require("jquery");
+var ReactDOM = require("react-dom");
+var util = {};
 
-utility.mergeClassName = function(ReactComponent, defaultClassNames, componentPropsToComponentClassMap){
+util.mergeClassName = function(ReactComponent, defaultClassNames, componentPropsToComponentClassMap){
     defaultClassNames = defaultClassNames || "";
     var className="";
     if(ReactComponent.props.className){
@@ -20,5 +22,9 @@ utility.mergeClassName = function(ReactComponent, defaultClassNames, componentPr
     return className;
 };
 
+util.getJqueryDom = function(ReactComponent){
+    return $(ReactDOM.findDOMNode(ReactComponent));
+};
 
-module.exports = utility;
+
+module.exports = util;

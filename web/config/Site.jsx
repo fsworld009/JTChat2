@@ -1,8 +1,9 @@
 
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, BulletedList} from "./Semantic.jsx";
+import {Segment, IconButton, BulletedList, Modal} from "./Semantic.jsx";
 var _ = require("lodash");
+var util = require("./util.js");
 
 function mapStateToProps(state){
   return {
@@ -16,14 +17,28 @@ function mapDispatchToProps(dispatch){
 }
 
 var EditSiteModal = React.createClass({
-
+  show: function(){
+    var $this = util.getJqueryDom(this);
+    console.log($this);
+  },
 
   render: function(){
-
+    return (
+      <Modal>
+        <h2>Hello Modal</h2>
+      </Modal>
+    );
   }
 });
 
 var Site = React.createClass({
+  editSite: function(){
+    console.log(this, arguments);
+    console.log("id", this.props.site.get("id"));
+    console.log(this.refs)
+    this.refs.editModal.show();
+  },
+
   render: function(){
     var site = this.props.site;
     // var hosts = site.get("hosts").toArray();
@@ -56,9 +71,10 @@ var Site = React.createClass({
             </div>
           </div>
           <div className="extra">
-            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit"></IconButton>
+            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" onClick={this.editSite}></IconButton>
           </div>
         </div>
+        <EditSiteModal ref="editModal" />
       </div>
     );
   }
