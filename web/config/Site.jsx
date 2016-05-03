@@ -64,6 +64,13 @@ var EditSiteModal = React.createClass({
               <div className="ui header">Edit Site</div>
               <p>(Forms)</p>
               <p>You're now editing {this.state.site.get("displayName")}</p>
+              <form>
+                <div className="ui input icon labeled">
+                  <div className="ui label"><i className="fa fa-asterisk icon fitted red"></i></div>
+                  <i className="icon fa fa-comment-o"></i>
+                  <input type="text"/>
+                </div>
+              </form>
           </div>
           <div className="actions">
             <Button className="deny">Cancel</Button>
