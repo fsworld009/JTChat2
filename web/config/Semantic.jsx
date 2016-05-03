@@ -1,6 +1,7 @@
 var React = require("react");
 var ReactDOM = require("react-dom");
 var util = require("./util.js");
+var $ = require("jquery");
 
 //Common semantic components for this project
 var SemanticUI={};
@@ -89,50 +90,46 @@ SemanticUI.Modal = React.createClass({
     };
   },
 
-  show: function(options, eidtComponent){
+  callbackToStateMap: {
+    onVisible: {
+      initialized: true,
+      visible: true
+    },
+
+    onHidden: {
+      initialized: true,
+      visible: false
+    }
+  },
+
+  show: function(options){
     var $this = util.getJqueryDom(this);
     var reactComponent = this;
+
     if(!this.state.initialized){
-      console.log("Modal initialized");
-      options =  {
-        detachable: false,
-        closable: false,
-        selector: {
-          approve  : '.actions .confirm',
-          deny: '.actions .deny'
-        },
-        onVisible: function(){
-          console.log("Modal onVisible");
-          reactComponent.setState({
-            initialized: true,
-            visible: true
-          });
-        },
-        onHidden: function(){
-          console.log("Modal onHidden");
-          reactComponent.setState({
-            initialized: true,
-            visible: false
-          });
-        },
-        onApprove: function(){
-          console.log("Modal onApprove", arguments);
-          return false;
-        },
-        onDeny: function(){
-          console.log("onDeny", arguments);
-        }
-      };
+      options = $.extend(true, {}, options, {detachable: false});  //prevent moving the element to other cotainer
+      _.each(this.callbackToStateMap, function(state, callbackFuncName){
+        var clientCallbackFunc = options[callbackFuncName];
+        var returnValue;
+        options[callbackFuncName] = function(){
+          if(typeof clientCallbackFunc == "function"){
+            //lose the ability to use bind in client Componetnt
+            returnValue = clientCallbackFunc.apply(this);
+          }
+          reactComponent.setState(state);
+          return returnValue;
+        };
+      });
       $this.modal(options);
     }
     $this.modal("show");
-    //this.setState();
   },
 
   componentDidMount: function(){
   },
 
   componentDidUpdate: function(){
+    console.log("current state:", this.state);
     var $this = util.getJqueryDom(this);
     $this.modal("refresh");
   },

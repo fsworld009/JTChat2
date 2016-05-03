@@ -28,7 +28,27 @@ var EditSiteModal = React.createClass({
   // },
 
   show: function(siteProp){
-    this.refs.modal.show({});
+    var view = this;
+    this.refs.modal.show({
+      closable: false,
+      selector: {
+        approve  : '.actions .confirm',
+        deny: '.actions .deny'
+      },
+      onVisible: function(){
+        console.log("onVisible",this);
+      },
+      onHidden: function(){
+        console.log("onHidden", this);
+      },
+      onApprove: function(){
+        console.log("Modal onApprove", arguments);
+        return false;
+      },
+      onDeny: function(){
+        console.log("onDeny", arguments);
+      }
+    });
     this.setState({site: siteProp});
   },
 
@@ -46,10 +66,10 @@ var EditSiteModal = React.createClass({
               <p>You're now editing {this.state.site.get("displayName")}</p>
           </div>
           <div className="actions">
-            <div className="ui red deny button">
+            <div className="ui deny button">
               Cancel
             </div>
-            <div className="ui right confirm blue button">
+            <div className="ui right confirm green button">
               Save
             </div>
           </div>
