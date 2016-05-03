@@ -1,7 +1,7 @@
 
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, BulletedList, Modal} from "./Semantic.jsx";
+import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 
@@ -66,12 +66,8 @@ var EditSiteModal = React.createClass({
               <p>You're now editing {this.state.site.get("displayName")}</p>
           </div>
           <div className="actions">
-            <div className="ui deny button">
-              Cancel
-            </div>
-            <div className="ui right confirm green button">
-              Save
-            </div>
+            <Button className="deny">Cancel</Button>
+            <Button className="right confirm green">Save</Button>
           </div>
         </Modal>
       );
@@ -113,11 +109,11 @@ var Site = React.createClass({
                 </div>
                 <div className="column">
                   Hosts
-                  <BulletedList items={site.get("hosts").toArray()} />
+                  <BulletList items={site.get("hosts").toArray()} />
                 </div>
                 <div className="column">
                   Ports
-                  <BulletedList items={site.get("ports").toArray()} />
+                  <BulletList items={site.get("ports").toArray()} />
                 </div>
               </div>
             </div>

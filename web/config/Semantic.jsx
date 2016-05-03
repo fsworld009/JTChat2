@@ -2,6 +2,7 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var util = require("./util.js");
 var $ = require("jquery");
+var _ = require("lodash");
 
 //Common semantic components for this project
 var SemanticUI={};
@@ -59,7 +60,16 @@ SemanticUI.IconButton = React.createClass({
   }
 });
 
-SemanticUI.BulletedList = React.createClass({
+SemanticUI.Button = React.createClass({
+  render: function(){
+    var className = util.mergeClassName(this, "ui button");
+    return (
+      <div {..._.extend({}, this.props, {className: className})}></div>
+    );
+  }
+});
+
+SemanticUI.BulletList = React.createClass({
   propTypes: {
     items: React.PropTypes.array.isRequired
   },
