@@ -1,7 +1,8 @@
 
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, BulletList, Modal, Button, Form, TextInput} from "./Semantic.jsx";
+import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
+import {Form, TextInput, TextInputList} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 
@@ -66,11 +67,10 @@ var EditSiteModal = React.createClass({
                 <div className="ui grid">
                   <div className="two column row">
                     <div className="column">
-                      <TextInput label="Host" required="true" iconClass="fa fa-trash" name="host" placeholder="Input Name"/>
+                      <TextInputList name="hosts" label="Hosts" items={site.get("hosts").toArray()}/>
                     </div>
                     <div className="column">
-                      Ports
-
+                      <TextInputList name="ports" label="Ports" items={site.get("ports").toArray()}/>
                     </div>
                   </div>
                 </div>

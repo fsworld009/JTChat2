@@ -22,7 +22,6 @@ SemanticUI.Segment = React.createClass({
 
 SemanticUI.IconButton = React.createClass({
   propTypes: {
-    extraClass: React.PropTypes.string,
     "pull-right": React.PropTypes.string,
     "popup-content": React.PropTypes.string,
     iconClass: React.PropTypes.string.isRequired,
@@ -157,46 +156,4 @@ SemanticUI.Modal = React.createClass({
     );
   }
 });
-
-//=====================
-
-SemanticUI.Form = React.createClass({
-  render: function(){
-    var className = util.mergeClassName(this, ["ui form", this.props.className]);
-    return (
-      <form {..._.extend({}, this.props, {className: className})}>
-        {this.props.children}
-      </form>
-    );
-  }
-});
-
-SemanticUI.TextInput = React.createClass({
-  render: function(){
-    var divClassName = util.mergeClassName(this, ["ui input"],{
-      "iconClass" : {
-        "*": "icon"
-      },
-      "required" : {
-        "true" : ""
-      }
-    });
-    return (
-      <div className="field">
-        <label>{this.props.label}</label>
-        <div className={divClassName}>
-          {this.props.required==="true"? <i className="fa fa-asterisk red"></i> : null}
-          {this.props.iconClass? <i className={util.mergeClassName(this, ["icon", this.props.iconClass])}></i> : null}
-          <input {..._.extend({}, this.props, {type: "text", iconClass: undefined, required: undefined, label: undefined})}/>
-        </div>
-      </div>
-    );
-  }
-});
-
-// <div className="ui input icon labeled">
-//   <div className="ui label"><i className="fa fa-asterisk icon fitted red"></i></div>
-//   <i className="icon fa fa-comment-o"></i>
-//   <input type="text"/>
-// </div>
 module.exports = SemanticUI;
