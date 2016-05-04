@@ -22,7 +22,7 @@ const history = syncHistoryWithStore(browserHistory, store, {
 });
 
 var Status = require("./Status.jsx");
-var Site = require("./Site.jsx");
+import {Site, EditSite} from "./Site.jsx";
 var User = require("./User.jsx");
 var Theme = require("./Theme.jsx");
 var Profile = require("./Profile.jsx");
@@ -47,6 +47,9 @@ var MainMenu = React.createClass({
     var currentPath = (this.props.currentPath || "").replace(/^\/config\/([^\/]*)(.*$)/, function(match, $1){
       return $1;
     });
+
+    var inEdit = (this.props.currentPath || "").indexOf("/edit/") > -1;
+
     var currentMenuItem = _.find(menuItems, function(menuItem){
       return menuItem.path == currentPath;
     });
@@ -58,7 +61,11 @@ var MainMenu = React.createClass({
     return (
       <div className="ui blue secondary pointing menu">
         {menuItems.map(function(menuItem){
-          return <Link key={menuItem.path} className={"item"+ (menuItem.selected? " active":"")} to={rootPath + menuItem.path}>{menuItem.label}</Link>;
+            if(inEdit){
+              return <a href="javascript:void(0)" key={menuItem.path} className="item disabled" >{menuItem.label}</a>;
+            }else{
+              return <Link key={menuItem.path} className={"item"+ (menuItem.selected? " active":"")} to={rootPath + menuItem.path}>{menuItem.label}</Link>;
+            }
         })}
       </div>
     );
@@ -87,7 +94,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
         <Route path={rootPath} component={App}>
-        <Route path="site" component={Site}/>
+        <Route path="site" component={Site} />
+        <Route path="site/edit/:siteId" component={EditSite}/>
         <Route path="user" component={User}/>
         <Route path="theme" component={Theme}/>
         <Route path="profile" component={Profile}/>

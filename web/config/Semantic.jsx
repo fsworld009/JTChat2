@@ -3,6 +3,7 @@ var ReactDOM = require("react-dom");
 var util = require("./util.js");
 var $ = require("jquery");
 var _ = require("lodash");
+import { Link } from 'react-router';
 
 //Common semantic components for this project
 var SemanticUI={};
@@ -51,20 +52,33 @@ SemanticUI.IconButton = React.createClass({
     var className = util.mergeClassName(this, ["ui circular icon button", this.props.className], {
       "pull-right": {"true":"right floated"}
     });
-    return (
-      <button className={className} data-content={this.props["popup-content"]} onClick={this.props.onClick}>
+
+    if(this.props.route){
+      return (<Link to={this.props.route} className={className} data-content={this.props["popup-content"]} onClick={this.props.onClick}>
         <i className={this.props.iconClass}></i>
-      </button>
-    );
+      </Link>);
+    }else{
+      return (
+        <a className={className} data-content={this.props["popup-content"]} onClick={this.props.onClick}>
+          <i className={this.props.iconClass}></i>
+        </a>
+      );
+    }
   }
 });
 
 SemanticUI.Button = React.createClass({
   render: function(){
-    var className = util.mergeClassName(this, ["ui button", this.props.className]);
-    return (
-      <div {..._.extend({}, this.props, {className: className})}></div>
-    );
+    var className = util.mergeClassName(this, ["ui button", this.props.className], {
+      "pull-right": {"true":"right floated"}
+    });
+    if(this.props.route){
+      return (<Link {..._.extend({}, this.props, {className: className, to: this.props.route})}></Link>);
+    }else{
+      return (
+        <button {..._.extend({}, this.props, {className: className})}></button>
+      );
+    }
   }
 });
 

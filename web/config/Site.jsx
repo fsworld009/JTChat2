@@ -93,6 +93,25 @@ var EditSiteModal = React.createClass({
   }
 });
 
+var EditSite = React.createClass({
+  render: function(){
+    return (
+        <Segment title={"EditSite" + this.props.params.siteId}>
+          <div className="ui divided items">
+            <div className="item">
+              <div className="content">1</div>
+              <div className="extra">
+                <Button className="green" pull-right="true">Save</Button>
+                <Button className="" pull-right="true" route="/config/site/">Cancel</Button>
+
+              </div>
+            </div>
+          </div>
+        </Segment>
+      );
+  }
+});
+
 var Site = React.createClass({
   editSite: function(){
     this.props.onEdit(this.props.site);
@@ -130,7 +149,7 @@ var Site = React.createClass({
             </div>
           </div>
           <div className="extra">
-            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" onClick={this.editSite}></IconButton>
+            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+site.get("id")}></IconButton>
           </div>
         </div>
       </div>
@@ -163,4 +182,4 @@ var Sites = React.createClass({
 });
 
 var SiteContainer = connect(mapStateToProps, mapDispatchToProps)(Sites);
-module.exports = SiteContainer;
+module.exports = {Site: SiteContainer, EditSite: EditSite};
