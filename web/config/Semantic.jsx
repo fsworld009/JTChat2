@@ -49,7 +49,7 @@ SemanticUI.IconButton = React.createClass({
 
 
   render: function(){
-    var className = util.mergeClassName(this, "ui circular icon button", {
+    var className = util.mergeClassName(this, ["ui circular icon button", this.props.className], {
       "pull-right": {"true":"right floated"}
     });
     return (
@@ -62,7 +62,7 @@ SemanticUI.IconButton = React.createClass({
 
 SemanticUI.Button = React.createClass({
   render: function(){
-    var className = util.mergeClassName(this, "ui button");
+    var className = util.mergeClassName(this, ["ui button", this.props.className]);
     return (
       <div {..._.extend({}, this.props, {className: className})}></div>
     );
@@ -158,5 +158,45 @@ SemanticUI.Modal = React.createClass({
   }
 });
 
+//=====================
 
+SemanticUI.Form = React.createClass({
+  render: function(){
+    var className = util.mergeClassName(this, ["ui form", this.props.className]);
+    return (
+      <form {..._.extend({}, this.props, {className: className})}>
+        {this.props.children}
+      </form>
+    );
+  }
+});
+
+SemanticUI.TextInput = React.createClass({
+  render: function(){
+    var divClassName = util.mergeClassName(this, ["ui input"],{
+      "iconClass" : {
+        "*": "icon"
+      },
+      "required" : {
+        "true" : ""
+      }
+    });
+    return (
+      <div className="field">
+        <label>{this.props.label}</label>
+        <div className={divClassName}>
+          {this.props.required==="true"? <i className="fa fa-asterisk red"></i> : null}
+          {this.props.iconClass? <i className={util.mergeClassName(this, ["icon", this.props.iconClass])}></i> : null}
+          <input {..._.extend({}, this.props, {type: "text", iconClass: undefined, required: undefined, label: undefined})}/>
+        </div>
+      </div>
+    );
+  }
+});
+
+// <div className="ui input icon labeled">
+//   <div className="ui label"><i className="fa fa-asterisk icon fitted red"></i></div>
+//   <i className="icon fa fa-comment-o"></i>
+//   <input type="text"/>
+// </div>
 module.exports = SemanticUI;

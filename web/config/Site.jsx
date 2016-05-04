@@ -1,7 +1,7 @@
 
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
+import {Segment, IconButton, BulletList, Modal, Button, Form, TextInput} from "./Semantic.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 
@@ -55,22 +55,26 @@ var EditSiteModal = React.createClass({
   render: function(){
     var modalContent;
     if(this.state.site){
+      var site = this.state.site;
       modalContent = (
         <Modal ref="modal">
           <div className="header">
-            Edit Site
+            Edit {site.get("displayName")}
           </div>
           <div className="content">
-              <div className="ui header">Edit Site</div>
-              <p>(Forms)</p>
-              <p>You're now editing {this.state.site.get("displayName")}</p>
-              <form>
-                <div className="ui input icon labeled">
-                  <div className="ui label"><i className="fa fa-asterisk icon fitted red"></i></div>
-                  <i className="icon fa fa-comment-o"></i>
-                  <input type="text"/>
+              <Form>
+                <div className="ui grid">
+                  <div className="two column row">
+                    <div className="column">
+                      <TextInput label="Host" required="true" iconClass="fa fa-trash" name="host" placeholder="Input Name"/>
+                    </div>
+                    <div className="column">
+                      Ports
+
+                    </div>
+                  </div>
                 </div>
-              </form>
+              </Form>
           </div>
           <div className="actions">
             <Button className="deny">Cancel</Button>
