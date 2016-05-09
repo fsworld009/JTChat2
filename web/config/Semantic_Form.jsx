@@ -17,6 +17,17 @@ SemanticUI.Form = React.createClass({
   }
 });
 
+SemanticUI.FormField = React.createClass({
+  render: function(){
+    return (
+      <div className="field">
+        <label>{this.props.label}</label>
+        {this.props.children}
+      </div>
+    );
+  }
+});
+
 SemanticUI.TextInput = React.createClass({
   render: function(){
     var divClassName = util.mergeClassName(this, ["ui input"],{
@@ -28,14 +39,23 @@ SemanticUI.TextInput = React.createClass({
       }
     });
     return (
-      <div className="field">
-        <label>{this.props.label}</label>
+      <SemanticUI.FormField label={this.props.label}>
         <div className={divClassName}>
           {this.props.required==="true"? <i className="fa fa-asterisk red"></i> : null}
           {this.props.iconClass? <i className={util.mergeClassName(this, ["icon", this.props.iconClass])}></i> : null}
           <input {..._.extend({}, this.props, {type: "text", iconClass: undefined, required: undefined, label: undefined})}/>
         </div>
-      </div>
+      </SemanticUI.FormField>
+    );
+  }
+});
+
+SemanticUI.Textarea = React.createClass({
+  render: function(){
+    return (
+      <SemanticUI.FormField label={this.props.label}>
+        <textarea {..._.extend({}, this.props, {label: undefined})}/>
+      </SemanticUI.FormField>
     );
   }
 });

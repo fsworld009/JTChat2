@@ -78,6 +78,7 @@ var data = {
 };
 
 parseStore(data);
+console.log("raw data",data);
 //console.log("Immu",)
 const store = createStore(reducer, Immutable.fromJS(data));
 //console.log("store",store,store.getState().get("sites"));

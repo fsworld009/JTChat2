@@ -2,7 +2,7 @@
 var React = require("react");
 import { connect } from 'react-redux';
 import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
-import {Form, TextInput, TextInputList} from "./Semantic_Form.jsx";
+import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 
@@ -95,18 +95,33 @@ var EditSiteModal = React.createClass({
 
 var EditSite = React.createClass({
   render: function(){
+    //params: from react-router
+    //sitesById: from redux (provided by EditSiteContainer)
+    var siteId = this.props.params.siteId;
+    var site = this.props.sitesById.get(siteId);
     return (
         <Segment title={"EditSite" + this.props.params.siteId}>
-          <div className="ui divided items">
-            <div className="item">
-              <div className="content">1</div>
+          <Form>
+            <div className="content">
+              <div className="description">
+                <div className="ui grid">
+                  <div className="two column row">
+                    <div className="column">
+                      <Textarea name="hosts" label="Hosts" rows="3" defaultValue={site.get("hosts").toArray().join("\n")}/>
+                    </div>
+                    <div className="column">
+                      <Textarea name="ports" label="Ports" rows="3" defaultValue={site.get("ports").toArray().join("\n")}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="extra">
                 <Button className="green" pull-right="true">Save</Button>
                 <Button className="" pull-right="true" route="/config/site/">Cancel</Button>
-
+                <br/><br/>
               </div>
             </div>
-          </div>
+          </Form>
         </Segment>
       );
   }
@@ -149,7 +164,7 @@ var Site = React.createClass({
             </div>
           </div>
           <div className="extra">
-            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+site.get("id")}></IconButton>
+            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/_"+site.get("id")}></IconButton>
           </div>
         </div>
       </div>
@@ -182,4 +197,5 @@ var Sites = React.createClass({
 });
 
 var SiteContainer = connect(mapStateToProps, mapDispatchToProps)(Sites);
-module.exports = {Site: SiteContainer, EditSite: EditSite};
+var EditSiteContainer = connect(mapStateToProps, mapDispatchToProps)(EditSite);
+module.exports = {Site: SiteContainer, EditSite: EditSiteContainer};
