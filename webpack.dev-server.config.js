@@ -3,9 +3,10 @@ var webpack = require('webpack');
 
 var config = {
     entry: {
-        config: ['webpack/hot/dev-server', path.resolve(__dirname, 'web/config/index.jsx')]
+        config: [/*'webpack/hot/dev-server',*/ path.resolve(__dirname, 'web/config/index.jsx')]
     },
     output: {
+        //path and public Path is meaningless when used by expressjs
         path: path.resolve(__dirname, 'web/bundle/'),
         publicPath: "/bundle/",
         filename: "[name].bundle.js",
