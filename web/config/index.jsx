@@ -22,7 +22,8 @@ const history = syncHistoryWithStore(browserHistory, store, {
 });
 
 var Status = require("./Status.jsx");
-import {Site, EditSite} from "./Site.jsx";
+var Site= require("./Site.jsx");
+var EditSite = require("./EditSite.jsx");
 var User = require("./User.jsx");
 var Theme = require("./Theme.jsx");
 var Profile = require("./Profile.jsx");
