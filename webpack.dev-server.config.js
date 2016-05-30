@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 var config = {
     entry: {
-        config: [/*'webpack/hot/dev-server',*/ path.resolve(__dirname, 'web/config/index.jsx')]
+        config: ["webpack-hot-middleware/client",/*'webpack/hot/dev-server'*/, path.resolve(__dirname, 'web/config/index.jsx')]
     },
     output: {
         //path and public Path is meaningless when used by expressjs
@@ -14,11 +14,11 @@ var config = {
     },
     module: {
         loaders: [
-            // {
-            //   test: /\.jsx$/,
-            //   loader: 'react-hot-loader',
-            //   exclude: /(semantic.js)|(node_modules)/,
-            // },
+            {
+              test: /\.(js|jsx)$/,
+              loader: 'react-hot-loader',
+              exclude: /(semantic.js)|(node_modules)/,
+            },
             {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
@@ -40,7 +40,8 @@ var config = {
         ]
     },
     plugins: [
-        // new webpack.HotModuleReplacementPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
             $: "jquery",

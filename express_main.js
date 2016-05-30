@@ -2,13 +2,15 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
-// app.get('/', function (req, res) {
-//   res.send('Hello World!');
-// });
+var environment = process.env.NODE_ENV;
+
+app.get("/config/*", function(req, res, next){
+    req.url = "/config/";
+    next();
+});
+
 
 app.use('/', express.static(path.resolve(__dirname + '/web')));
-
-
 
 var webpack = require('webpack');
 //var WebpackDevServer = require('webpack-dev-server');
@@ -19,6 +21,7 @@ var webpackDevMiddleware = require("webpack-dev-middleware");
 app.use("/bundle/",webpackDevMiddleware(compiler, {
     // options
 }));
+app.use(require("webpack-hot-middleware")(compiler));
 
 // new WebpackDevServer(webpack(config), {
 //    hot: true,
