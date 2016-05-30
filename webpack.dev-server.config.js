@@ -13,7 +13,12 @@ var config = {
     },
     module: {
         loaders: [
-              {
+            // {
+            //   test: /\.jsx$/,
+            //   loader: 'react-hot-loader',
+            //   exclude: /(semantic.js)|(node_modules)/,
+            // },
+            {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
                 exclude: /(semantic.js)|(node_modules)/,
@@ -34,6 +39,7 @@ var config = {
         ]
     },
     plugins: [
+        // new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
             $: "jquery",
