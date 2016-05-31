@@ -2,11 +2,37 @@ var express = require('express');
 var app = express();
 var path = require('path');
 
+var basePath = path.resolve(__dirname);
+
+//var Promise = require('bluebird');
+var fs = require('fs');
+//Promise.promisifyAll(fs);
+
+
 var environment = process.env.NODE_ENV;
 
 app.get("/config/*", function(req, res, next){
     req.url = "/config/";
     next();
+});
+
+app.get("/profiles/", function(req, res, next){
+    // fs.readFileAsync(basePath + "/profiles/configsdsdsd.json", "utf8").then([
+    //     function(data){
+    //         console.log("load", data);
+    //         res.send(data);
+    //     },
+    //     function(err){
+    //         console.log("error", err);
+    //         res.send(JSON.stringify({"error":true}));
+    //     }
+    // ]);
+    fs.readFile(basePath + "/profiles/config.json","utf-8",function(err, data){
+        console.log("read",data);
+        res.setHeader('Content-Type', 'application/json');
+        res.send(data);
+    });
+    //res.send("123")
 });
 
 
