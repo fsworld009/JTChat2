@@ -11,7 +11,7 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 const store = require("./store.js");
@@ -76,6 +76,16 @@ var MainMenu = React.createClass({
 
 var App = React.createClass({
   render: function(){
+    var content;
+    if(this.props.loading){
+      content = (
+        <div><i className="fa fa-spin fa-spinner"></i>Loading...</div>
+      );
+    }else{
+      content = this.props.children;
+    }
+
+
     return (
       <div>
         <div style={{margin:"5px"}}>
@@ -83,7 +93,7 @@ var App = React.createClass({
         </div>
         <MainMenu currentPath={this.props.location.pathname}/>
         <div style={{margin:"5px","maxWidth":"800px"}}>
-          {this.props.children}
+          {content}
         </div>
       </div>
     );
@@ -91,10 +101,23 @@ var App = React.createClass({
 
 });
 
+function mapStateToProps(state){
+  var loading = state.get("loading") == "loading";
+  return {
+    loading: loading
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  return {};
+}
+
+var AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-        <Route path={rootPath} component={App}>
+        <Route path={rootPath} component={AppContainer}>
         <Route path="site" component={Site} />
         <Route path="site/edit/:siteId" component={EditSite}/>
         <Route path="user" component={User}/>

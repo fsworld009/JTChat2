@@ -2,11 +2,7 @@ var _ = require("lodash");
 var actions = require('./actions.js');
 import {LOCATION_CHANGE}  from "react-router-redux";
 import {INIT}  from "redux";
-var Immutable = require('immutable');
 
-var initialState=Immutable.fromJS({
-    routing: {locationBeforeTransitions: null}
-});
 //console.log("out", initialState.get("locationBeforeTransitions"));
 
 function doNothing(state, action){
@@ -28,7 +24,11 @@ var reducers = {
 
 var reducer = function(state, action){
     if(action.type === "@@redux/INIT"){
-        return state.merge(initialState);
+        //return state.merge(initialState);
+        return state;
+    }
+    if(action.type === "LOAD_CONFIG"){
+        return state.merge(_.extend({"loading":action.loading}, action.profiles));
     }
     if (action.type === LOCATION_CHANGE) {
             return state.setIn(["routing", "locationBeforeTransitions"], action.payload);

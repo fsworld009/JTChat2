@@ -4,9 +4,9 @@ var path = require('path');
 
 var basePath = path.resolve(__dirname);
 
-//var Promise = require('bluebird');
+var Promise = require('bluebird');
 var fs = require('fs');
-//Promise.promisifyAll(fs);
+Promise.promisifyAll(fs);
 
 
 var environment = process.env.NODE_ENV;
@@ -17,22 +17,12 @@ app.get("/config/*", function(req, res, next){
 });
 
 app.get("/profiles/", function(req, res, next){
-    // fs.readFileAsync(basePath + "/profiles/configsdsdsd.json", "utf8").then([
-    //     function(data){
-    //         console.log("load", data);
-    //         res.send(data);
-    //     },
-    //     function(err){
-    //         console.log("error", err);
-    //         res.send(JSON.stringify({"error":true}));
-    //     }
-    // ]);
-    fs.readFile(basePath + "/profiles/config.json","utf-8",function(err, data){
-        console.log("read",data);
+    fs.readFileAsync(basePath + "/profiles/config.json","utf-8").then(function(data){
         res.setHeader('Content-Type', 'application/json');
         res.send(data);
+    }).error(function(err){
+        res.json({error: true});
     });
-    //res.send("123")
 });
 
 

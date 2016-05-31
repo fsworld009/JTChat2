@@ -1,7 +1,9 @@
 var _ = require("lodash");
 var reducer = require('./reducer.js');
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 var Immutable = require('immutable');
+var $ = require('jquery');
 
 function parseValue(value){
     if(typeof value == "object" && value.id){
@@ -23,63 +25,36 @@ function parseStore(store){
     });
 }
 
-//saveStore
+var initialState=Immutable.fromJS({
+    routing: {locationBeforeTransitions: null}
+});
 
-var data = {
-  "sites": [
-    {
-      "id": 1,
-      "remoteSocketObj": "TwitchIRCBot",
-      "urlId": "twitch",
-      "displayName": "Twitch",
-      "hosts": ["irc.chat.twitch.tv","irc.twitch.tv"],
-      "ports": [6667, 80]
-  },
-  {
-    "id": 2,
-    "remoteSocketObj": "TwitchIRCBot",
-    "urlId": "twitch2",
-    "displayName": "Twitch 2",
-    "hosts": ["irc.chat.twitch.tv2","irc.twitch.tv2"],
-    "ports": [66672, 802]
-  }
-  ],
-  "users": [
-    {
-      "id": 1,
-      "siteId": 1,
-      "urlId": "none",
-      "displayName": "(Anonymous)",
-      "username": "justinfan123",
-      "password": "kappa"
-    }
-  ],
+function loadConfig(store){
+    return function(next){
+        return function(action){
+            var state = store.getState();
+            if(!state.get("loading")){
+                var nextState = next({
+                    type: "LOAD_CONFIG",
+                    loading: "loading"
+                });
 
-  "themes": [
-    {
-      "id": 1,
-      "urlId": "default",
-      "displayName" :"Theme 1",
-      "userTheme": false,
-      "path" : "/"
-    }
-  ],
+                $.getJSON("/profiles/", function(data){
+                    parseStore(data);
+                    next({
+                        type: "LOAD_CONFIG",
+                        loading: "loaded",
+                        profiles: data
+                    });
+                });
+                return nextState;
+            }else{
+                //move to next middleware or reducer
+                return next(action);
+            }
+        };
+    };
+}
 
-  "profiles": [
-    {
-      "id" : 1,
-      "urlId": "profile1",
-      "themeId": 1,
-      "options": {
-
-      }
-    }
-  ]
-};
-
-parseStore(data);
-console.log("raw data",data);
-//console.log("Immu",)
-const store = createStore(reducer, Immutable.fromJS(data));
-//console.log("store",store,store.getState().get("sites"));
+const store = createStore(reducer, Immutable.fromJS(initialState), applyMiddleware(thunkMiddleware, loadConfig));
 module.exports = store;
