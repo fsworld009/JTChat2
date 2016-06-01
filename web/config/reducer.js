@@ -23,6 +23,7 @@ var reducers = {
 };
 
 var reducer = function(state, action){
+    console.log("reducer", state.toJS(), action);
     if(action.type === "@@redux/INIT"){
         //return state.merge(initialState);
         return state;

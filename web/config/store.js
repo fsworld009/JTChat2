@@ -29,32 +29,23 @@ var initialState=Immutable.fromJS({
     routing: {locationBeforeTransitions: null}
 });
 
-function loadConfig(store){
-    return function(next){
-        return function(action){
-            var state = store.getState();
-            if(!state.get("loading")){
-                var nextState = next({
-                    type: "LOAD_CONFIG",
-                    loading: "loading"
-                });
-
-                $.getJSON("/profiles/", function(data){
-                    parseStore(data);
-                    next({
-                        type: "LOAD_CONFIG",
-                        loading: "loaded",
-                        profiles: data
-                    });
-                });
-                return nextState;
-            }else{
-                //move to next middleware or reducer
-                return next(action);
-            }
-        };
+function loadConfig(){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_CONFIG",
+            loading: "loading"
+        });
+        $.getJSON("/profiles/", function(data){
+            parseStore(data);
+            dispatch({
+                type: "LOAD_CONFIG",
+                loading: "loaded",
+                profiles: data
+            });
+        });
     };
 }
 
-const store = createStore(reducer, Immutable.fromJS(initialState), applyMiddleware(thunkMiddleware, loadConfig));
+const store = createStore(reducer, Immutable.fromJS(initialState), applyMiddleware(thunkMiddleware));
+store.dispatch(loadConfig());
 module.exports = store;
