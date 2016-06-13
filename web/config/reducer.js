@@ -6,6 +6,21 @@ import {INIT}  from "redux";
 
 //console.log("out", initialState.get("locationBeforeTransitions"));
 
+
+function saveConfig(state){
+    var store = state.toJS();
+    delete store.routing;
+    delete store.loading;
+    _.forEach(store, function(value, key){
+        var originalKey = key.replace(/ById$/g, "");
+        if(originalKey !== key && store[originalKey]){
+            store[originalKey] = _.values(value);
+            delete store[key];
+        }
+    });
+        console.log("saveConfig3", store);
+}
+
 //id, hosts, ports
 var updateSite = function(state, action){
     var site = state.getIn(["sitesById",action.id]);
@@ -31,6 +46,7 @@ var reducer = function(state, action){
     }
     if(action.type === "SAVE_SITE"){
         state = updateSite(state, action);
+        saveConfig(state);
     }
     return state;
 };

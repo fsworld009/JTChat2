@@ -20,6 +20,11 @@ var config = {
               exclude: /(semantic.js)|(node_modules)/,
             },
             {
+              test: /\.js$/,
+              loader: 'webpack-module-hot-accept',
+              exclude: /(semantic.js)|(node_modules)/,
+            },
+            {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
                 exclude: /(semantic.js)|(node_modules)/,
