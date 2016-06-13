@@ -73,10 +73,10 @@ SemanticUI.Button = React.createClass({
       "pull-right": {"true":"right floated"}
     });
     if(this.props.route){
-      return (<Link {..._.extend({}, this.props, {className: className, to: this.props.route})}></Link>);
+      return (<Link {..._.extend({type: "button"}, this.props, {className: className, to: this.props.route})}></Link>);
     }else{
       return (
-        <button {..._.extend({}, this.props, {className: className})}></button>
+        <button {..._.extend({type: "button"}, this.props, {className: className})}></button>
       );
     }
   }

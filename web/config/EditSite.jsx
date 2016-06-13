@@ -13,10 +13,26 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return {};
+  return {
+    saveSite: function(params){
+      dispatch(_.extend({type: "SAVE_SITE"},params));
+    },
+  };
 }
 
 var EditSite = React.createClass({
+  save: function(){
+    var hosts = this.refs.hosts.val();
+    hosts = hosts? hosts.split("\n") : [];
+    var ports = this.refs.ports.val();
+    ports = ports? ports.split("\n") : [];
+    console.log(hosts);
+    this.props.saveSite({
+      id: this.props.params.siteId,
+      hosts: hosts,
+      ports: ports
+    });
+  },
   render: function(){
     //params: from react-router
     //sitesById: from redux (provided by EditSiteContainer)
@@ -30,16 +46,16 @@ var EditSite = React.createClass({
                 <div className="ui grid">
                   <div className="two column row">
                     <div className="column">
-                      <Textarea name="hosts" label="Hosts" rows="3" defaultValue={site.get("hosts").toArray().join("\n")}/>
+                      <Textarea ref="hosts" name="hosts" label="Hosts" rows="3" defaultValue={site.get("hosts").toArray().join("\n")}/>
                     </div>
                     <div className="column">
-                      <Textarea name="ports" label="Ports" rows="3" defaultValue={site.get("ports").toArray().join("\n")}/>
+                      <Textarea ref="ports" name="ports" label="Ports" rows="3" defaultValue={site.get("ports").toArray().join("\n")}/>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="extra">
-                <Button className="green" pull-right="true">Save</Button>
+                <Button className="green" pull-right="true" onClick={this.save}>Save</Button>
                 <Button className="" pull-right="true" route="/config/site/">Cancel</Button>
                 <br/><br/>
               </div>

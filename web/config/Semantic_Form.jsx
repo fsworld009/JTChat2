@@ -51,6 +51,11 @@ SemanticUI.TextInput = React.createClass({
 });
 
 SemanticUI.Textarea = React.createClass({
+  val: function(value){
+    var $this = util.getJqueryDom(this);
+    var $textarea = $this.find("textarea");
+    return typeof value == "undefined"? $textarea.val() : $textarea.val(value);
+  },
   render: function(){
     return (
       <SemanticUI.FormField label={this.props.label}>
