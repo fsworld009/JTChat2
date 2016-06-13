@@ -17,11 +17,18 @@ app.get("/config/*", function(req, res, next){
 });
 
 app.get("/profiles/", function(req, res, next){
+    var responseJson = {error: true};
     fs.readFileAsync(basePath + "/profiles/config.json","utf-8").then(function(data){
+        responseJson = data;
+        return Promise.resolve();
+    },function(err){
+        return fs.readFileAsync(basePath + "/profiles/default.json","utf-8");
+    }).then(function(data){
+        if(data){
+            responseJson = data;
+        }
         res.setHeader('Content-Type', 'application/json');
-        res.send(data);
-    }).error(function(err){
-        res.json({error: true});
+        res.send(responseJson);
     });
 });
 

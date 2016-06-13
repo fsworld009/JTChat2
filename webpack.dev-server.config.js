@@ -15,7 +15,7 @@ var config = {
     module: {
         loaders: [
             {
-              test: /\.(js|jsx)$/,
+              test: /\.jsx$/,
               loader: 'react-hot-loader',
               exclude: /(semantic.js)|(node_modules)/,
             },

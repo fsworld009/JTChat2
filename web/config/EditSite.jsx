@@ -5,6 +5,7 @@ import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
+import {saveConfig} from './ajax.js';
 
 function mapStateToProps(state){
   return {
@@ -28,6 +29,7 @@ var EditSite = React.createClass({
     hosts = hosts? hosts.split("\n") : [];
     var ports = this.refs.ports.val();
     ports = ports? ports.split("\n") : [];
+    ports = _.map(ports, Number);
     this.props.saveSite({
       id: this.props.params.siteId,
       hosts: hosts,

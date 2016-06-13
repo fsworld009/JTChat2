@@ -15,6 +15,7 @@ import { Provider, connect } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 const store = require("./store.js");
+console.log("index store",store)
 
 var Status = require("./Status.jsx");
 var Site= require("./Site.jsx");
@@ -23,6 +24,8 @@ var User = require("./User.jsx");
 var Theme = require("./Theme.jsx");
 var Profile = require("./Profile.jsx");
 var UrlGenerator = require("./UrlGenerator.jsx");
+
+import {saveConfig} from './ajax.js';
 
 
 
@@ -71,12 +74,16 @@ var MainMenu = React.createClass({
 
 var App = React.createClass({
   render: function(){
+    console.log("App render",this.props);
     var content;
     if(this.props.loading){
       content = (
-        <div><i className="fa fa-spin fa-spinner"></i>Loading...</div>
+        <div><i className="fa fa-spin fa-spinner"></i> Loading...</div>
       );
     }else{
+      if(this.props.saving){
+        this.props.saveConfig(this.props.state);
+      }
       content = this.props.children;
     }
 
@@ -98,13 +105,20 @@ var App = React.createClass({
 
 function mapStateToProps(state){
   var loading = state.get("loading") == "loading";
+  var saving = state.get("saving") == "saving";
   return {
-    loading: loading
+    loading: loading,
+    saving: saving,
+    state: state
   };
 }
 
 function mapDispatchToProps(dispatch){
-  return {};
+  return {
+    saveConfig: function(store){
+      dispatch(saveConfig(store));
+    }
+  };
 }
 
 var AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
