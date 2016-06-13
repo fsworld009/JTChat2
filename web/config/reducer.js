@@ -3,12 +3,15 @@ var actions = require('./actions.js');
 import {LOCATION_CHANGE}  from "react-router-redux";
 var Immutable = require('immutable');
 import {INIT}  from "redux";
+import {getId} from "./ajax.js";
 
 //id, hosts, ports
 var updateSite = function(state, action){
     var site = state.getIn(["sitesById",action.id]);
     site = site.set("hosts",Immutable.fromJS(action.hosts)),
+    site = site.set("hostsById",Immutable.fromJS(_.keyBy(action.hosts,getId)));
     site = site.set("ports",Immutable.fromJS(action.ports));
+    site = site.set("portsById",Immutable.fromJS(_.keyBy(action.ports,getId)));
     state = state.setIn(["sitesById",action.id], site);
     console.log("updateSite",site.toJS());
     console.log("state update",state.getIn(["sitesById",action.id]).toJS());
@@ -28,7 +31,7 @@ var reducer = function(state, action){
         return state.set("saving",action.saving);
     }
     if (action.type === LOCATION_CHANGE) {
-            return state.setIn(["routing", "locationBeforeTransitions"], action.payload);
+        return state.setIn(["routing", "locationBeforeTransitions"], action.payload);
     }
     if(action.type === "SAVE_SITE"){
         state = updateSite(state, action);

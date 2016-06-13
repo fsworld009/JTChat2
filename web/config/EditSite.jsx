@@ -42,7 +42,7 @@ var EditSite = React.createClass({
     var siteId = this.props.params.siteId;
     var site = this.props.sitesById.get(siteId);
     return (
-        <Segment title={"EditSite" + this.props.params.siteId}>
+        <Segment title={"Edit " + site.get("displayName")}>
           <Form>
             <div className="content">
               <div className="description">

@@ -21,6 +21,7 @@ function doSaveConfig(saveJson){
 function saveConfig(state){
     //console.log("store",store2);
     var saveJson = state.toJS();
+    console.log("saveJson",saveJson);
     delete saveJson.routing;
     delete saveJson.loading;
     delete saveJson.saving;
@@ -34,18 +35,26 @@ function saveConfig(state){
             method: "PUT",
             success: function(response){
                 console.log("success",response);
-                dispatch({type: "SAVE_CONFIG", saving: "success"})
+                dispatch({type: "SAVE_CONFIG", saving: "success"});
             },
             error: function(error){
                 console.log("error",error);
-                dispatch({type: "SAVE_CONFIG", saving: "failed"})
+                dispatch({type: "SAVE_CONFIG", saving: "failed"});
             }
         });
     };
 }
 
 
-function parseValue(value){
+function getId(value){
+    if(typeof value == "object" && value.id){
+        return "_" + value.id;
+    }else{
+        return "_" + value;
+    }
+}
+
+function getValue(value){
     if(typeof value == "object" && value.id){
         return "_" + value.id;
     }else{
@@ -56,8 +65,8 @@ function parseValue(value){
 function parseStore(store){
     _.forEach(store, function(value, key){
         if(value instanceof Array){
-            store[key + "ById"] = _.keyBy(value, parseValue);
-            store[key] = _.map(value, parseValue);
+            store[key + "ById"] = _.keyBy(value, getId);
+            store[key] = _.map(value, getValue);
             parseStore(store[key + "ById"]);
         }else if(typeof value == "object"){
             parseStore(value);
@@ -84,5 +93,6 @@ function loadConfig(){
 
 module.exports = {
     saveConfig: saveConfig,
-    loadConfig: loadConfig
+    loadConfig: loadConfig,
+    getId: getId
 };
