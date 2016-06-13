@@ -15,11 +15,6 @@ import { Provider, connect } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 const store = require("./store.js");
-const history = syncHistoryWithStore(browserHistory, store, {
-  selectLocationState: function(state){
-    return state.get("routing").toJS();
-  }
-});
 
 var Status = require("./Status.jsx");
 var Site= require("./Site.jsx");

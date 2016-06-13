@@ -32,7 +32,6 @@ var reducer = function(state, action){
     if(action.type === "SAVE_SITE"){
         state = updateSite(state, action);
     }
-    console.log("next state update",state.getIn(["sitesById",action.id]).toJS());
     return state;
 };
 

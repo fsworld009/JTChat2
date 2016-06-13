@@ -4,6 +4,7 @@ import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
 import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
+import { push } from 'react-router-redux';
 
 function mapStateToProps(state){
   return {
@@ -16,6 +17,7 @@ function mapDispatchToProps(dispatch){
   return {
     saveSite: function(params){
       dispatch(_.extend({type: "SAVE_SITE"},params));
+      dispatch(push("/config/site/"));
     },
   };
 }
@@ -26,7 +28,6 @@ var EditSite = React.createClass({
     hosts = hosts? hosts.split("\n") : [];
     var ports = this.refs.ports.val();
     ports = ports? ports.split("\n") : [];
-    console.log(hosts);
     this.props.saveSite({
       id: this.props.params.siteId,
       hosts: hosts,
