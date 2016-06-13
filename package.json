@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "bluebird": "^3.4.0",
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "immutable": "^3.7.6",
     "lodash": "^4.6.1",

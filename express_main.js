@@ -6,10 +6,13 @@ var basePath = path.resolve(__dirname);
 
 var Promise = require('bluebird');
 var fs = require('fs');
+var bodyParser = require("body-parser");
 Promise.promisifyAll(fs);
 
 
 var environment = process.env.NODE_ENV;
+
+app.use(bodyParser.json());
 
 app.get("/config/*", function(req, res, next){
     req.url = "/config/";
@@ -32,7 +35,12 @@ app.get("/profiles/", function(req, res, next){
     });
 });
 
-
+app.put("/profiles/", function(req, res){
+    fs.writeFileAsync(basePath + "/profiles/config.json", JSON.stringify(req.body, null, 2), "utf-8").then(function(error){
+        console.log("error",error);
+        res.send({success: true});
+    });
+});
 app.use('/', express.static(path.resolve(__dirname + '/web')));
 
 var webpack = require('webpack');

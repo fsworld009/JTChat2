@@ -29,13 +29,16 @@ function saveConfig(state){
         $.ajax({
             url: "/profiles/",
             dataType: "json",
+            contentType: "application/json",
             data: JSON.stringify(saveJson),
             method: "PUT",
             success: function(response){
                 console.log("success",response);
+                dispatch({type: "SAVE_CONFIG", saving: "success"})
             },
             error: function(error){
                 console.log("error",error);
+                dispatch({type: "SAVE_CONFIG", saving: "failed"})
             }
         });
     };

@@ -24,6 +24,9 @@ var reducer = function(state, action){
     if(action.type === "LOAD_CONFIG"){
         return state.merge(_.extend({"loading":action.loading}, action.profiles));
     }
+    if(action.type === "SAVE_CONFIG"){
+        return state.set("saving",action.saving);
+    }
     if (action.type === LOCATION_CHANGE) {
             return state.setIn(["routing", "locationBeforeTransitions"], action.payload);
     }
