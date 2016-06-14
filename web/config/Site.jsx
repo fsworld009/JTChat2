@@ -19,7 +19,7 @@ function mapDispatchToProps(dispatch){
 
 
 var Site = React.createClass({
-  
+
   render: function(){
     var site = this.props.site;
     // var hosts = site.get("hosts").toArray();

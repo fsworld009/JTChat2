@@ -21,7 +21,6 @@ function doSaveConfig(saveJson){
 function saveConfig(state){
     //console.log("store",store2);
     var saveJson = state.toJS();
-    console.log("saveJson",saveJson);
     delete saveJson.routing;
     delete saveJson.loading;
     delete saveJson.saving;
@@ -34,11 +33,9 @@ function saveConfig(state){
             data: JSON.stringify(saveJson),
             method: "PUT",
             success: function(response){
-                console.log("success",response);
                 dispatch({type: "SAVE_CONFIG", saving: "success"});
             },
             error: function(error){
-                console.log("error",error);
                 dispatch({type: "SAVE_CONFIG", saving: "failed"});
             }
         });

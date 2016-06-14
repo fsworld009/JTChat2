@@ -8,13 +8,13 @@ import {getId} from "./ajax.js";
 //id, hosts, ports
 var updateSite = function(state, action){
     var site = state.getIn(["sitesById",action.id]);
-    site = site.set("hosts",Immutable.fromJS(action.hosts)),
-    site = site.set("hostsById",Immutable.fromJS(_.keyBy(action.hosts,getId)));
-    site = site.set("ports",Immutable.fromJS(action.ports));
-    site = site.set("portsById",Immutable.fromJS(_.keyBy(action.ports,getId)));
+    site = site.withMutations(function(site){
+        site.set("hosts",Immutable.fromJS(action.hosts)),
+        site.set("hostsById",Immutable.fromJS(_.keyBy(action.hosts,getId)));
+        site.set("ports",Immutable.fromJS(action.ports));
+        site.set("portsById",Immutable.fromJS(_.keyBy(action.ports,getId)));
+    });
     state = state.setIn(["sitesById",action.id], site);
-    console.log("updateSite",site.toJS());
-    console.log("state update",state.getIn(["sitesById",action.id]).toJS());
     return state;
 };
 

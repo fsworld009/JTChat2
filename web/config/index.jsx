@@ -15,7 +15,6 @@ import { Provider, connect } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 const store = require("./store.js");
-console.log("index store",store)
 
 var Status = require("./Status.jsx");
 var Site= require("./Site.jsx");
@@ -74,7 +73,6 @@ var MainMenu = React.createClass({
 
 var App = React.createClass({
   render: function(){
-    console.log("App render",this.props);
     var content;
     if(this.props.loading){
       content = (
@@ -91,7 +89,7 @@ var App = React.createClass({
     return (
       <div>
         <div style={{margin:"5px"}}>
-          <h1 className="ui header">JTChat2 Configuration</h1>
+          <h1 className="ui header">JTChat2 Configuration2</h1>
         </div>
         <MainMenu currentPath={this.props.location.pathname}/>
         <div style={{margin:"5px","maxWidth":"800px"}}>
