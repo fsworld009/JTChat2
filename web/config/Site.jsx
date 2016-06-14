@@ -29,7 +29,7 @@ var Site = React.createClass({
     return (
       <div className="item">
         <div className="image">
-          <i className="fa fa-twitch fa-3x" style={{color: "blue"}}></i>
+          <img src={site.get("logo")} alt={site.get("displayName")} />
         </div>
         <div className="content">
           <div className="header">{site.get("displayName")}</div>
