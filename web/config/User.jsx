@@ -1,4 +1,5 @@
 var React = require("react");
+var DataTable = require("./DataTable.jsx");
 import { connect } from 'react-redux';
 
 function mapStateToProps(state){
@@ -14,7 +15,9 @@ function mapDispatchToProps(dispatch){
 var User = React.createClass({
   render: function(){
     console.log(this.props);
-    return (<div>User</div>);
+    return (
+      <DataTable></DataTable>
+    );
   }
 });
 

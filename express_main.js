@@ -37,7 +37,6 @@ app.get("/profiles/", function(req, res, next){
 
 app.put("/profiles/", function(req, res){
     fs.writeFileAsync(basePath + "/profiles/config.json", JSON.stringify(req.body, null, 2), "utf-8").then(function(error){
-        console.log("error",error);
         res.send({success: true});
     });
 });
