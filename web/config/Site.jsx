@@ -5,6 +5,7 @@ import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
 import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
+import {getId} from "./ajax.js";
 
 function mapStateToProps(state){
   return {
@@ -24,7 +25,8 @@ var Site = React.createClass({
     var site = this.props.site;
     // var hosts = site.get("hosts").toArray();
     // var hostList = [];
-
+    var siteId = site.get("id");
+    siteId = getId(siteId);
 
     return (
       <div className="item">
@@ -52,7 +54,7 @@ var Site = React.createClass({
             </div>
           </div>
           <div className="extra">
-            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/_"+site.get("id")}></IconButton>
+            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+siteId}></IconButton>
           </div>
         </div>
       </div>
