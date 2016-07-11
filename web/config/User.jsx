@@ -45,9 +45,9 @@ var User = React.createClass({
       data: users,
       columns: [
         {title: "Site", data: "siteId", render: this.getSiteFromSiteId},
-        {title: "URL ID", data: "urlId"},
         {title: "Username", data: "username"},
         {title: "Display Name", data: "displayName"},
+        {title: "URL ID", data: "urlId"},
         {title: " ", data: "id", render: this.renderActionButtons}
       ],
       columnDefs: [
@@ -58,7 +58,10 @@ var User = React.createClass({
       order: []
     };
     return (
-      <DataTable options={options}></DataTable>
+      <div style={{position:"relative"}}>
+        <DataTable options={options}></DataTable>
+        <div style={{position: "absolute", left: "1em", top: "1em"}}><IconButton iconClass="fa fa-plus" className="green" popup-content="New" route={"/config/user/new/"}></IconButton></div>
+      </div>
     );
   }
 });
