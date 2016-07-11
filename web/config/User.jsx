@@ -4,7 +4,7 @@ var _ = require("lodash");
 var DataTable = require("./DataTable.jsx");
 import { connect } from 'react-redux';
 import { getId } from './ajax.js';
-import {IconButton} from './Semantic.jsx';
+import {Segment, IconButton} from './Semantic.jsx';
 
 function mapStateToProps(state){
   return {
@@ -58,10 +58,10 @@ var User = React.createClass({
       order: []
     };
     return (
-      <div style={{position:"relative"}}>
-        <DataTable options={options}></DataTable>
+      <Segment style={{position:"relative"}} title="User">
+        <DataTable className="selectable" options={options}></DataTable>
         <div style={{position: "absolute", left: "1em", top: "1em"}}><IconButton iconClass="fa fa-plus" className="green" popup-content="New" route={"/config/user/new/"}></IconButton></div>
-      </div>
+      </Segment>
     );
   }
 });
