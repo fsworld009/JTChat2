@@ -20,6 +20,7 @@ var Status = require("./Status.jsx");
 var Site= require("./Site.jsx");
 var EditSite = require("./EditSite.jsx");
 var User = require("./User.jsx");
+var EditUser = require("./EditUser.jsx");
 var Theme = require("./Theme.jsx");
 var Profile = require("./Profile.jsx");
 var UrlGenerator = require("./UrlGenerator.jsx");
@@ -128,6 +129,8 @@ ReactDOM.render(
         <Route path="site" component={Site} />
         <Route path="site/edit/:siteId" component={EditSite}/>
         <Route path="user" component={User}/>
+        <Route path="user/new/" component={EditUser}/>
+        <Route path="user/edit/:userId" component={EditUser}/>
         <Route path="theme" component={Theme}/>
         <Route path="profile" component={Profile}/>
         <Route path="url" component={UrlGenerator}/>

@@ -43,7 +43,7 @@ SemanticUI.TextInput = React.createClass({
         <div className={divClassName}>
           {this.props.required==="true"? <i className="fa fa-asterisk red"></i> : null}
           {this.props.iconClass? <i className={util.mergeClassName(this, ["icon", this.props.iconClass])}></i> : null}
-          <input {..._.extend({}, this.props, {type: "text", iconClass: undefined, required: undefined, label: undefined})}/>
+          <input {..._.extend({}, this.props, {type: (this.props.password == "true"?"password":"text"), iconClass: undefined, required: undefined, label: undefined})}/>
         </div>
       </SemanticUI.FormField>
     );
@@ -166,6 +166,45 @@ SemanticUI.TextInputList = React.createClass({
         </div>
       );
 
+  }
+});
+
+SemanticUI.Dropdown = React.createClass({
+  propTypes: {
+    "label" : React.PropTypes.string.isRequired,
+    "name" : React.PropTypes.string.isRequired
+  },
+  componentDidMount: function(){
+    var $this = util.getJqueryDom(this);
+    var $selection = $this.find(".selection");
+    $selection.dropdown();
+  },
+
+  componentDidUpdate: function(){
+    var $this = util.getJqueryDom(this);
+    var $selection = $this.find(".selection");
+    $selection.dropdown('refresh');
+  },
+
+  componentWillUnmount: function(){
+    var $this = util.getJqueryDom(this);
+    var $selection = $this.find(".selection");
+    $selection.dropdown('destroy');
+  },
+  render: function(){
+    return (
+      <SemanticUI.FormField label={this.props.label}>
+        <div className="ui multiple search selection dropdown">
+          <input name={this.props.name} type="hidden"/>
+          <i className="dropdown icon fa fa-caret-down"></i>
+          <div className="default text">Gender</div>
+          <div className="menu">
+            <div className="item" data-value="1">Male</div>
+            <div className="item" data-value="0">Female</div>
+          </div>
+        </div>
+      </SemanticUI.FormField>
+    );
   }
 });
 
