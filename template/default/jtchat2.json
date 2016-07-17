@@ -14,6 +14,7 @@
     {"name": "useUserCustomColor", "type": "toggle", "default": true},
     {"name": "clearBannedMsg", "type": "toggle", "default": true},
     {"name": "allowClearChat", "type": "toggle", "default": true},
+    {"name": "textareaDummy", "type": "textarea", "default": "Textarea\nsecond line"},
     {"name": "textDummy", "type": "text", "default": "Text"},
     {"name": "optionDummy", "type": "select",
       "values":["option1","option2","option3"], "default": "option2" 
@@ -23,17 +24,40 @@
     }
 
   ],
-  "optionsDisplayName": {
+  "language": {
     "en" : {
-      "hasChatInput": "Enable Chat Input",
-      "bgColor": "Background Color",
-      "textColor": "Text Color",
-      "userColor": "User Color",
-      "sysColor": "System Message Color",
-      "useUserCustomColor": "Use Users' nickname color if possible",
-      "clearBannedMsg": "Clear Banned Users' messages",
-      "allowClearChat": "Clear Chat when a clear command is received",
-      "optionDummy":  "dummy"
+      "template": {
+        "displayName": "Default Template",
+        "description" : "Description"
+      },
+      "options" : {
+        "hasChatInput": {"label": "Enable Chat Input", "tip": "Input box"},
+        "bgColor": {"label": "Background Color", "tip": ""},
+        "textColor": {"label": "Text Color", "tip": ""},
+        "userColor": {"label": "User Color", "tip": ""},
+        "sysColor": {"label": "System Message Color", "tip": ""},
+        "useUserCustomColor": {"label": "Use Users' nickname color if possible", "tip": ""},
+        "clearBannedMsg": {"label": "Clear Banned Users' messages", "tip": ""},
+        "allowClearChat": {"label": "Clear Chat when a clear command is received", "tip": ""},
+        "textDummy": {"label": "(Text)", "tip": "placeholder"},
+        "textareaDummy": {"label": "(Text Area)", "tip": "tarea placeholder"},
+        "optionDummy":  {"label": "dummy", "options": 
+          {
+            "option1": "Option 1",
+            "option2": "Option 2",
+            "option3": "Option 3"
+          }
+        },
+        "multiOptionDummy":  {"label": "dummy", "options": 
+          {
+            "option1": "Option 1",
+            "option2": "Option 2",
+            "option3": "Option 3",
+            "option4": "Option 4",
+            "option5": "Option 5"
+          }
+        }
+      }
     }
   }
 }
