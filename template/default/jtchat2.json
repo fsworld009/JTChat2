@@ -1,0 +1,39 @@
+{
+  "version": "0.0.1",
+  "displayName": {
+    "en": "Default Template",
+    "zh-TW": ""
+  },
+  "options": [
+    {"name": "maxNumOfLines", "type": "number", "default": 10},
+    {"name": "hasChatInput", "type": "toggle", "default": false},
+    {"name": "bgColor", "type": "color", "default":"black"},
+    {"name": "textColor", "type" : "color", "default": "white"},
+    {"name": "userColor", "type": "color", "default": "yellow"},
+    {"name": "sysColor", "type": "color", "default": "#ffcccc"},
+    {"name": "useUserCustomColor", "type": "toggle", "default": true},
+    {"name": "clearBannedMsg", "type": "toggle", "default": true},
+    {"name": "allowClearChat", "type": "toggle", "default": true},
+    {"name": "textDummy", "type": "text", "default": "Text"},
+    {"name": "optionDummy", "type": "select",
+      "values":["option1","option2","option3"], "default": "option2" 
+    },
+    {"name": "multiOptionDummy", "type": "multiselect",
+      "values":["option1","option2","option3","option4","option5"], "default": ["option2" ,"option5"]
+    }
+
+  ],
+  "optionsDisplayName": {
+    "en" : {
+      "hasChatInput": "Enable Chat Input",
+      "bgColor": "Background Color",
+      "textColor": "Text Color",
+      "userColor": "User Color",
+      "sysColor": "System Message Color",
+      "useUserCustomColor": "Use Users' nickname color if possible",
+      "clearBannedMsg": "Clear Banned Users' messages",
+      "allowClearChat": "Clear Chat when a clear command is received",
+      "optionDummy":  "dummy"
+    }
+  }
+}
