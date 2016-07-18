@@ -1,7 +1,6 @@
-
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
+import {Segment, SegmentItem, Items, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
 import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
@@ -29,35 +28,26 @@ var Site = React.createClass({
     siteId = getId(siteId);
 
     return (
-      <div className="item">
-        <div className="image">
-          <img src={site.get("logo")} alt={site.get("displayName")} />
-        </div>
-        <div className="content">
-          <div className="header">{site.get("displayName")}</div>
-          <div className="description">
-            <div className="ui grid">
-              <div className="three column row">
-                <div className="column">
-                  URL ID<br/><br/>
-                  {site.get("urlId")}
-                </div>
-                <div className="column">
-                  Hosts
-                  <BulletList items={site.get("hosts").toArray()} />
-                </div>
-                <div className="column">
-                  Ports
-                  <BulletList items={site.get("ports").toArray()} />
-                </div>
+      <SegmentItem title={site.get("displayName")}>
+          <img match="image" src={site.get("logo")} alt={site.get("displayName")} />
+          <div match="content" className="ui grid">
+            <div className="three column row">
+              <div className="column">
+                URL ID<br/><br/>
+                {site.get("urlId")}
+              </div>
+              <div className="column">
+                Hosts
+                <BulletList items={site.get("hosts").toArray()} />
+              </div>
+              <div className="column">
+                Ports
+                <BulletList items={site.get("ports").toArray()} />
               </div>
             </div>
           </div>
-          <div className="extra">
-            <IconButton iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+siteId}></IconButton>
-          </div>
-        </div>
-      </div>
+          <IconButton match="extra" iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+siteId}></IconButton>
+      </SegmentItem>
     );
   }
 });
@@ -69,14 +59,13 @@ var Sites = React.createClass({
     var view = this;
     return (
       <Segment title="Site">
-        <div className="ui divided items">
+        <Items items=
           {
-            this.props.sites.toArray().map(function(id){
+            util.listToComponents(this.props.sites.toArray(), function(id, key){
               var site = siteMap.get(id);
-              return (<Site key={id} site={site}/>);
+              return (<Site key={key} site={site}/>);
             })
-          }
-        </div>
+          } />
       </Segment>
     );
   }

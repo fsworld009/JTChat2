@@ -21,6 +21,48 @@ SemanticUI.Segment = React.createClass({
   }
 });
 
+SemanticUI.SegmentItem = React.createClass({
+  render: function(){
+    var childrenMatchMap = util.getChildrenMatchMap(this);
+    
+    var image = childrenMatchMap.image;
+    var content = childrenMatchMap.content;
+    var extra = childrenMatchMap.extra;
+    console.log(image,content,extra);
+
+    return (
+      <div className="item">
+        { image ? (
+        <div className="image">
+          { image}
+        </div>
+        ) : null }
+        <div className="content">
+          <div className="header">{this.props.title}</div>
+          <div className="description">
+            { content }
+          </div>
+          { extra? (
+          <div className="extra">
+            { extra }
+            </div>
+          ) : null }
+        </div>
+      </div>
+    );
+  }
+});
+
+SemanticUI.Items = React.createClass({
+    render: function(){
+      return (
+        <div className="ui divided items">
+            { this.props.items || []}
+        </div>
+      );
+    }
+});
+
 SemanticUI.IconButton = React.createClass({
   propTypes: {
     "pull-right": React.PropTypes.string,

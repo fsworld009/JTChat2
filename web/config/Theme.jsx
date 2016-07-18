@@ -2,6 +2,7 @@
 var React = require("react");
 import { connect } from 'react-redux';
 import {loadThemes} from "./ajax.js";
+import {Segment, IconButton} from './Semantic.jsx';
 
 function mapStateToProps(state){
   var loadStatus = state.getIn(["load,themes"]);
@@ -33,7 +34,11 @@ var Theme = React.createClass({
   },*/
 
   render: function(){
-        return (<div>Theme</div>);
+    return (
+      <Segment title="Themes">
+     aaaAAA
+      </Segment>
+    );
   }
 });
 

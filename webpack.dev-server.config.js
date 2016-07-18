@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-
 var config = {
     entry: {
         config: ["webpack-hot-middleware/client",/*'webpack/hot/dev-server'*/, path.resolve(__dirname, 'web/config/index.jsx')]
