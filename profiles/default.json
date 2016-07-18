@@ -30,16 +30,6 @@
     }
   ],
 
-  "themes": [
-    {
-      "id": 1,
-      "urlId": "default",
-      "displayName" :"Theme 1",
-      "userTheme": false,
-      "path" : "/"
-    }
-  ],
-
   "profiles": [
     {
       "id" : 1,
