@@ -35,11 +35,21 @@ var Theme = React.createClass({
       <SegmentItem title={language.getIn(["theme","displayName"]) + " (" + theme.get("version") + ")"}>
           <div match="content" className="ui grid">
             <div className="row">
-              <div className="four wide column">
+              <div className="twelve column">
                 {language.getIn(["theme","description"])}
               </div>
-              <div className="twelve wide column">
-                Options
+            </div>
+            <div className="row">
+              <div className="twelve column">
+                <h3 className="ui header">Options</h3>
+              </div>
+            </div>
+            <div className="two column row">
+              <div className="column">
+                Option A
+              </div>
+              <div className="column">
+                Options B
               </div>
             </div>
           </div>
