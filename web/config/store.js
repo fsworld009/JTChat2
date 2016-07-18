@@ -6,12 +6,16 @@ import {browserHistory} from 'react-router';
 import { syncHistoryWithStore, routerMiddleware, push } from 'react-router-redux';
 var Immutable = require('immutable');
 var $ = require('jquery');
-import {loadConfig, saveConfig} from "./ajax.js";
+import {loadConfig, loadThemes} from "./ajax.js";
 
 
 var initialState=Immutable.fromJS({
     routing: {locationBeforeTransitions: null},
-    loading: "loading"
+    load: {
+        config: "init",
+        themes: "init",
+        sites: "init"
+    }
 });
 
 
@@ -22,4 +26,5 @@ const history = syncHistoryWithStore(browserHistory, store, {
   }
 });
 store.dispatch(loadConfig());
+store.dispatch(loadThemes());
 module.exports = store;

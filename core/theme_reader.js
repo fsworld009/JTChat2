@@ -3,29 +3,29 @@ var fs = require("fs");
 var path = require('path');
 var _ = require('lodash');
 
-var templateBasePath = path.resolve(__dirname, "../template");
+var themeBasePath = path.resolve(__dirname, "../themes");
 Promise.promisifyAll(fs);
 
-var templateJsonFileObjectList;
+var themeJsonFileObjectList;
 
 function refreshTemplateList(){
-    var templateJsonFileList=[];
-    templateJsonFileObjectList=[];
-    return fs.readdirAsync(templateBasePath).then(function(files){
+    var themeJsonFileList=[];
+    themeJsonFileObjectList=[];
+    return fs.readdirAsync(themeBasePath).then(function(files){
         _.each(files, function(file){
-            var filepath = path.resolve(templateBasePath, file);
+            var filepath = path.resolve(themeBasePath, file);
             var stat = fs.statSync(filepath);
             if(stat.isDirectory()){
                 var filenames = fs.readdirSync(filepath);
                 if(_.includes(filenames, "jtchat2.json")){
                     //console.log(filepath);
-                    templateJsonFileList.push(path.resolve(filepath, "jtchat2.json"));
+                    themeJsonFileList.push(path.resolve(filepath, "jtchat2.json"));
                 }
             }
         });
-        return Promise.all (_.map(templateJsonFileList, function(jsonPath){
+        return Promise.all (_.map(themeJsonFileList, function(jsonPath){
                 return fs.readFileAsync(jsonPath,"utf-8").then(function(json){
-                    templateJsonFileObjectList.push(JSON.parse(json));
+                    themeJsonFileObjectList.push(JSON.parse(json));
                 });
             })
         );
@@ -33,7 +33,7 @@ function refreshTemplateList(){
 }
 
 function getTemplateList(){
-return templateJsonFileObjectList;
+return themeJsonFileObjectList;
 }
 
 module.exports = {

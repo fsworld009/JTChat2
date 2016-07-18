@@ -24,18 +24,29 @@ var reducer = function(state, action){
         //return state.merge(initialState);
         return state;
     }
+    if (action.type === LOCATION_CHANGE) {
+        return state.setIn(["routing", "locationBeforeTransitions"], action.payload);
+    }
     if(action.type === "LOAD_CONFIG"){
-        return state.merge(_.extend({"loading":action.loading}, action.profiles));
+        state = state.withMutations(function(state){
+            state.setIn(["load","config"], action.loading);
+            state.merge(action.profiles);
+        });
+        return state;
     }
     if(action.type === "SAVE_CONFIG"){
         return state.set("saving",action.saving);
     }
-    if (action.type === LOCATION_CHANGE) {
-        return state.setIn(["routing", "locationBeforeTransitions"], action.payload);
-    }
     if(action.type === "SAVE_SITE"){
         state = updateSite(state, action);
         state = state.set("saving","saving");
+    }
+    if(action.type === "LOAD_THEMES"){
+        state = state.withMutations(function(state){
+            state.setIn(["load","themes"], action.themes);
+            state.set("themes", action.themes);
+            state.set("themesByName", _.keyBy(action.themes, "name"));
+        });
     }
     return state;
 };

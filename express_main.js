@@ -9,7 +9,7 @@ var fs = require('fs');
 var bodyParser = require("body-parser");
 Promise.promisifyAll(fs);
 
-var template_reader = require(path.resolve(basePath, "./core/template_reader.js"));
+var theme_reader = require(path.resolve(basePath, "./core/theme_reader.js"));
 
 var environment = process.env.NODE_ENV;
 
@@ -37,10 +37,10 @@ app.get("/profiles/", function(req, res, next){
 });
 
 
-app.get("/templates/", function(req, res, next){
-    template_reader.refresh().then(function(){
+app.get("/themes/", function(req, res, next){
+    theme_reader.refresh().then(function(){
         res.setHeader('Content-Type', 'application/json');
-        res.send(template_reader.get());
+        res.send(theme_reader.get());
     });
 });
 

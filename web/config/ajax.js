@@ -24,6 +24,9 @@ function saveConfig(state){
     delete saveJson.routing;
     delete saveJson.loading;
     delete saveJson.saving;
+    delete json.loadingTheme;
+    delete json.themes;
+    delete json.themesByName;
     doSaveConfig(saveJson);
     return function(dispatch){
         $.ajax({
@@ -88,8 +91,25 @@ function loadConfig(){
     };
 }
 
+function loadThemes(){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_THEMES",
+            loadingThemes: "loading"
+        });
+        $.getJSON("/themes/", function(data){
+            dispatch({
+                type: "LOAD_THEMES",
+                loadingThemes: "loaded",
+                themes: data
+            });
+        });
+    };
+}   
+
 module.exports = {
     saveConfig: saveConfig,
     loadConfig: loadConfig,
+    loadThemes: loadThemes,
     getId: getId
 };
