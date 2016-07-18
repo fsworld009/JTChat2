@@ -44,8 +44,7 @@ var reducer = function(state, action){
     if(action.type === "LOAD_THEMES"){
         state = state.withMutations(function(state){
             state.setIn(["load","themes"], action.themes);
-            state.set("themes", action.themes);
-            state.set("themesByName", _.keyBy(action.themes, "name"));
+            state.merge({themes: action.themes, themesById: action.themesById});
         });
     }
     return state;

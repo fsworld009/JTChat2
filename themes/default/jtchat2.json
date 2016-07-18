@@ -1,5 +1,5 @@
 {
-  "name" : "default",
+  "id" : "default",
   "version": "0.0.1",
   "options": [
     {"name": "maxNumOfLines", "type": "number", "default": 10},

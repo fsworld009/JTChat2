@@ -10,7 +10,7 @@ function mapStateToProps(state){
   return {
     loadStatus: loadStatus,
     themes: state.get("themes"),
-    thenesByName: state.get("themesByName")
+    themesById: state.get("themesById")
   };
 }
 
@@ -33,7 +33,6 @@ var Theme = React.createClass({
   },*/
 
   render: function(){
-
         return (<div>Theme</div>);
   }
 });

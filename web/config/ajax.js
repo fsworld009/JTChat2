@@ -22,11 +22,8 @@ function saveConfig(state){
     //console.log("store",store2);
     var saveJson = state.toJS();
     delete saveJson.routing;
-    delete saveJson.loading;
+    delete saveJson.load;
     delete saveJson.saving;
-    delete json.loadingTheme;
-    delete json.themes;
-    delete json.themesByName;
     doSaveConfig(saveJson);
     return function(dispatch){
         $.ajax({
@@ -101,7 +98,8 @@ function loadThemes(){
             dispatch({
                 type: "LOAD_THEMES",
                 loadingThemes: "loaded",
-                themes: data
+                themes: data,
+                themesById: _.keyBy(data, "id")
             });
         });
     };
