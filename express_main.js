@@ -9,6 +9,7 @@ var fs = require('fs');
 var bodyParser = require("body-parser");
 Promise.promisifyAll(fs);
 
+var template_reader = require(path.resolve(basePath, "./core/template_reader.js"));
 
 var environment = process.env.NODE_ENV;
 
@@ -32,6 +33,14 @@ app.get("/profiles/", function(req, res, next){
         }
         res.setHeader('Content-Type', 'application/json');
         res.send(responseJson);
+    });
+});
+
+
+app.get("/templates/", function(req, res, next){
+    template_reader.refresh().then(function(){
+        res.setHeader('Content-Type', 'application/json');
+        res.send(template_reader.get());
     });
 });
 

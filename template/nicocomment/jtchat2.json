@@ -1,5 +1,5 @@
 {
-  "name" : "default",
+  "name" : "nicocomment",
   "version": "0.0.1",
   "options": [
     {"name": "maxNumOfLines", "type": "number", "default": 10},
@@ -24,11 +24,10 @@
   "language": {
     "en" : {
       "template": {
-        "displayName": "Default Template",
-        "description" : "Description"
+        "displayName": "Niconico Comment",
+        "description" : "Niconico style comment screen"
       },
       "options" : {
-        "maxNumOfLines" : {"label": "Max number of messages", "tip" : "Max number of messages"},
         "hasChatInput": {"label": "Enable Chat Input", "tip": "Input box"},
         "bgColor": {"label": "Background Color", "tip": ""},
         "textColor": {"label": "Text Color", "tip": ""},
