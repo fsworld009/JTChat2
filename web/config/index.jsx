@@ -103,8 +103,13 @@ var App = React.createClass({
 });
 
 function mapStateToProps(state){
-  var loading = state.getIn(["load","config"]) == "loading";
+  var loadingStatus = state.get("load").toObject();
+  var loading = false;
+  _.each(loadingStatus, function(status){
+    loading = loading || (status === "loading");
+  });
   var saving = state.get("saving") == "saving";
+  console.log("loading", loading, loadingStatus);
   return {
     loading: loading,
     saving: saving,

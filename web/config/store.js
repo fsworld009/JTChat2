@@ -14,7 +14,7 @@ var initialState=Immutable.fromJS({
     load: {
         config: "init",
         themes: "init",
-        sites: "init"
+        sites: "loaded"
     }
 });
 

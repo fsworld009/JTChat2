@@ -98,7 +98,7 @@ function loadThemes(){
             dispatch({
                 type: "LOAD_THEMES",
                 loadingThemes: "loaded",
-                themes: data,
+                themes: _.map(data, "id"),
                 themesById: _.keyBy(data, "id")
             });
         });

@@ -32,9 +32,16 @@ util.getJqueryDom = function(ReactComponent){
 };
 
 util.getChildrenMatchMap = function(ReactComponent){
-    var children = ReactComponent.props.children || [];
+    var children = [];
+    if(!(ReactComponent.props.children instanceof Array)){
+        children = [ReactComponent.props.children];
+    }else{
+        children = ReactComponent.props.children;
+    }
+    
+    children = children || [];
     return _.keyBy(children, function(component){
-        return component.props.match;
+        return component.props? component.props.match : undefined;
     });
 }
 

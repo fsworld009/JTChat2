@@ -23,7 +23,7 @@
   ],
   "language": {
     "en" : {
-      "template": {
+      "theme": {
         "displayName": "Default Template",
         "description" : "Description"
       },

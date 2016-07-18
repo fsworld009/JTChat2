@@ -23,7 +23,7 @@
   ],
   "language": {
     "en" : {
-      "template": {
+      "theme": {
         "displayName": "Niconico Comment",
         "description" : "Niconico style comment screen"
       },
