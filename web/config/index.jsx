@@ -23,6 +23,7 @@ var User = require("./User.jsx");
 var EditUser = require("./EditUser.jsx");
 var Theme = require("./Theme.jsx");
 var Profile = require("./Profile.jsx");
+var EditProfile = require("./EditProfile.jsx");
 var UrlGenerator = require("./UrlGenerator.jsx");
 
 import {saveConfig} from './ajax.js';
@@ -138,6 +139,8 @@ ReactDOM.render(
         <Route path="user/edit/:userId" component={EditUser}/>
         <Route path="theme" component={Theme}/>
         <Route path="profile" component={Profile}/>
+        <Route path="profile/new/" component={EditProfile}/>
+        <Route path="profile/edit/:profileId" component={EditProfile}/>
         <Route path="url" component={UrlGenerator}/>
         <Route path="*" component={Status}/>
         <IndexRoute component={Status} />

@@ -1,6 +1,5 @@
 var React = require("react");
 import { connect } from 'react-redux';
-import {loadThemes} from "./ajax.js";
 import {Segment, SegmentItem, Items, IconButton} from './Semantic.jsx';
 var _ = require("lodash");
 var util = require("./util.js");
@@ -17,11 +16,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return {
-    loadThemes: function(){
-      dispatch(loadThemes());
-    }
-  };
+  return {};
 }
 
 var Theme = React.createClass({
@@ -37,19 +32,6 @@ var Theme = React.createClass({
             <div className="row">
               <div className="twelve column">
                 {language.getIn(["theme","description"])}
-              </div>
-            </div>
-            <div className="row">
-              <div className="twelve column">
-                <h3 className="ui header">Options</h3>
-              </div>
-            </div>
-            <div className="two column row">
-              <div className="column">
-                Option A
-              </div>
-              <div className="column">
-                Options B
               </div>
             </div>
           </div>

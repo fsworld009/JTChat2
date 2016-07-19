@@ -31,13 +31,5 @@
   ],
 
   "profiles": [
-    {
-      "id" : 1,
-      "urlId": "profile1",
-      "themeId": 1,
-      "options": {
-
-      }
-    }
   ]
 }
