@@ -10,6 +10,8 @@ import {saveConfig} from './ajax.js';
 function mapStateToProps(state){
   return {
     sitesById: state.get("sitesById"),
+    themes: state.get("themes"),
+    themesById: state.get("themesById"),
     profilesById: state.get("profilesById"),
     profiles: state.get("profiles")
   };
@@ -25,6 +27,11 @@ function mapDispatchToProps(dispatch){
 }
 
 var EditProfile = React.createClass({
+  getInitialState: function(){
+    return {
+      themeId: null
+    };
+  },
   save: function(){
     var hosts = this.refs.hosts.val();
     hosts = hosts? hosts.split("\n") : [];
@@ -37,12 +44,22 @@ var EditProfile = React.createClass({
       ports: ports
     });
   },
+  onChangeTheme: function(value, label, $dropdown){
+    console.log(this);
+    this.setState({themeId : value});
+  },
   render: function(){
     //params: from react-router
     //sitesById: from redux (provided by EditSiteContainer)
+    var currentLanguage = "en";
     var profileId = this.props.params.profileId;
     var profile;
     var renderProperties;
+    var themesById = this.props.themesById;
+    var themeOptions = _.map(this.props.themes.toArray(), function(themeId){
+      var theme = themesById.get(themeId);
+      return {value: themeId, label: theme.getIn(["language",currentLanguage,"theme","displayName"])};
+    });
     if(typeof profileId == "undefined"){
       //new
       renderProperties = {
@@ -56,41 +73,12 @@ var EditProfile = React.createClass({
       _.extend(renderProperties, profile.toObject());
     
     }
-    console.log(renderProperties);
+    console.log("Current state", this.state);
     return (
         <Segment title={renderProperties.title + " Profile"}>
           <Form>
-            <div className="content">
-              <div className="description">
-                <div className="ui grid">
-                  <div className="two column row">
-                    <div className="column">
-                      <Dropdown label="Site" name="site"/>
-                    </div>
-                    <div className="column">
-                      <TextInput name="displayName" label="Display Name" defaultValue={renderProperties.displayName}/>
-                    </div>
-                  </div>
-                  <div className="two column row">
-                    <div className="column">
-                      <TextInput name="username" label="Username" defaultValue={renderProperties.username}/>
-                    </div>
-                    <div className="column">
-                      <TextInput name="password" label="Password" password="true"/>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="ui red message">
-                <p>Password will be saved as plain text file</p>
-              </div>
-              <div className="extra">
-                <br/><br/>
-                <Button className="green" pull-right="true" onClick={this.save}>Save</Button>
-                <Button className="" pull-right="true" route="/config/profile/">Cancel</Button>
-                <br/><br/>
-              </div>
-            </div>
+            <Dropdown name="themeId" label="Select Theme" placeholder="Select Theme" options={themeOptions} onChange={this.onChangeTheme}>
+            </Dropdown>
           </Form>
         </Segment>
       );

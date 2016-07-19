@@ -48,7 +48,7 @@ var MainMenu = React.createClass({
       return $1;
     });
 
-    var inEdit = (this.props.currentPath || "").indexOf("/edit/") > -1;
+    var inEdit = (this.props.currentPath || "").search(/\/(edit|new)\//) > -1;
 
     var currentMenuItem = _.find(menuItems, function(menuItem){
       return menuItem.path == currentPath;

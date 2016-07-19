@@ -172,12 +172,22 @@ SemanticUI.TextInputList = React.createClass({
 SemanticUI.Dropdown = React.createClass({
   propTypes: {
     "label" : React.PropTypes.string.isRequired,
-    "name" : React.PropTypes.string.isRequired
+    "name" : React.PropTypes.string.isRequired,
+    "placeholder" : React.PropTypes.string,
+    "defaultValue": React.PropTypes.string,
+    "options": React.PropTypes.array,
+    "onChange" : React.PropTypes.func
   },
+
+
   componentDidMount: function(){
     var $this = util.getJqueryDom(this);
     var $selection = $this.find(".selection");
-    $selection.dropdown();
+    var options = {};
+    if(this.props.onChange){
+      options.onChange = this.props.onChange;
+    }
+    $selection.dropdown(options);
   },
 
   componentDidUpdate: function(){
@@ -194,13 +204,18 @@ SemanticUI.Dropdown = React.createClass({
   render: function(){
     return (
       <SemanticUI.FormField label={this.props.label}>
-        <div className="ui multiple search selection dropdown">
-          <input name={this.props.name} type="hidden"/>
+        <div className="ui search selection dropdown">
+          <input name={this.props.name} defaultValue={this.props.defaultValue} type="hidden"/>
           <i className="dropdown icon fa fa-caret-down"></i>
-          <div className="default text">Gender</div>
+          <div className="default text">{this.props.placeholder}</div>
           <div className="menu">
-            <div className="item" data-value="1">Male</div>
-            <div className="item" data-value="0">Female</div>
+            {
+              util.listToComponents(this.props.options || [], function(option, key){
+                return (
+                  <div key={key} className="item" data-value={option.value}>{option.label}</div>
+                );
+              })
+            }
           </div>
         </div>
       </SemanticUI.FormField>

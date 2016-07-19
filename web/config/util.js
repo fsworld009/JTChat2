@@ -43,7 +43,7 @@ util.getChildrenMatchMap = function(ReactComponent){
     return _.keyBy(children, function(component){
         return component.props? component.props.match : undefined;
     });
-}
+};
 
 /*util.setRef = function(refName){
     console.log(refName, "called");
@@ -74,7 +74,7 @@ util.listToComponents = function(list, renderMethod){
             return component;
         });
     }
-}
+};
 
 
 module.exports = util;
