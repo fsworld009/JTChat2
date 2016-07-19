@@ -77,9 +77,9 @@ var EditProfile = React.createClass({
     return (
         <Segment title={renderProperties.title + " Profile"}>
           <Form>
-            <Dropdown name="themeId" label="Select Theme" placeholder="Select Theme" options={themeOptions} onChange={this.onChangeTheme}>
+            <Dropdown name="themeId" label="Select Theme" placeholder="Select Theme" options={themeOptions} onChange={this.onChangeTheme} defaultValue="default">
             </Dropdown>
-            <Toggle name="toggle" label="Toggle" placeholder="Placeholder"></Toggle>
+            <Toggle name="toggle" label="Toggle" placeholder="Placeholder" defaultChecked="checked"></Toggle>
           </Form>
         </Segment>
       );

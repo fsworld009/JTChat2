@@ -230,7 +230,7 @@ SemanticUI.Toggle = React.createClass({
     "label" : React.PropTypes.string.isRequired,
     "name" : React.PropTypes.string.isRequired,
     "placeholder" : React.PropTypes.string,
-    "defaultValue": React.PropTypes.string,
+    "defaultChecked": React.PropTypes.string,
     "onChange" : React.PropTypes.func
   },
 
@@ -238,7 +238,6 @@ SemanticUI.Toggle = React.createClass({
     var $this = util.getJqueryDom(this);
     var $checkbox = $this.find(".checkbox");
     var options = {};
-    console.log(this, $checkbox);
     if(this.props.onChange){
       options.onChange = this.props.onChange;
     }
@@ -260,7 +259,7 @@ SemanticUI.Toggle = React.createClass({
       return (
         <SemanticUI.FormField label={this.props.label}>
           <div className="ui toggle checkbox">
-            <input className="hidden" type="checkbox"/>
+            <input className="hidden" type="checkbox" name={this.props.name} defaultChecked={this.props.defaultChecked}/>
             <label>{this.props.placeholder}</label>
           </div>
         </SemanticUI.FormField>
