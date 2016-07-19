@@ -82,6 +82,11 @@ var EditProfile = React.createClass({
             <Toggle name="toggle" label="Toggle" placeholder="Placeholder" defaultChecked="checked"></Toggle>
             <Colorpicker name="color" label="label"/>
           </Form>
+          <br/><br/>
+            <Button className="green" pull-right="true" onClick={this.save}>Save</Button>
+            <Button className="" pull-right="true" route="/config/profile/">Cancel</Button>
+          <br/><br/>
+
         </Segment>
       );
   }

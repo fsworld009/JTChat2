@@ -1,6 +1,7 @@
 require("../css/semantic.css");
 require("../css/font-awesome.css");
 require("../css/fa-color.css");
+require("../css/override.css");
 
 //window.jQuery = window.$ = require("jquery");
 //window.$ = window.jQuery = require("jquery");

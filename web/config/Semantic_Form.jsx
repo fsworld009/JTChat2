@@ -283,7 +283,6 @@ SemanticUI.Colorpicker = React.createClass({
   componentDidMount: function(){
     var $this = util.getJqueryDom(this);
     var $input = $this.find("input");
-    console.log("input", $this, $input);
     $input.colorpicker({
           defaultPalette: 'web'
     });
@@ -295,6 +294,8 @@ SemanticUI.Colorpicker = React.createClass({
 
   componentWillUnmount: function(){
     var $this = util.getJqueryDom(this);
+    var $input = $this.find("input");
+    $input.colorpicker("destroy");
   },
   render: function(){
     return (

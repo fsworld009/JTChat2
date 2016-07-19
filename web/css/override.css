@@ -1,0 +1,12 @@
+.evo-color.evo-color div, .evo-cHist.evo-cHist div {
+    width: 1em;
+    height: 1em;
+}
+
+.evo-pop a {
+    text-decoration: underline;
+}
+
+.evo-pop a:hover {
+    color: #ff9900;
+}
