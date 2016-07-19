@@ -176,7 +176,8 @@ SemanticUI.Dropdown = React.createClass({
     "placeholder" : React.PropTypes.string,
     "defaultValue": React.PropTypes.string,
     "options": React.PropTypes.array,
-    "onChange" : React.PropTypes.func
+    "onChange" : React.PropTypes.func,
+    "multiselect" : React.PropTypes.bool
   },
 
 
@@ -202,9 +203,10 @@ SemanticUI.Dropdown = React.createClass({
     $selection.dropdown('destroy');
   },
   render: function(){
+    var multi = this.props.multiselect? "multiple" : "";
     return (
       <SemanticUI.FormField label={this.props.label}>
-        <div className="ui search selection dropdown">
+        <div className={"ui search selection dropdown "+multi}>
           <input name={this.props.name} defaultValue={this.props.defaultValue} type="hidden"/>
           <i className="dropdown icon fa fa-caret-down"></i>
           <div className="default text">{this.props.placeholder}</div>
@@ -223,4 +225,48 @@ SemanticUI.Dropdown = React.createClass({
   }
 });
 
+SemanticUI.Toggle = React.createClass({
+  propTypes: {
+    "label" : React.PropTypes.string.isRequired,
+    "name" : React.PropTypes.string.isRequired,
+    "placeholder" : React.PropTypes.string,
+    "defaultValue": React.PropTypes.string,
+    "onChange" : React.PropTypes.func
+  },
+
+  componentDidMount: function(){
+    var $this = util.getJqueryDom(this);
+    var $checkbox = $this.find(".checkbox");
+    var options = {};
+    console.log(this, $checkbox);
+    if(this.props.onChange){
+      options.onChange = this.props.onChange;
+    }
+    $checkbox.checkbox();
+  },
+
+  componentDidUpdate: function(){
+    var $this = util.getJqueryDom(this);
+    var $checkbox = $this.find(".checkbox");
+    $checkbox.checkbox('refresh');
+  },
+
+  componentWillUnmount: function(){
+    var $this = util.getJqueryDom(this);
+    var $checkbox = $this.find(".checkbox");
+    $checkbox.checkbox('destroy');
+  },
+  render: function(){
+      return (
+        <SemanticUI.FormField label={this.props.label}>
+          <div className="ui toggle checkbox">
+            <input className="hidden" type="checkbox"/>
+            <label>{this.props.placeholder}</label>
+          </div>
+        </SemanticUI.FormField>
+      );
+  }
+
+
+});
 module.exports = SemanticUI;

@@ -1,7 +1,7 @@
 var React = require("react");
 import { connect } from 'react-redux';
 import {Segment, IconButton, Button} from "./Semantic.jsx";
-import {Form, TextInput, Dropdown} from "./Semantic_Form.jsx";
+import {Form, TextInput, Dropdown, Toggle} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
@@ -79,6 +79,7 @@ var EditProfile = React.createClass({
           <Form>
             <Dropdown name="themeId" label="Select Theme" placeholder="Select Theme" options={themeOptions} onChange={this.onChangeTheme}>
             </Dropdown>
+            <Toggle name="toggle" label="Toggle" placeholder="Placeholder"></Toggle>
           </Form>
         </Segment>
       );
