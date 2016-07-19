@@ -1,7 +1,11 @@
+require("../css/jquery-ui-widget.css");
+require("../css/evol-colorpicker.css");
 var React = require("react");
 var ReactDOM = require("react-dom");
 var util = require("./util.js");
 var $ = require("jquery");
+require("../js/jquery-ui-widget.js");
+require("../js/evol-colorpicker.js");
 var _ = require("lodash");
 
 var SemanticUI={};
@@ -265,7 +269,42 @@ SemanticUI.Toggle = React.createClass({
         </SemanticUI.FormField>
       );
   }
+});
+
+SemanticUI.Colorpicker = React.createClass({
+  propTypes: {
+    "label" : React.PropTypes.string.isRequired,
+    "name" : React.PropTypes.string.isRequired,
+    "placeholder" : React.PropTypes.string,
+    "defaultChecked": React.PropTypes.string,
+    "onChange" : React.PropTypes.func
+  },
+
+  componentDidMount: function(){
+    var $this = util.getJqueryDom(this);
+    var $input = $this.find("input");
+    console.log("input", $this, $input);
+    $input.colorpicker({
+          defaultPalette: 'web'
+    });
+  },
+
+  componentDidUpdate: function(){
+    var $this = util.getJqueryDom(this);
+  },
+
+  componentWillUnmount: function(){
+    var $this = util.getJqueryDom(this);
+  },
+  render: function(){
+    return (
+      <SemanticUI.FormField label={this.props.label}>
+        <input name="color" />
+      </SemanticUI.FormField>
+    );
+  }
 
 
 });
+
 module.exports = SemanticUI;
