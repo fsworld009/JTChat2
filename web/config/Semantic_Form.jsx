@@ -284,7 +284,26 @@ SemanticUI.Colorpicker = React.createClass({
     var $this = util.getJqueryDom(this);
     var $input = $this.find("input");
     $input.colorpicker({
-          defaultPalette: 'web'
+      defaultPalette: 'web',
+      hideButton: true
+    });
+    var view = this;
+    if(this.props.onChange){
+      $input.off("change.color").on("change.color", function(event, color){
+        if(typeof color !== "undefined"){
+          view.props.onChange(event, color);
+        }
+      });
+    }
+    //remove .evo-cp-wrap as it breaks semantic ui
+    var $inputParent = $this.find(".ui.input");
+    $this.find("input").prependTo($inputParent);
+    $this.find(".evo-cp-wrap").remove();
+
+    //move color pickup popup to proper position
+    $input.off("focus.jt").on("focus.jt", function(){
+      var $popup = $this.find(".evo-pop");
+      $popup.insertAfter($popup.parent());
     });
   },
 
@@ -300,7 +319,10 @@ SemanticUI.Colorpicker = React.createClass({
   render: function(){
     return (
       <SemanticUI.FormField label={this.props.label}>
-        <input name="color" />
+        <div className="ui right labeled input">
+          <input name={this.props.name} defaultValue={this.props.defaultValue} placeholder={this.props.placeholder}/>
+          <div className="ui basic label" style={{"backgroundColor": this.props.defaultValue}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
       </SemanticUI.FormField>
     );
   }

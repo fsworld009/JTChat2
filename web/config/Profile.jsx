@@ -19,7 +19,6 @@ function mapDispatchToProps(dispatch){
 
 var Profile = React.createClass({
   render: function(){
-    console.log(this.props);
     return (<div>Profile</div>);
   }
 });
@@ -41,7 +40,7 @@ var Profiles = React.createClass({
           {
             util.listToComponents(this.props.profiles.toArray(), function(id, key){
               var profile = profileMap.get(id);
-              return (<Theme key={key} profile={profile}/>);
+              return (<Profile key={key} profile={profile}/>);
             })
           } />
       </Segment>

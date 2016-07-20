@@ -48,6 +48,11 @@ var EditProfile = React.createClass({
     console.log(this);
     this.setState({themeId : value});
   },
+
+  onChangeColorTest: function(event, color){
+    console.log("EditProfile view get color: ", color, this);
+  },
+
   render: function(){
     //params: from react-router
     //sitesById: from redux (provided by EditSiteContainer)
@@ -80,7 +85,8 @@ var EditProfile = React.createClass({
             <Dropdown name="themeId" label="Select Theme" placeholder="Select Theme" options={themeOptions} onChange={this.onChangeTheme} defaultValue="default">
             </Dropdown>
             <Toggle name="toggle" label="Toggle" placeholder="Placeholder" defaultChecked="checked"></Toggle>
-            <Colorpicker name="color" label="label"/>
+            <Colorpicker name="color" label="label" placeholder="Choose Color" onChange={this.onChangeColorTest}/>
+            <Colorpicker name="color2" label="label2" placeholder="Choose Color" onChange={this.onChangeColorTest}/>
           </Form>
           <br/><br/>
             <Button className="green" pull-right="true" onClick={this.save}>Save</Button>

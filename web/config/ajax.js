@@ -61,6 +61,9 @@ function getValue(value){
 
 function parseStore(store){
     _.forEach(store, function(value, key){
+        if(key == "themes" || key == "themesById"){
+            return;
+        }
         if(value instanceof Array){
             store[key + "ById"] = _.keyBy(value, getId);
             store[key] = _.map(value, getValue);
