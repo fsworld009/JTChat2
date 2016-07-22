@@ -54,13 +54,14 @@ var Themes = React.createClass({
     var themeMap = this.props.themesById;
     return (
       <Segment title="Theme">
-        <Items items=
+        <Items>
           {
             util.listToComponents(this.props.themes.toArray(), function(id, key){
               var theme = themeMap.get(id);
               return (<Theme key={key} theme={theme}/>);
             })
-          } />
+          }
+        </Items>
       </Segment>
     );
   }

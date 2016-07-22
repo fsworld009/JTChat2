@@ -28,7 +28,6 @@ SemanticUI.SegmentItem = React.createClass({
     var image = childrenMatchMap.image;
     var content = childrenMatchMap.content;
     var extra = childrenMatchMap.extra;
-    console.log(image,content,extra);
 
     return (
       <div className="item">
@@ -40,11 +39,11 @@ SemanticUI.SegmentItem = React.createClass({
         <div className="content">
           <div className="header">{this.props.title}</div>
           <div className="description">
-            { content }
+            { content || null }
           </div>
           { extra? (
           <div className="extra">
-            { extra }
+            { extra || null }
             </div>
           ) : null }
         </div>
@@ -57,7 +56,7 @@ SemanticUI.Items = React.createClass({
     render: function(){
       return (
         <div className="ui divided items">
-            { this.props.items || []}
+            { this.props.children}
         </div>
       );
     }

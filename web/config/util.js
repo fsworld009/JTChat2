@@ -41,7 +41,7 @@ util.getChildrenMatchMap = function(ReactComponent){
     
     children = children || [];
     return _.keyBy(children, function(component){
-        return component.props? component.props.match : undefined;
+        return component&&component.props? component.props.match : undefined;
     });
 };
 

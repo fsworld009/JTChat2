@@ -1,11 +1,12 @@
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, Button} from "./Semantic.jsx";
-import {Form, TextInput, Dropdown, Toggle, Colorpicker} from "./Semantic_Form.jsx";
+import {Segment, IconButton, Button, Items, SegmentItem} from "./Semantic.jsx";
+import {Form, TextInput, Dropdown, Toggle, Textarea, Colorpicker} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
 import {saveConfig} from './ajax.js';
+var InputRenderer = require("./InputRenderer.jsx");
 
 function mapStateToProps(state){
   return {
@@ -61,10 +62,15 @@ var EditProfile = React.createClass({
     var profile;
     var renderProperties;
     var themesById = this.props.themesById;
-    var themeOptions = _.map(this.props.themes.toArray(), function(themeId){
+    var themeOptionLabels = {};
+    _.each(this.props.themes.toArray(), function(themeId){
       var theme = themesById.get(themeId);
-      return {value: themeId, label: theme.getIn(["language",currentLanguage,"theme","displayName"])};
+      themeOptionLabels[themeId] = theme.getIn(["language",currentLanguage,"theme","displayName"]);
     });
+    var themes = {
+      options: this.props.themes.toArray(),
+      labels: themeOptionLabels
+    };
     if(typeof profileId == "undefined"){
       //new
       renderProperties = {
@@ -78,12 +84,33 @@ var EditProfile = React.createClass({
       _.extend(renderProperties, profile.toObject());
     
     }
-    console.log("Current state", this.state);
+
+    var basic = {
+      "options": [
+          {"name": "profileName", "type": "text"},
+          {"name": "themeId", "type": "select", "options":themes.options}
+        ],
+        "language":{
+          "en": {
+            "options": {
+              "profileName" : {"label": "Profile Name"},
+              "themeId" : {"label": "Theme", "tip":"Select a theme", "options": themes.labels}
+            }
+          }
+        }
+    };
+
+
     return (
         <Segment title={renderProperties.title + " Profile"}>
           <Form>
-            <Dropdown name="themeId" label="Select Theme" placeholder="Select Theme" options={themeOptions} onChange={this.onChangeTheme} defaultValue="default">
-            </Dropdown>
+            <Items>
+              <SegmentItem title="Profile Setting">
+                <div match="content">
+                  <InputRenderer options={basic.options} language={basic.language[currentLanguage].options} />
+                </div>
+              </SegmentItem>
+            </Items>
             <Toggle name="toggle" label="Toggle" placeholder="Placeholder" defaultChecked="checked"></Toggle>
             <Colorpicker name="color" label="label" placeholder="Choose Color" onChange={this.onChangeColorTest}/>
             <Colorpicker name="color2" label="label2" placeholder="Choose Color" onChange={this.onChangeColorTest}/>

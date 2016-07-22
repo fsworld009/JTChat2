@@ -6,7 +6,7 @@
     {"name": "hasChatInput", "type": "toggle", "default": false},
     {"name": "bgColor", "type": "color", "default":"black"},
     {"name": "textColor", "type" : "color", "default": "white"},
-    {"name": "userColor", "type": "color", "default": "yellow"},
+    {"name": "userColor", "type": "color"},
     {"name": "sysColor", "type": "color", "default": "#ffcccc"},
     {"name": "useUserCustomColor", "type": "toggle", "default": true},
     {"name": "clearBannedMsg", "type": "toggle", "default": true},
@@ -14,10 +14,10 @@
     {"name": "textareaDummy", "type": "textarea", "default": "Textarea\nsecond line"},
     {"name": "textDummy", "type": "text", "default": "Text"},
     {"name": "optionDummy", "type": "select",
-      "values":["option1","option2","option3"], "default": "option2" 
+      "options":["option1","option2","option3"], "default": "option2" 
     },
     {"name": "multiOptionDummy", "type": "multiselect",
-      "values":["option1","option2","option3","option4","option5"], "default": ["option2" ,"option5"]
+      "options":["option1","option2","option3","option4","option5"], "default": ["option2" ,"option5"]
     }
 
   ],

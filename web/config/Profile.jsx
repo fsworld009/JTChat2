@@ -36,13 +36,14 @@ var Profiles = React.createClass({
     return (
       <Segment title="Theme Profile">
         <IconButton iconClass="fa fa-plus" className="green" popup-content="New" route={"/config/profile/new/"}></IconButton>
-        <Items items=
+        <Items>
           {
             util.listToComponents(this.props.profiles.toArray(), function(id, key){
               var profile = profileMap.get(id);
               return (<Profile key={key} profile={profile}/>);
             })
-          } />
+          }
+        </Items>
       </Segment>
     );
   }

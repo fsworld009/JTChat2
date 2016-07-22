@@ -32,7 +32,7 @@ SemanticUI.FormField = React.createClass({
   }
 });
 
-SemanticUI.TextInput = React.createClass({
+/*SemanticUI.TextInput = React.createClass({
   render: function(){
     var divClassName = util.mergeClassName(this, ["ui input"],{
       "iconClass" : {
@@ -52,14 +52,40 @@ SemanticUI.TextInput = React.createClass({
       </SemanticUI.FormField>
     );
   }
+});*/
+
+SemanticUI.TextInput = React.createClass({
+  propTypes: {
+    "label" : React.PropTypes.string.isRequired,
+    "name" : React.PropTypes.string.isRequired,
+    "placeholder" : React.PropTypes.string,
+    "defaultValue": React.PropTypes.string,
+    "onChange" : React.PropTypes.func,
+    "password" : React.PropTypes.bool
+  },
+  render: function(){
+    var inputType = this.props.password? "password" : "text";
+    return (
+      <SemanticUI.FormField label={this.props.label}>
+          <input className="ui input" type={inputType} placeholder={this.props.placeholder} defaultValue={this.props.defaultValue} onChange={this.props.onChange}/>
+      </SemanticUI.FormField>
+    );
+  }
 });
 
 SemanticUI.Textarea = React.createClass({
-  val: function(value){
+  propTypes: {
+    "label" : React.PropTypes.string.isRequired,
+    "name" : React.PropTypes.string.isRequired,
+    "placeholder" : React.PropTypes.string,
+    "defaultValue": React.PropTypes.string,
+    "onChange" : React.PropTypes.func,
+  },
+  /*val: function(value){
     var $this = util.getJqueryDom(this);
     var $textarea = $this.find("textarea");
     return typeof value == "undefined"? $textarea.val() : $textarea.val(value);
-  },
+  },*/
   render: function(){
     return (
       <SemanticUI.FormField label={this.props.label}>
@@ -178,7 +204,7 @@ SemanticUI.Dropdown = React.createClass({
     "label" : React.PropTypes.string.isRequired,
     "name" : React.PropTypes.string.isRequired,
     "placeholder" : React.PropTypes.string,
-    "defaultValue": React.PropTypes.string,
+    "defaultValue": React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]),
     "options": React.PropTypes.array,
     "onChange" : React.PropTypes.func,
     "multiselect" : React.PropTypes.bool
@@ -208,6 +234,10 @@ SemanticUI.Dropdown = React.createClass({
   },
   render: function(){
     var multi = this.props.multiselect? "multiple" : "";
+    var defaultValue = this.props.defaultValue;
+    if(defaultValue instanceof Array){
+      defaultValue = defaultValue.join(",");
+    }
     return (
       <SemanticUI.FormField label={this.props.label}>
         <div className={"ui search selection dropdown "+multi}>
