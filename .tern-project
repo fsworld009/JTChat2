@@ -5,6 +5,9 @@
       "./node_modules/react-dom/react-dom.js",
       "./web/js/semantic.js"
     ],
+    "exclude": [
+        "node_modules/**"
+    ],
     "libs": [
         "browser","jquery"
     ],
