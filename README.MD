@@ -5,7 +5,7 @@
 3. gulp build
 
 # Generate bundles for UI
-Dev
+Dev (Not working as of now)
 - npm run dev-pack
 
 Dev with hot updating server
