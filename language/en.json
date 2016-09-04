@@ -1,0 +1,24 @@
+{
+  "name": "English",
+  "langCode": "en",
+  "version": "0.0.1",
+  "title": "JTChat 2 Configuration",
+  "status": {
+    "title": "Status"
+  },
+  "site": {
+    "title": "Site"
+  },
+  "user": {
+    "title": "User"
+  },
+  "theme": {
+    "title": "Title"
+  },
+  "profile":{
+    "title": "Theme Profile"
+  },
+  "urlGenerator": {
+    "title": "URL Generator"
+  }
+}

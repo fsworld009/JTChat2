@@ -8,6 +8,7 @@
     "express": "^4.13.4",
     "immutable": "^3.7.6",
     "lodash": "^4.6.1",
+    "lowdb": "^0.13.1",
     "nodejs-websocket": "git://github.com/sitegui/nodejs-websocket.git",
     "react-redux": "^4.4.1",
     "react-router": "^2.0.1",

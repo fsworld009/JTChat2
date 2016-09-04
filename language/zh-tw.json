@@ -1,0 +1,24 @@
+{
+  "name": "繁體中文",
+  "langCode": "zh-tw",
+  "version": "0.0.1",
+  "title": "JTChat 2 設定",
+  "status": {
+    "title": "狀態"
+  },
+  "site": {
+    "title": "網站"
+  },
+  "user": {
+    "title": "帳號"
+  },
+  "theme": {
+    "title": "主題"
+  },
+  "profile":{
+    "title": "主題設定"
+  },
+  "urlGenerator": {
+    "title": "URL產生器"
+  }
+}
