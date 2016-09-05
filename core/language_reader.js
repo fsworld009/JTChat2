@@ -4,14 +4,15 @@ var path = require('path');
 var _ = require('lodash');
 var lowdb = require('lowdb');
 
-var languageBasePath = path.resolve(__dirname, "../language");
+var languageBasePath = path.resolve(__dirname, "../languages");
 var themeBasePath = path.resolve(__dirname, "../themes");
 Promise.promisifyAll(fs);
 
 
 
 var database;
-var defaultLangFileNameRegExp = new RegExp("^en");
+var defaultLangCode = "en";
+var defaultLangFileNameRegExp = new RegExp("^"+defaultLangCode);
 
 function parseJson(jsonString, defaultObject){
     //inject comment handle in the future
@@ -32,7 +33,66 @@ function parseJson(jsonString, defaultObject){
 }
 
 function readLanguage(langCode){
+}
 
+function readThemeFiles(){
+    var themeJsonFileList=[];
+    return fs.readdirAsync(themeBasePath).then(function(files){
+        _.each(files, function(file){
+            var filepath = path.resolve(themeBasePath, file);
+            var stat = fs.statSync(filepath);
+            if(stat.isDirectory()){
+                var filenames = fs.readdirSync(filepath);
+                if(_.includes(filenames, "jtchat2.json")){
+                    //console.log(filepath);
+                    themeJsonFileList.push(path.resolve(filepath, "jtchat2.json"));
+                }
+            }
+        });
+        return Promise.map(themeJsonFileList, function(jsonPath){
+            return fs.readFileAsync(jsonPath,"utf-8").then(function(json){
+                json = parseJson(json, {});
+                database.get("themes").push(json).value();
+            });
+        }).then(function(){
+            database.set("themeById", database.get("themes").keyBy("id").value()).value();
+            return Promise.resolve();
+        });
+    });
+
+}
+
+function setLanguage(themeId, langCode, json){
+    json = json || {};
+    var dbThemeWrapper = database.get("themeById."+ themeId);
+    if(typeof dbThemeWrapper.get("languages").value() == "undefined"){
+        dbThemeWrapper.set("languages",{}).value();
+    }
+
+    if(langCode != defaultLangCode){
+        json = _.merge({}, dbThemeWrapper.get("languages."+defaultLangCode).value(), json); 
+    }
+    dbThemeWrapper.set("languages."+langCode, json).value();
+}
+
+function readThemeLanguage(langCode){
+    var themes = database.get("themes").value();
+    var themeLangPromiseList=[];
+    _.each(themes, function(theme){
+        var themeId = theme.id;
+        var jsonPath = path.resolve(themeBasePath, themeId, "languages", langCode + ".json");
+
+        var promise = fs.readFileAsync(jsonPath,"utf-8").then(function(json){
+            json = parseJson(json, {});
+            setLanguage(themeId, langCode, json);
+        }).error(function(e){
+            console.log("failed to load ", jsonPath," reason: ", e.message);
+            setLanguage(themeId, langCode, {});
+        });
+
+        themeLangPromiseList.push(promise);
+    });
+    return Promise.all(themeLangPromiseList);
 }
 
 function readLanguageFiles(){
@@ -74,13 +134,47 @@ function readLanguageFiles(){
 
 }
 
-function refresh(){
+function refresh(currentLangCode){
+    currentLangCode = currentLangCode || defaultLangCode;
     database = lowdb();
     readLanguageFiles().then(function(){
-        console.log("after readLanguageFiles()");
-        console.log(database.get("languages").value());
-        console.log(database.get("languageByCode").value());
+        database.set("themes",[]).value();
+        return readThemeFiles();
+    }).then(function(){
+        return readThemeLanguage(defaultLangCode);
+    }).then(function(){
+        if(currentLangCode != defaultLangCode){
+            return readThemeLanguage(currentLangCode);
+        }else{
+            return Promise.resolve();
+        }
+    }).then(function(){
+        console.log("load end");
+
+        //console.log(database.get("themeById.default.languages").value());
     });
 }
 
-refresh();
+//refresh("zh-tw");
+
+
+var initialized = false;
+
+function getLanguages(){
+    if(!initialized){
+        refresh();
+        initialized=true;
+    }
+    return {
+        languages: database.get("languages").value(),
+        languageByCode: database.get("languageByCode").value()
+    };
+}
+
+function getThemes(currentLangCode){
+    
+}
+
+module.exports = {
+    refresh: refresh,
+};
