@@ -57,14 +57,14 @@ function readLanguageFiles(){
             database.get("languages").push(enLangJson).value();
 
             //then read other languages
-            return Promise.all (_.map(langJsonFileList, function(jsonPath){
+            return Promise.map (langJsonFileList, function(jsonPath){
                 return fs.readFileAsync(jsonPath,"utf-8").then(function(jsonString){
                     //console.log(jsonString);
                     json = parseJson(jsonString);
                     var thisLangJson = _.merge({}, enLangJson, json);
                     database.get("languages").push(thisLangJson).value();
                 });
-            }));
+            });
         }).then(function(){
              database.set("languageByCode", database.get("languages").keyBy("langCode").value()).value();
              return Promise.resolve();
