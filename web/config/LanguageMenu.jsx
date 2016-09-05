@@ -9,7 +9,7 @@ function mapStateToProps(state){
   return {
     langCode: state.get("langCode"),
     languages: state.get("languages"),
-    languageByCode: state.get("languageByCode")
+    languagesByCode: state.get("languagesByCode")
   };
 }
 
@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch){
 var LanguageMenu = React.createClass({
   render: function(){
     var languages = _.map(this.props.languages.toArray(), function(langCode){
-      var languageObj = this.props.languageByCode.get(langCode).toJS();
+      var languageObj = this.props.languagesByCode.get(langCode).toJS();
       return {
         value: languageObj.langCode,
         label: languageObj.name

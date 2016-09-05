@@ -54,7 +54,7 @@ function readThemeFiles(){
                 database.get("themes").push(json).value();
             });
         }).then(function(){
-            database.set("themeById", database.get("themes").keyBy("id").value()).value();
+            database.set("themesById", database.get("themes").keyBy("id").value()).value();
             return Promise.resolve();
         });
     });
@@ -63,15 +63,15 @@ function readThemeFiles(){
 
 function setLanguage(themeId, langCode, json){
     json = json || {};
-    var dbThemeWrapper = database.get("themeById."+ themeId);
-    if(typeof dbThemeWrapper.get("languageByCode").value() == "undefined"){
-        dbThemeWrapper.set("languageByCode",{}).value();
+    var dbThemeWrapper = database.get("themesById."+ themeId);
+    if(typeof dbThemeWrapper.get("languagesByCode").value() == "undefined"){
+        dbThemeWrapper.set("languagesByCode",{}).value();
     }
 
     if(langCode != defaultLangCode){
-        json = _.merge({}, dbThemeWrapper.get("languageByCode."+defaultLangCode).value(), json); 
+        json = _.merge({}, dbThemeWrapper.get("languagesByCode."+defaultLangCode).value(), json); 
     }
-    dbThemeWrapper.set("languageByCode."+langCode, json).value();
+    dbThemeWrapper.set("languagesByCode."+langCode, json).value();
     loadedLanguages[langCode] = true;
 }
 
@@ -126,7 +126,7 @@ function readLanguageFiles(){
                 });
             });
         }).then(function(){
-             //database.set("languageByCode", database.get("languages").keyBy("langCode").value()).value();
+             //database.set("languagesByCode", database.get("languages").keyBy("langCode").value()).value();
              return Promise.resolve();
         });
 
@@ -152,7 +152,7 @@ function refresh(currentLangCode){
     }).then(function(){
         console.log("load end");
         console.log(loadedLanguages);
-        //console.log(database.get("themeById.default.languages").value());
+        //console.log(database.get("themesById.default.languages").value());
         return Promise.resolve();
     });
 }
@@ -178,8 +178,8 @@ function getThemes(langCode){
         var returnThemes=[];
         _.each(themes, function(theme){
             theme = _.extend({}, theme);
-            theme.language = theme.languageByCode[langCode];
-            delete theme.languageByCode;
+            theme.language = theme.languagesByCode[langCode];
+            delete theme.languagesByCode;
             returnThemes.push(theme);
         });
         return Promise.resolve(returnThemes);
@@ -190,7 +190,7 @@ function getThemes(langCode){
 /*refresh().then(function(){
     console.log(getLanguages());
     getThemes("zh-tw").then(function(themes){
-        console.log(themes.themesById.default.languageByCode);
+        console.log(themes.themesById.default.languagesByCode);
     });
 });*/
 

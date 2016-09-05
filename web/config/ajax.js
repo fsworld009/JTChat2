@@ -91,7 +91,7 @@ function loadLanguages(){
                 type: "LOAD_LANGUAGES",
                 loading: "loaded",
                 languages: _.map(data, "langCode"),
-                languageByCode: _.keyBy(data, "langCode")
+                languagesByCode: _.keyBy(data, "langCode")
             });
         });
     };
