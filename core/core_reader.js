@@ -64,14 +64,14 @@ function readThemeFiles(){
 function setLanguage(themeId, langCode, json){
     json = json || {};
     var dbThemeWrapper = database.get("themeById."+ themeId);
-    if(typeof dbThemeWrapper.get("languages").value() == "undefined"){
-        dbThemeWrapper.set("languages",{}).value();
+    if(typeof dbThemeWrapper.get("languageByCode").value() == "undefined"){
+        dbThemeWrapper.set("languageByCode",{}).value();
     }
 
     if(langCode != defaultLangCode){
-        json = _.merge({}, dbThemeWrapper.get("languages."+defaultLangCode).value(), json); 
+        json = _.merge({}, dbThemeWrapper.get("languageByCode."+defaultLangCode).value(), json); 
     }
-    dbThemeWrapper.set("languages."+langCode, json).value();
+    dbThemeWrapper.set("languageByCode."+langCode, json).value();
     loadedLanguages[langCode] = true;
 }
 
@@ -188,7 +188,7 @@ function getThemes(langCode){
 /*refresh().then(function(){
     console.log(getLanguages());
     getThemes("zh-tw").then(function(themes){
-        console.log(themes.themesById.default.languages);
+        console.log(themes.themesById.default.languageByCode);
     });
 });*/
 
