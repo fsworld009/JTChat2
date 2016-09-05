@@ -17,6 +17,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 const store = require("./store.js");
 
+var MainMenu = require("./MainMenu.jsx");
 var LanguageMenu = require("./LanguageMenu.jsx");
 var Status = require("./Status.jsx");
 var Site= require("./Site.jsx");
@@ -36,50 +37,12 @@ import {saveConfig} from './ajax.js';
 
 var rootPath = "/config/";
 
-var MainMenu = React.createClass({
-  render: function(){
-    var menuItems = [
-      {path: "status", label: "Status"},
-      {path: "site", label: "Site"},
-      {path: "user", label: "User"},
-      {path: "theme", label: "Theme"},
-      {path: "profile", label: "Theme Profile"},
-      {path: "url", label: "Url Generator"}
-    ];
-    var currentPath = (this.props.currentPath || "").replace(/^\/config\/([^\/]*)(.*$)/, function(match, $1){
-      return $1;
-    });
-
-    var inEdit = (this.props.currentPath || "").search(/\/(edit|new)\//) > -1;
-
-    var currentMenuItem = _.find(menuItems, function(menuItem){
-      return menuItem.path == currentPath;
-    });
-    if(currentMenuItem){
-      currentMenuItem.selected = true;
-    }else{
-      menuItems[0].selected = true;
-    }
-    return (
-      <div className="ui blue secondary pointing menu">
-        {menuItems.map(function(menuItem){
-            if(inEdit){
-              return <a href="javascript:void(0)" key={menuItem.path} className="item disabled" >{menuItem.label}</a>;
-            }else{
-              return <Link key={menuItem.path} className={"item"+ (menuItem.selected? " active":"")} to={rootPath + menuItem.path}>{menuItem.label}</Link>;
-            }
-        })}
-      </div>
-    );
-  }
-});
-
-
 var App = React.createClass({
   render: function(){
-    var content, languageMenu;
+    var content, languageMenu, mainMenu;
     if(this.props.loading){
-      languageMenu = "";
+      languageMenu = (<span></span>);
+      mainMenu = (<span></span>);
       content = (
         <div><i className="fa fa-spin fa-spinner"></i> Loading...</div>
       );
@@ -89,6 +52,7 @@ var App = React.createClass({
       }
       content = this.props.children;
       languageMenu = (<LanguageMenu />);
+      mainMenu = (<MainMenu currentPath={this.props.location.pathname}/>);
     }
 
 
@@ -98,7 +62,7 @@ var App = React.createClass({
           <h1 className="ui header">JTChat2 Configuration</h1>
         </div>
         {languageMenu}
-        <MainMenu currentPath={this.props.location.pathname}/>
+        {mainMenu}
         <div style={{margin:"5px","maxWidth":"800px"}}>
           {content}
         </div>
