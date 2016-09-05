@@ -1,0 +1,16 @@
+[
+    {
+      "id": "twitch",
+      "logo":"http://s.jtvnw.net/jtv_user_pictures/hosted_images/GlitchIcon_purple.png",
+      "options": [
+        {"name": "hosts", "type": "select", "values": ["irc.chat.twitch.tv","irc.twitch.tv"], "default": "irc.chat.twitch.tv"},
+        {"name": "ports", "type": "select", "values": [6667, 80], "default": 6667},
+        {"name": "ircv3Tag", "type": "toggle", "default": true}
+      ]
+    },
+    {
+      "id": "hitbox",
+      "logo":"https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-1/p160x160/11150308_544971458975080_5605718068476404617_n.jpg?oh=0f41e8497cd320632ccae44f92714ff6&oe=57C8A86D",
+      "options": []
+    }
+  ]

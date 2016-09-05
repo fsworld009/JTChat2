@@ -7,7 +7,20 @@
     "title": "Status"
   },
   "site": {
-    "title": "Site"
+    "title": "Site",
+    "siteById" : {
+      "twitch" : {
+        "name": "Twitch",
+        "options": {
+          "host": {"label": "Host", "tip": "Host"},
+          "ports": {"label": "Port", "tip": "Port"},
+          "ircv3Tag" : {"label" : "Use IRCv3 Tag", "tip": "Enable features such as username color and user list"}
+        }
+      },
+      "hitbox" : {
+        "name": "Hitbox"
+      }
+    }
   },
   "user": {
     "title": "User"

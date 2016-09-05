@@ -20,41 +20,5 @@
       "values":["option1","option2","option3","option4","option5"], "default": ["option2" ,"option5"]
     }
 
-  ],
-  "language": {
-    "en" : {
-      "theme": {
-        "displayName": "Niconico Comment",
-        "description" : "Niconico style comment screen"
-      },
-      "options" : {
-        "hasChatInput": {"label": "Enable Chat Input", "tip": "Input box"},
-        "bgColor": {"label": "Background Color", "tip": ""},
-        "textColor": {"label": "Text Color", "tip": ""},
-        "userColor": {"label": "User Color", "tip": ""},
-        "sysColor": {"label": "System Message Color", "tip": ""},
-        "useUserCustomColor": {"label": "Use Users' nickname color if possible", "tip": ""},
-        "clearBannedMsg": {"label": "Clear Banned Users' messages", "tip": ""},
-        "allowClearChat": {"label": "Clear Chat when a clear command is received", "tip": ""},
-        "textDummy": {"label": "(Text)", "tip": "placeholder"},
-        "textareaDummy": {"label": "(Text Area)", "tip": "tarea placeholder"},
-        "optionDummy":  {"label": "dummy", "options": 
-          {
-            "option1": "Option 1",
-            "option2": "Option 2",
-            "option3": "Option 3"
-          }
-        },
-        "multiOptionDummy":  {"label": "dummy", "options": 
-          {
-            "option1": "Option 1",
-            "option2": "Option 2",
-            "option3": "Option 3",
-            "option4": "Option 4",
-            "option5": "Option 5"
-          }
-        }
-      }
-    }
-  }
+  ]
 }
