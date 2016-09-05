@@ -7,13 +7,25 @@ import { connect } from 'react-redux';
 import {Dropdown} from "./Semantic_Form.jsx";
 function mapStateToProps(state){
   return {
+    langCode: state.get("langCode"),
     languages: state.get("languages"),
     languageByCode: state.get("languageByCode")
   };
 }
 
 function mapDispatchToProps(dispatch){
-  return {};
+  return {
+    changeLanguage:function(){
+      var $this = util.getJqueryDom(this);
+      var $input = $this.find("[name=lang]");
+      console.log("select", $input.val());
+      dispatch({
+        type: "SAVE_LANG",
+        langCode: $input.val()
+      });
+    }
+  };
+
 }
 
 var LanguageMenu = React.createClass({
@@ -26,7 +38,7 @@ var LanguageMenu = React.createClass({
       };
     }.bind(this));
     return (
-      <Dropdown name="lang" label="" defaultValue="en" options={languages}></Dropdown>
+      <Dropdown name="lang" label="" onChange={this.props.changeLanguage} defaultValue={this.props.langCode} options={languages}></Dropdown>
     );
   }
 

@@ -37,6 +37,12 @@ var reducer = function(state, action){
     if(action.type === "SAVE_CONFIG"){
         return state.set("saving",action.saving);
     }
+    if(action.type === "SAVE_LANG"){
+        state = state.withMutations(function(state){
+            state.set("langCode",action.langCode);
+            state.set("saving","saving");
+        });
+    }
     if(action.type === "SAVE_SITE"){
         state = updateSite(state, action);
         state = state.set("saving","saving");

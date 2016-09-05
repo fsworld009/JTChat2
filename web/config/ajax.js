@@ -20,10 +20,16 @@ function doSaveConfig(saveJson){
 
 function saveConfig(state){
     //console.log("store",store2);
-    var saveJson = state.toJS();
-    delete saveJson.routing;
-    delete saveJson.load;
-    delete saveJson.saving;
+    var stateJson = state.toJS();
+    var saveJson = {
+        users: stateJson.users,
+        usersById: stateJson.usersById,
+        sites: stateJson.sites,
+        sitesById: stateJson.sitesById,
+        profiles: stateJson.profiles,
+        profilesById: stateJson.profilesById,
+        langCode: stateJson.langCode
+    };
     doSaveConfig(saveJson);
     return function(dispatch){
         $.ajax({
