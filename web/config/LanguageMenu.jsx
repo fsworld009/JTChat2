@@ -5,24 +5,29 @@ var $ = require("jquery");
 var _ = require("lodash");
 import { connect } from 'react-redux';
 import {Dropdown} from "./Semantic_Form.jsx";
+import {loadThemes} from "./ajax.js";
 function mapStateToProps(state){
   return {
     langCode: state.get("langCode"),
     languages: state.get("languages"),
-    languagesByCode: state.get("languagesByCode")
+    languagesByCode: state.get("languagesByCode"),
+    loadedLanguages: state.get("loadedLanguages")
   };
 }
 
 function mapDispatchToProps(dispatch){
   return {
     changeLanguage:function(){
+      console.log("this", this);
       var $this = util.getJqueryDom(this);
       var $input = $this.find("[name=lang]");
-      console.log("select", $input.val());
+      var langCode = $input.val();
+      console.log("select", langCode);
       dispatch({
         type: "SAVE_LANG",
-        langCode: $input.val()
+        langCode: langCode
       });
+      dispatch(loadThemes(langCode));
     }
   };
 
@@ -38,7 +43,7 @@ var LanguageMenu = React.createClass({
       };
     }.bind(this));
     return (
-      <Dropdown name="lang" label="" onChange={this.props.changeLanguage} defaultValue={this.props.langCode} options={languages}></Dropdown>
+      <Dropdown name="lang" label="" onChange={this.props.changeLanguage.bind(this)} defaultValue={this.props.langCode} options={languages}></Dropdown>
     );
   }
 

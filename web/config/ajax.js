@@ -110,22 +110,26 @@ function loadConfig(){
                 loading: "loaded",
                 profiles: data
             });
+        }).then(function(data){
+            var langCode = data.langCode || "en";
+            loadThemes(data.langCode)(dispatch);
         });
     };
 }
 
-function loadThemes(){
+function loadThemes(langCode){
     return function(dispatch){
         dispatch({
             type: "LOAD_THEMES",
             loadingThemes: "loading"
         });
-        $.getJSON("/themes/", function(data){
+        $.getJSON("/themes/"+langCode + "/", function(data){
             dispatch({
                 type: "LOAD_THEMES",
                 loadingThemes: "loaded",
                 themes: _.map(data, "id"),
-                themesById: _.keyBy(data, "id")
+                themesById: _.keyBy(data, "id"),
+                langCode: langCode
             });
         });
     };
