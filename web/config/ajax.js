@@ -74,6 +74,23 @@ function parseStore(store){
     });
 }
 
+function loadLanguages(){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_LANGUAGES",
+            loading: "loading"
+        });
+        $.getJSON("/languages/", function(data){
+            dispatch({
+                type: "LOAD_LANGUAGES",
+                loading: "loaded",
+                languages: _.map(data, "langCode"),
+                languageByCode: _.keyBy(data, "langCode")
+            });
+        });
+    };
+}
+
 function loadConfig(){
     return function(dispatch){
         dispatch({
@@ -112,5 +129,6 @@ module.exports = {
     saveConfig: saveConfig,
     loadConfig: loadConfig,
     loadThemes: loadThemes,
+    loadLanguages: loadLanguages,
     getId: getId
 };

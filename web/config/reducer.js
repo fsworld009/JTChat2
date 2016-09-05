@@ -47,6 +47,12 @@ var reducer = function(state, action){
             state.merge({themes: action.themes, themesById: action.themesById});
         });
     }
+    if(action.type === "LOAD_LANGUAGES"){
+        state = state.withMutations(function(state){
+            state.setIn(["load","languages"], action.loadingThemes);
+            state.merge({languages: action.languages, languageByCode: action.languageByCode});
+        });
+    }
     return state;
 };
 

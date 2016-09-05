@@ -162,10 +162,7 @@ function refresh(currentLangCode){
 
 
 function getLanguages(){
-    return {
-        languages: database.get("languages").value(),
-        //languageByCode: database.get("languageByCode").value()
-    };
+    return database.get("languages").value();
 }
 
 function getThemes(langCode){
@@ -177,10 +174,7 @@ function getThemes(langCode){
         promise = Promise.resolve();
     }
     return promise.then(function(){
-        return Promise.resolve({
-            themes: database.get("themes").value(),
-            //themesById: database.get("themeById").value()
-        });
+        return Promise.resolve(database.get("themes").value());
     });
 };
 

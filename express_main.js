@@ -51,6 +51,21 @@ app.get("/themes/", function(req, res, next){
     });
 });
 
+app.get("/sites/", function(req, res, next){
+    var responseJson = {error: true};
+    fs.readFileAsync(basePath + "/core/sites.json","utf-8").then(function(data){
+        responseJson = data;
+        return Promise.resolve();
+    },function(err){
+        return Promise.resolve();
+    }).then(function(){
+        res.setHeader('Content-Type', 'application/json');
+        res.send(responseJson);
+    });
+});
+
+
+
 app.get("/themes/:langCode", function(req, res, next){
     core_reader.getThemes(req.params.langCode).then(function(themes){
         res.setHeader('Content-Type', 'application/json');
