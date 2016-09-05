@@ -174,7 +174,15 @@ function getThemes(langCode){
         promise = Promise.resolve();
     }
     return promise.then(function(){
-        return Promise.resolve(database.get("themes").value());
+        var themes = database.get("themes").value();
+        var returnThemes=[];
+        _.each(themes, function(theme){
+            theme = _.extend({}, theme);
+            theme.language = theme.languageByCode[langCode];
+            delete theme.languageByCode;
+            returnThemes.push(theme);
+        });
+        return Promise.resolve(returnThemes);
     });
 };
 
