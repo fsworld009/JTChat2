@@ -126,7 +126,7 @@ function readLanguageFiles(){
                 });
             });
         }).then(function(){
-             database.set("languageByCode", database.get("languages").keyBy("langCode").value()).value();
+             //database.set("languageByCode", database.get("languages").keyBy("langCode").value()).value();
              return Promise.resolve();
         });
 
@@ -164,7 +164,7 @@ function refresh(currentLangCode){
 function getLanguages(){
     return {
         languages: database.get("languages").value(),
-        languageByCode: database.get("languageByCode").value()
+        //languageByCode: database.get("languageByCode").value()
     };
 }
 
@@ -179,7 +179,7 @@ function getThemes(langCode){
     return promise.then(function(){
         return Promise.resolve({
             themes: database.get("themes").value(),
-            themesById: database.get("themeById").value()
+            //themesById: database.get("themeById").value()
         });
     });
 };

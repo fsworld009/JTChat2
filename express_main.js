@@ -10,6 +10,7 @@ var bodyParser = require("body-parser");
 Promise.promisifyAll(fs);
 
 var theme_reader = require(path.resolve(basePath, "./core/theme_reader.js"));
+var core_reader = require(path.resolve(basePath, "./core/core_reader.js"));
 
 var environment = process.env.NODE_ENV;
 
@@ -42,12 +43,24 @@ app.get("/profiles/", function(req, res, next){
     });
 });
 
-
+//old
 app.get("/themes/", function(req, res, next){
     theme_reader.refresh().then(function(){
         res.setHeader('Content-Type', 'application/json');
         res.send(theme_reader.get());
     });
+});
+
+app.get("/themes/:langCode", function(req, res, next){
+    core_reader.getThemes(req.params.langCode).then(function(themes){
+        res.setHeader('Content-Type', 'application/json');
+        res.send(themes);
+    });
+});
+
+app.get("/languages/", function(req, res, next){
+    res.setHeader('Content-Type', 'application/json');
+    res.send(core_reader.getLanguages());
 });
 
 app.put("/profiles/", function(req, res){
