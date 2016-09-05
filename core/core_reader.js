@@ -13,6 +13,7 @@ Promise.promisifyAll(fs);
 var database;
 var defaultLangCode = "en";
 var defaultLangFileNameRegExp = new RegExp("^"+defaultLangCode);
+var loadedLanguages = {};
 
 function parseJson(jsonString, defaultObject){
     //inject comment handle in the future
@@ -32,8 +33,6 @@ function parseJson(jsonString, defaultObject){
     return json;
 }
 
-function readLanguage(langCode){
-}
 
 function readThemeFiles(){
     var themeJsonFileList=[];
@@ -73,6 +72,7 @@ function setLanguage(themeId, langCode, json){
         json = _.merge({}, dbThemeWrapper.get("languages."+defaultLangCode).value(), json); 
     }
     dbThemeWrapper.set("languages."+langCode, json).value();
+    loadedLanguages[langCode] = true;
 }
 
 function readThemeLanguage(langCode){
@@ -136,8 +136,9 @@ function readLanguageFiles(){
 
 function refresh(currentLangCode){
     currentLangCode = currentLangCode || defaultLangCode;
+    loadedLanguages = {};
     database = lowdb();
-    readLanguageFiles().then(function(){
+    return readLanguageFiles().then(function(){
         database.set("themes",[]).value();
         return readThemeFiles();
     }).then(function(){
@@ -150,31 +151,50 @@ function refresh(currentLangCode){
         }
     }).then(function(){
         console.log("load end");
-
+        console.log(loadedLanguages);
         //console.log(database.get("themeById.default.languages").value());
+        return Promise.resolve();
     });
 }
 
 //refresh("zh-tw");
 
 
-var initialized = false;
 
 function getLanguages(){
-    if(!initialized){
-        refresh();
-        initialized=true;
-    }
     return {
         languages: database.get("languages").value(),
         languageByCode: database.get("languageByCode").value()
     };
 }
 
-function getThemes(currentLangCode){
-    
-}
+function getThemes(langCode){
+    langCode = langCode || defaultLangCode;
+    var promise;
+    if(!loadedLanguages[langCode]){
+        promise = readThemeLanguage(langCode);
+    }else{
+        promise = Promise.resolve();
+    }
+    return promise.then(function(){
+        return Promise.resolve({
+            themes: database.get("themes").value(),
+            themesById: database.get("themeById").value()
+        });
+    });
+};
 
+
+/*refresh().then(function(){
+    console.log(getLanguages());
+    getThemes("zh-tw").then(function(themes){
+        console.log(themes.themesById.default.languages);
+    });
+});*/
+
+refresh();
 module.exports = {
     refresh: refresh,
+    getLanguages: getLanguages,
+    getThemes: getThemes
 };
