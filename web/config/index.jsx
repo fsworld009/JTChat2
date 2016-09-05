@@ -17,6 +17,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 const store = require("./store.js");
 
+var LanguageMenu = require("./LanguageMenu.jsx");
 var Status = require("./Status.jsx");
 var Site= require("./Site.jsx");
 var EditSite = require("./EditSite.jsx");
@@ -76,8 +77,9 @@ var MainMenu = React.createClass({
 
 var App = React.createClass({
   render: function(){
-    var content;
+    var content, languageMenu;
     if(this.props.loading){
+      languageMenu = "";
       content = (
         <div><i className="fa fa-spin fa-spinner"></i> Loading...</div>
       );
@@ -86,6 +88,7 @@ var App = React.createClass({
         this.props.saveConfig(this.props.state);
       }
       content = this.props.children;
+      languageMenu = (<LanguageMenu />);
     }
 
 
@@ -94,6 +97,7 @@ var App = React.createClass({
         <div style={{margin:"5px"}}>
           <h1 className="ui header">JTChat2 Configuration</h1>
         </div>
+        {languageMenu}
         <MainMenu currentPath={this.props.location.pathname}/>
         <div style={{margin:"5px","maxWidth":"800px"}}>
           {content}

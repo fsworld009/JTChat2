@@ -12,8 +12,9 @@ import {loadConfig, loadThemes, loadLanguages} from "./ajax.js";
 var initialState=Immutable.fromJS({
     routing: {locationBeforeTransitions: null},
     load: {
-        config: "init",
-        themes: "init",
+        config: "loading",
+        themes: "loading",
+        languages: "loading",
         sites: "loaded"
     }
 });
