@@ -27,6 +27,6 @@ const history = syncHistoryWithStore(browserHistory, store, {
   }
 });
 store.dispatch(loadConfig());
-store.dispatch(loadLanguages());
+//store.dispatch(loadLanguages());
 store.dispatch(loadSiteDefs());
 module.exports = store;

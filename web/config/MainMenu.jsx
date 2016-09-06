@@ -6,9 +6,8 @@ import { connect } from 'react-redux';
 import {Dropdown} from "./Semantic_Form.jsx";
 import {Link} from "react-router";
 function mapStateToProps(state){
-  var langCode = state.get("langCode");
   return {
-    language: state.getIn(["languagesByCode", langCode])
+    language: state.get("currentLanguage")
   };
 }
 

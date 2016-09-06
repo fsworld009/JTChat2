@@ -41,6 +41,8 @@ var reducer = function(state, action){
         state = state.withMutations(function(state){
             state.set("langCode",action.langCode);
             state.set("saving","saving");
+            var currentLangCode = state.get("langCode");
+            state.set("currentLanguage", state.getIn(["languagesByCode",currentLangCode]));
         });
     }
     if(action.type === "SAVE_SITE"){
@@ -57,6 +59,8 @@ var reducer = function(state, action){
         state = state.withMutations(function(state){
             state.setIn(["load","languages"], action.loading);
             state.merge({languages: action.languages, languagesByCode: action.languagesByCode});
+            var currentLangCode = state.get("langCode");
+            state.set("currentLanguage", state.getIn(["languagesByCode",currentLangCode]));
         });
     }
     if(action.type === "LOAD_SITE_DEFS"){

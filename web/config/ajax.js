@@ -129,6 +129,7 @@ function loadConfig(){
                 profiles: data
             });
         }).then(function(data){
+            loadLanguages()(dispatch);
             var langCode = data.langCode || "en";
             loadThemes(data.langCode)(dispatch);
         });
