@@ -56,8 +56,13 @@ var reducer = function(state, action){
     if(action.type === "LOAD_LANGUAGES"){
         state = state.withMutations(function(state){
             state.setIn(["load","languages"], action.loading);
-            console.log("action", action);
             state.merge({languages: action.languages, languagesByCode: action.languagesByCode});
+        });
+    }
+    if(action.type === "LOAD_SITE_DEFS"){
+        state = state.withMutations(function(state){
+            state.setIn(["load","siteDefs"], action.loading);
+            state.merge({siteDefs: action.siteDefs, siteDefsById: action.siteDefsById});
         });
     }
     return state;

@@ -1,34 +1,8 @@
 {
   "langCode": "en",
   "sites": [
-    {
-      "id": 1,
-      "remoteSocketObj": "TwitchIRCBot",
-      "urlId": "twitch",
-      "logo":"http://s.jtvnw.net/jtv_user_pictures/hosted_images/GlitchIcon_purple.png",
-      "displayName": "Twitch",
-      "hosts": ["irc.chat.twitch.tv","irc.twitch.tv"],
-      "ports": [6667, 80]
-    },
-    {
-      "id": 2,
-      "remoteSocketObj": "HitboxBot",
-      "urlId": "hitbox",
-      "logo":"https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-1/p160x160/11150308_544971458975080_5605718068476404617_n.jpg?oh=0f41e8497cd320632ccae44f92714ff6&oe=57C8A86D",
-      "displayName": "Hitbox",
-      "hosts": ["(Not applicable)"],
-      "ports": []
-    }
   ],
   "users": [
-    {
-      "id": 1,
-      "siteId": 1,
-      "urlId": "none",
-      "displayName": "(Anonymous)",
-      "username": "justinfan123",
-      "password": "kappa"
-    }
   ],
 
   "profiles": [

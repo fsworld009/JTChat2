@@ -51,9 +51,9 @@ app.get("/themes/", function(req, res, next){
     });
 });
 
-app.get("/sites/", function(req, res, next){
+app.get("/siteDefs/", function(req, res, next){
     var responseJson = {error: true};
-    fs.readFileAsync(basePath + "/core/sites.json","utf-8").then(function(data){
+    fs.readFileAsync(basePath + "/core/siteDefs.json","utf-8").then(function(data){
         responseJson = data;
         return Promise.resolve();
     },function(err){

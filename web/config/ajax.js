@@ -80,6 +80,24 @@ function parseStore(store){
     });
 }
 
+function loadSiteDefs(){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_SITE_DEFS",
+            loading: "loading"
+        });
+        $.getJSON("/siteDefs/", function(data){
+            dispatch({
+                type: "LOAD_SITE_DEFS",
+                loading: "loaded",
+                siteDefs: _.map(data, "id"),
+                siteDefsById: _.keyBy(data, "id")
+            });
+        });
+    };
+}
+
+
 function loadLanguages(){
     return function(dispatch){
         dispatch({
@@ -140,5 +158,6 @@ module.exports = {
     loadConfig: loadConfig,
     loadThemes: loadThemes,
     loadLanguages: loadLanguages,
+    loadSiteDefs: loadSiteDefs,
     getId: getId
 };
