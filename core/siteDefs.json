@@ -3,9 +3,12 @@
       "id": "twitch",
       "logo":"http://s.jtvnw.net/jtv_user_pictures/hosted_images/GlitchIcon_purple.png",
       "options": [
-        {"name": "hosts", "type": "select", "values": ["irc.chat.twitch.tv","irc.twitch.tv"], "default": "irc.chat.twitch.tv"},
-        {"name": "ports", "type": "select", "values": ["6667", "80"], "default": "6667"},
-        {"name": "ircv3Tag", "type": "toggle", "default": true}
+        {"name": "hosts", "type": "select", "options": ["irc.chat.twitch.tv","irc.twitch.tv"], "default": "irc.chat.twitch.tv"},
+        {"name": "ports", "type": "select", "options": ["6667", "80"], "default": "6667"},
+        {"name": "ircv3Tag", "type": "toggle", "default": true},
+        {"name": "dummy1", "type": "select", "default": "option1", "options":["option1","option2"]},
+        {"name": "dummy2", "type": "multiselect", "default": "option1", "options":["option1","option2","option3","option4","option5"]},
+        {"name": "dummy3", "type": "text", "default": "aaa"}
       ]
     },
     {

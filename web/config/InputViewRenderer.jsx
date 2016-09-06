@@ -5,45 +5,50 @@ var $ = require("jquery");
 var _ = require("lodash");
 import {Form, TextInput, Dropdown, Toggle, Textarea, Colorpicker} from "./Semantic_Form.jsx";
 
-var InputRenderer = React.createClass({
+var InputViewRenderer = React.createClass({
   propTypes: {
     "options" : React.PropTypes.array.isRequired,
     "language": React.PropTypes.object.isRequired,
     "savedOptions" : React.PropTypes.object
   },
 
-  optionMap: {
-    number: {comp: TextInput, defaultProps:{}},
-    text: {comp: TextInput, defaultProps:{}},
-    toggle: {comp: Toggle, defaultProps:{}},
-    select: {comp: Dropdown, defaultProps:{}},
-    multiselect: {comp: Dropdown, defaultProps: {multiselect: true}},
-    color: {comp: Colorpicker, defaultProps: {}}
-  },
-
   render: function(){
     var options = this.props.options;
     var language = this.props.language;
+    var savedOptions = this.props.savedOptions || {};
     var $rows=[];
     var $row, $columns=[];
-    var rowCounter=0, columnCounter=0, componentCounter=0;
-    console.log("Optionss", options);
+    var rowCounter=0, columnCounter=0;
     _.each(options, function(option){
       option = option || {};
-      var optionMap = this.optionMap[option.type];
-      if(!optionMap){
-        return;
-      }
+      
       var componentLanguage = language[option.name] || {};
-      var componentOption = _.extend({}, optionMap.defaultProps, {
-        name: option.name,
-        label: componentLanguage.label || option.name,
-        defaultValue: option.default,
-        placeholder: componentLanguage.tip || ""
-      });
+      var label = componentLanguage || option.name;
+      var value="";
+      if(savedOptions[option.name]){
+        value = savedOptions[option.name].value;
+      }else{
+        value = option.default || "";
+      }
+
+      if(typeof value == "boolean"){
+        value = String(value);
+      }
+      if(options.options){
+        if(value instanceof Array){
+
+        }else{
+
+        }
+      }
+
+      if(value instanceof Array){
+        value = value.join(", ");
+      }
+
       if(option.options){
-        componentOption.options = _.map(option.options, function(value){
-          var label = componentLanguage.options? componentLanguage.options[value]||value : value;
+        componentOption.options = _.map(option.values, function(value){
+          var label = componentLanguage.options? componentLanguage.options[value] : value;
           return {value: value, label: label};
         });
       }
@@ -52,18 +57,16 @@ var InputRenderer = React.createClass({
       $columns.push($column);
       columnCounter++;
 
-      componentCounter++;
-      if(columnCounter>=2 || (columnCounter < 2 && componentCounter==options.length)){
+      if(columnCounter>=2){
         $row = (<div key={rowCounter} className="two column row">{$columns}</div>);
         $rows.push($row);
-        $columns=[];
         columnCounter=0;
         rowCounter++;
       }
 
     }.bind(this));
 
-    console.log("$rows",$rows);
+
     return (
       <div className="ui vertically padded grid">{$rows}</div>
     );

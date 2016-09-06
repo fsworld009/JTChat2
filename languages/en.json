@@ -15,7 +15,10 @@
         "options": {
           "hosts": {"label": "Host", "tip": "Host"},
           "ports": {"label": "Port", "tip": "Port"},
-          "ircv3Tag" : {"label" : "Use IRCv3 Tag", "tip": "Enable features such as username color and user list"}
+          "ircv3Tag" : {"label" : "Use IRCv3 Tag", "tip": "Enable features such as username color and user list"},
+          "dummy1": {"label": "(Test 1)", "options" :{"option1":"Option 1","option2":"Option 2"}},
+          "dummy2": {"label": "(Test 2)", "options" :{"option1":"Option 1","option2":"Option 2","option3":"Option 3","option5":"Option 5"}},
+          "dummy3": {"label": "(Test 3)"}
         }
       },
       "hitbox" : {

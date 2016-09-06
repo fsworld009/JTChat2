@@ -27,11 +27,7 @@ function mapDispatchToProps(dispatch){
 
 var EditSite = React.createClass({
   save: function(){
-    var hosts = this.refs.hosts.val();
-    hosts = hosts? hosts.split("\n") : [];
-    var ports = this.refs.ports.val();
-    ports = ports? ports.split("\n") : [];
-    ports = _.map(ports, Number);
+    //return; 
     this.props.saveSite({
       id: this.props.params.siteId,
       hosts: hosts,
