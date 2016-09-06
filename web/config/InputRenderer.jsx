@@ -36,9 +36,9 @@ var InputRenderer = React.createClass({
       var componentLanguage = language[option.name] || {};
       var componentOption = _.extend({}, optionMap.defaultProps, {
         name: option.name,
-        label: componentLanguage.label,
+        label: componentLanguage.label || option.name,
         defaultValue: option.default,
-        placeholder: componentLanguage.tip
+        placeholder: componentLanguage.tip || ""
       });
       if(option.values){
         componentOption.options = _.map(option.values, function(value){
