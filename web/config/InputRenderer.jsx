@@ -8,7 +8,8 @@ import {Form, TextInput, Dropdown, Toggle, Textarea, Colorpicker} from "./Semant
 var InputRenderer = React.createClass({
   propTypes: {
     "options" : React.PropTypes.array.isRequired,
-    "language": React.PropTypes.object.isRequired
+    "language": React.PropTypes.object.isRequired,
+    "savedOptions" : React.PropTypes.object
   },
 
   optionMap: {

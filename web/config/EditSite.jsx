@@ -1,7 +1,8 @@
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
+import {Segment, SegmentItem,  IconButton, BulletList, Modal, Button} from "./Semantic.jsx";
 import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
+var InputRenderer = require("./InputRenderer.jsx");
 var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
@@ -10,7 +11,8 @@ import {saveConfig} from './ajax.js';
 function mapStateToProps(state){
   return {
     sitesById: state.get("sitesById"),
-    sites: state.get("sites")
+    siteDefsById: state.get("siteDefsById"),
+    language: state.getIn(["currentLanguage","site"])
   };
 }
 
@@ -37,33 +39,31 @@ var EditSite = React.createClass({
     });
   },
   render: function(){
-    //params: from react-router
-    //sitesById: from redux (provided by EditSiteContainer)
     var siteId = this.props.params.siteId;
     var site = this.props.sitesById.get(siteId);
+    var siteDef = this.props.siteDefsById.get(siteId);
+    var language = this.props.language.toJS();
+    var options = siteDef.get("options").toJS();
+    var savedOptions = {};
+    console.log(options, language, savedOptions);
+    if(typeof site !== "undefined"){
+      savedOptions = _.keyBy(site.get("options").toJS(), "name");
+    }
+    var optionsLanguage = language.sitesById[siteId].options;
     return (
-        <Segment title={"Edit " + site.get("displayName")}>
-          <Form>
-            <div className="content">
-              <div className="description">
-                <div className="ui grid">
-                  <div className="two column row">
-                    <div className="column">
-                      <Textarea ref="hosts" name="hosts" label="Hosts" rows="3" defaultValue={site.get("hosts").toArray().join("\n")}/>
-                    </div>
-                    <div className="column">
-                      <Textarea ref="ports" name="ports" label="Ports" rows="3" defaultValue={site.get("ports").toArray().join("\n")}/>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="extra">
-                <Button className="green" pull-right="true" onClick={this.save}>Save</Button>
-                <Button className="" pull-right="true" route="/config/site/">Cancel</Button>
-                <br/><br/>
-              </div>
+        <Segment title={"Edit " + siteDef.get("name")}>
+          <SegmentItem>
+            <div className="ui grid" match="content">
+              <Form>
+                <InputRenderer options="{options}" language="{language}" savedOptions="{savedOptions}"></InputRenderer>
+              </Form>
             </div>
-          </Form>
+            <div match="extra">
+              <Button className="green" pull-right="true" onClick={this.save}>Save</Button>
+              <Button className="" pull-right="true" route="/config/site/">Cancel</Button>
+              <br/><br/>
+            </div>
+          </SegmentItem>
         </Segment>
       );
   }

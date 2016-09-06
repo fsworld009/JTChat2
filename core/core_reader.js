@@ -134,7 +134,8 @@ function readLanguageFiles(){
 
 }
 
-function refresh(currentLangCode){
+var currentLangCode;
+function refresh(){
     currentLangCode = currentLangCode || defaultLangCode;
     loadedLanguages = {};
     database = lowdb();

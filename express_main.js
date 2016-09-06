@@ -78,6 +78,14 @@ app.get("/languages/", function(req, res, next){
     res.send(core_reader.getLanguages());
 });
 
+app.get("/refresh/", function(req, res, next){
+    core_reader.refresh().then(function(){
+        res.setHeader('Content-Type', 'application/json');
+        res.send({refreshed: true});
+    });
+});
+
+
 app.put("/profiles/", function(req, res){
     fs.writeFileAsync(basePath + "/profiles/config.json", JSON.stringify(req.body, null, 2), "utf-8").then(function(error){
         res.send({success: true});

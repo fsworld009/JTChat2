@@ -8,9 +8,9 @@
   },
   "site": {
     "title": "Site",
-    "siteById" : {
+    "sitesById" : {
       "twitch" : {
-        "name": "Twitch",
+        "name": "Twitch.tv",
         "options": {
           "host": {"label": "Host", "tip": "Host"},
           "ports": {"label": "Port", "tip": "Port"},
