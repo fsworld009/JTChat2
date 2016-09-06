@@ -27,7 +27,6 @@ var InputRenderer = React.createClass({
     var $rows=[];
     var $row, $columns=[];
     var rowCounter=0, columnCounter=0, componentCounter=0;
-    console.log("Optionss", options);
     _.each(options, function(option){
       option = option || {};
       var optionMap = this.optionMap[option.type];
@@ -63,7 +62,6 @@ var InputRenderer = React.createClass({
 
     }.bind(this));
 
-    console.log("$rows",$rows);
     return (
       <div className="ui vertically padded grid">{$rows}</div>
     );

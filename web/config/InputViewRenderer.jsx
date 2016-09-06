@@ -18,12 +18,12 @@ var InputViewRenderer = React.createClass({
     var savedOptions = this.props.savedOptions || {};
     var $rows=[];
     var $row, $columns=[];
-    var rowCounter=0, columnCounter=0;
+    var rowCounter=0, columnCounter=0, componentCounter=0;
     _.each(options, function(option){
       option = option || {};
       
       var componentLanguage = language[option.name] || {};
-      var label = componentLanguage || option.name;
+      var label = componentLanguage.label || option.name;
       var value="";
       if(savedOptions[option.name]){
         value = savedOptions[option.name].value;
@@ -32,13 +32,16 @@ var InputViewRenderer = React.createClass({
       }
 
       if(typeof value == "boolean"){
-        value = String(value);
+        value = value? "On" : "Off";
       }
-      if(options.options){
+      if(option.options){
         if(value instanceof Array){
-
+          value = _.map(value, function(savedVar){
+            var label = componentLanguage.options? componentLanguage.options[savedVar]||savedVar : savedVar;
+            return label;
+          });
         }else{
-
+            value = componentLanguage.options? componentLanguage.options[value]||value : value;
         }
       }
 
@@ -46,20 +49,20 @@ var InputViewRenderer = React.createClass({
         value = value.join(", ");
       }
 
-      if(option.options){
-        componentOption.options = _.map(option.values, function(value){
-          var label = componentLanguage.options? componentLanguage.options[value] : value;
-          return {value: value, label: label};
-        });
-      }
-      var $component = React.createElement(optionMap.comp, componentOption);
+      
+      var $component = (
+        <div>
+          {label} : {value}
+        </div>);
       var $column = (<div key={rowCounter + "-" + columnCounter} className="column" style={{paddingBottom: "15px"}}>{$component}</div>);
       $columns.push($column);
       columnCounter++;
 
-      if(columnCounter>=2){
+      componentCounter++;
+      if(columnCounter>=2 || (columnCounter < 2 && componentCounter==options.length)){
         $row = (<div key={rowCounter} className="two column row">{$columns}</div>);
         $rows.push($row);
+        $columns=[];
         columnCounter=0;
         rowCounter++;
       }
@@ -74,4 +77,4 @@ var InputViewRenderer = React.createClass({
 });
 
 
-module.exports = InputRenderer;
+module.exports = InputViewRenderer;

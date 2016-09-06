@@ -44,7 +44,7 @@ var EditSite = React.createClass({
     if(typeof site !== "undefined"){
       savedOptions = _.keyBy(site.get("options").toJS(), "name");
     }
-    var optionsLanguage = language.sitesById[siteId].options;
+    var optionsLanguage = language.sitesById[siteId].options || {};
     return (
         <Segment title={language.editTitle.replace("%name%",language.sitesById[siteId].name)}>
           <SegmentItem>

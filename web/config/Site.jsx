@@ -4,6 +4,7 @@ import {Segment, SegmentItem, Items, IconButton, BulletList, Modal, Button} from
 import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
+var InputViewRenderer = require("./InputViewRenderer.jsx");
 
 function mapStateToProps(state){
   return {
@@ -27,11 +28,17 @@ var Site = React.createClass({
     var siteDef = this.props.siteDef;
     var siteId = siteDef.get("id");
     var language = this.props.language;
-
+    var options = siteDef.get("options").toJS();
+    var savedOptions = {};
+    if(typeof site !== "undefined"){
+      savedOptions = _.keyBy(site.get("options").toJS(), "name");
+    }
+    var optionsLanguage = language.options || {};
     return (
       <SegmentItem title={language.name}>
           <img match="image" src={siteDef.get("logo")} alt={language.name} />
           <div match="content" className="ui grid">
+            <InputViewRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}/>
           </div>
           <IconButton match="extra" iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+siteId}></IconButton>
       </SegmentItem>
