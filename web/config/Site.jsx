@@ -9,7 +9,9 @@ import {getId} from "./ajax.js";
 function mapStateToProps(state){
   return {
     sitesById: state.get("sitesById"),
-    sites: state.get("sites")
+    sites: state.get("sites"),
+    siteDefsById: state.get("siteDefsById"),
+    siteDefs: state.get("siteDefs")
   };
 }
 
@@ -55,15 +57,17 @@ var Site = React.createClass({
 var Sites = React.createClass({
 
   render: function(){
-    var siteMap = this.props.sitesById;
+    var siteDefsById = this.props.siteDefsById;
     var view = this;
+    console.log(this.props.siteDefs.toArray());
     return (
       <Segment title="Site">
         <Items items=
           {
-            util.listToComponents(this.props.sites.toArray(), function(id, key){
-              var site = siteMap.get(id);
-              return (<Site key={key} site={site}/>);
+            util.listToComponents(this.props.siteDefs.toArray(), function(id, key){
+              var siteDef = siteDefsById.get(id);
+              return (<div key={key}>{id} {siteDef.get("name")} </div>);
+              //return (<Site key={key} site={site}/>);
             })
           } />
       </Segment>
