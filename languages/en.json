@@ -8,11 +8,12 @@
   },
   "site": {
     "title": "Site",
+    "editTitle": "Edit %name%",
     "sitesById" : {
       "twitch" : {
         "name": "Twitch.tv",
         "options": {
-          "host": {"label": "Host", "tip": "Host"},
+          "hosts": {"label": "Host", "tip": "Host"},
           "ports": {"label": "Port", "tip": "Port"},
           "ircv3Tag" : {"label" : "Use IRCv3 Tag", "tip": "Enable features such as username color and user list"}
         }

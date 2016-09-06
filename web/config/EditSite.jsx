@@ -45,17 +45,16 @@ var EditSite = React.createClass({
     var language = this.props.language.toJS();
     var options = siteDef.get("options").toJS();
     var savedOptions = {};
-    console.log(options, language, savedOptions);
     if(typeof site !== "undefined"){
       savedOptions = _.keyBy(site.get("options").toJS(), "name");
     }
     var optionsLanguage = language.sitesById[siteId].options;
     return (
-        <Segment title={"Edit " + siteDef.get("name")}>
+        <Segment title={language.editTitle.replace("%name%",language.sitesById[siteId].name)}>
           <SegmentItem>
             <div className="ui grid" match="content">
               <Form>
-                <InputRenderer options="{options}" language="{language}" savedOptions="{savedOptions}"></InputRenderer>
+                <InputRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}></InputRenderer>
               </Form>
             </div>
             <div match="extra">

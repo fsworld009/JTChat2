@@ -51,7 +51,7 @@ var App = React.createClass({
         this.props.saveConfig(this.props.state);
       }
       content = this.props.children;
-      languageMenu = (<LanguageMenu />);
+      languageMenu = (<LanguageMenu currentPath={this.props.location.pathname}/>);
       mainMenu = (<MainMenu currentPath={this.props.location.pathname}/>);
     }
 

@@ -4,7 +4,7 @@
       "logo":"http://s.jtvnw.net/jtv_user_pictures/hosted_images/GlitchIcon_purple.png",
       "options": [
         {"name": "hosts", "type": "select", "values": ["irc.chat.twitch.tv","irc.twitch.tv"], "default": "irc.chat.twitch.tv"},
-        {"name": "ports", "type": "select", "values": [6667, 80], "default": 6667},
+        {"name": "ports", "type": "select", "values": ["6667", "80"], "default": "6667"},
         {"name": "ircv3Tag", "type": "toggle", "default": true}
       ]
     },

@@ -18,11 +18,9 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return {
     changeLanguage:function(){
-      console.log("this", this);
       var $this = util.getJqueryDom(this);
       var $input = $this.find("[name=lang]");
       var langCode = $input.val();
-      console.log("select", langCode);
       dispatch({
         type: "SAVE_LANG",
         langCode: langCode
@@ -35,6 +33,11 @@ function mapDispatchToProps(dispatch){
 
 var LanguageMenu = React.createClass({
   render: function(){
+    var inEdit = (this.props.currentPath || "").search(/\/(edit|new)\//) > -1;
+    var className = "";
+    if(inEdit){
+      className = "disabled";
+    }
     var languages = _.map(this.props.languages.toArray(), function(langCode){
       var languageObj = this.props.languagesByCode.get(langCode).toJS();
       return {
@@ -43,7 +46,7 @@ var LanguageMenu = React.createClass({
       };
     }.bind(this));
     return (
-      <Dropdown name="lang" label="" onChange={this.props.changeLanguage.bind(this)} defaultValue={this.props.langCode} options={languages}></Dropdown>
+      <Dropdown className={className} name="lang" label="" onChange={this.props.changeLanguage.bind(this)} defaultValue={this.props.langCode} options={languages}></Dropdown>
     );
   }
 

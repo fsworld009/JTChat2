@@ -40,14 +40,14 @@ var InputRenderer = React.createClass({
         defaultValue: option.default,
         placeholder: componentLanguage.tip
       });
-      if(option.options){
-        componentOption.options = _.map(option.options, function(value){
+      if(option.values){
+        componentOption.options = _.map(option.values, function(value){
           var label = componentLanguage.options? componentLanguage.options[value] : value;
           return {value: value, label: label};
         });
       }
       var $component = React.createElement(optionMap.comp, componentOption);
-      var $column = (<div key={columnCounter} className="column">{$component}</div>);
+      var $column = (<div key={rowCounter + "-" + columnCounter} className="column" style={{paddingBottom: "15px"}}>{$component}</div>);
       $columns.push($column);
       columnCounter++;
 
@@ -62,7 +62,7 @@ var InputRenderer = React.createClass({
 
 
     return (
-      <div className="ui grid">{$rows}</div>
+      <div className="ui vertically padded grid">{$rows}</div>
     );
   }
 });

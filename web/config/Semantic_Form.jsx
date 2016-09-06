@@ -234,13 +234,16 @@ SemanticUI.Dropdown = React.createClass({
   },
   render: function(){
     var multi = this.props.multiselect? "multiple" : "";
+    var className = util.mergeClassName(this, ["ui search selection dropdown", this.props.className],{
+       multiselect: {"true" : "multiple"}
+    });
     var defaultValue = this.props.defaultValue;
     if(defaultValue instanceof Array){
       defaultValue = defaultValue.join(",");
     }
     return (
       <SemanticUI.FormField label={this.props.label}>
-        <div className={"ui search selection dropdown "+multi}>
+        <div className={className}>
           <input name={this.props.name} defaultValue={this.props.defaultValue} type="hidden"/>
           <i className="dropdown icon fa fa-caret-down"></i>
           <div className="default text">{this.props.placeholder}</div>

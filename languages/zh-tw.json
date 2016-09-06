@@ -7,7 +7,21 @@
     "title": "狀態"
   },
   "site": {
-    "title": "網站"
+    "title": "網站",
+    "editTitle": "編輯 %name%",
+    "sitesById" : {
+      "twitch" : {
+        "name": "抽筋電視",
+        "options": {
+          "hosts": {"label": "連接位址", "tip": "連接位址"},
+          "ports": {"label": "連接埠", "tip": "連接埠"},
+          "ircv3Tag" : {"label" : "使用IRCv3標記", "tip": "啟用此功能可讀取使用者顏色、使用者列表等"}
+        }
+      },
+      "hitbox" : {
+        "name": "打盒"
+      }
+    }
   },
   "user": {
     "title": "帳號"

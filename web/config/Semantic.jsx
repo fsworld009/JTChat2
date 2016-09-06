@@ -54,7 +54,6 @@ SemanticUI.SegmentItem = React.createClass({
 
 SemanticUI.Items = React.createClass({
     render: function(){
-        console.log("Items", this.props.children);
       return (
         <div className="ui divided items">
             { this.props.children}
