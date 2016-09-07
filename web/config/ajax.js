@@ -51,15 +51,15 @@ function saveConfig(state){
 
 function getId(value){
     if(typeof value == "object" && value.id){
-        return "_" + value.id;
+        return value.id;
     }else{
-        return "_" + value;
+        return  value;
     }
 }
 
 function getValue(value){
     if(typeof value == "object" && value.id){
-        return "_" + value.id;
+        return value.id;
     }else{
         return value;
     }
@@ -67,16 +67,13 @@ function getValue(value){
 
 function parseStore(store){
     _.forEach(store, function(value, key){
-        if(key == "themes" || key == "themesById"){
-            return;
-        }
         if(value instanceof Array){
             store[key + "ById"] = _.keyBy(value, getId);
             store[key] = _.map(value, getValue);
             parseStore(store[key + "ById"]);
-        }else if(typeof value == "object"){
+        }/*else if(typeof value == "object"){
             parseStore(value);
-        }
+        }*/
     });
 }
 

@@ -8,6 +8,11 @@ import {getId} from "./ajax.js";
 //id, hosts, ports
 var updateSite = function(state, action){
     var site = state.getIn(["sitesById",action.id]);
+    if(!site){
+
+    }else{
+
+    }
     site = site.withMutations(function(site){
         site.set("hosts",Immutable.fromJS(action.hosts)),
         site.set("hostsById",Immutable.fromJS(_.keyBy(action.hosts,getId)));
@@ -46,8 +51,22 @@ var reducer = function(state, action){
         });
     }
     if(action.type === "SAVE_SITE"){
-        state = updateSite(state, action);
-        state = state.set("saving","saving");
+        var target = state.getIn(["sitesById", action.id]);
+        var newRecord = false;
+        if(!target){
+            newRecord = true;
+        }
+        state = state.withMutations(function(state){
+            state.setIn(["sitesById", action.id], Immutable.fromJS({
+                ["id"]: action.id,
+                options: action.options
+            }));
+            if(newRecord){
+                var newList = state.get("sites").push(action.id);
+                state.set("sites", newList);
+            }
+            state.set("saving","saving");
+        });
     }
     if(action.type === "LOAD_THEMES"){
         state = state.withMutations(function(state){

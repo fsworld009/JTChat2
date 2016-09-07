@@ -77,6 +77,6 @@
     "dev-pack": "webpack --config webpack.dev-server.config.js",
     "build": "webpack --config webpack-production.config.js --progress --profile --colors",
     "old-dev-server": "webpack-dev-server --config webpack.dev-server.config.js --inline --progress --colors --hot",
-    "dev-server": "cross-env NODE_ENV=development supervisor -i client express_main"
+    "dev-server": "cross-env NODE_ENV=development supervisor -w express_main.js,./views/*,./core/*.js -i client express_main"
   }
 }

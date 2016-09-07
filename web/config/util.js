@@ -31,6 +31,37 @@ util.getJqueryDom = function(ReactComponent){
     return $(ReactDOM.findDOMNode(ReactComponent));
 };
 
+util.saveForm = function(ReactComponent, formOptions){
+    var $this = util.getJqueryDom(ReactComponent);
+    var savedOptions = [];
+    _.each(formOptions, function(option){
+        var name = option.name;
+        var type = option.type;
+        var $input = $this.find("[name="+name+"]");
+        var value = $input.val() || "";
+        var savedValue;
+        switch(option.type){
+            case "multiselect":
+                savedValue = value? value.split(",") : [];
+                break;
+            case "number":
+                savedValue = Number(value) || 0;
+                break;
+            case "toggle":
+                savedValue = $input.prop("checked");
+                break;
+            default:
+                savedValue = value;
+                break;
+        }
+        savedOptions.push({
+            name: option.name,
+            value: savedValue
+        });
+    });
+    return savedOptions;
+};
+
 util.getChildrenMatchMap = function(ReactComponent){
     var children = [];
     if(!(ReactComponent.props.children instanceof Array)){

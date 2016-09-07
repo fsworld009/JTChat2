@@ -24,6 +24,7 @@ var InputRenderer = React.createClass({
   render: function(){
     var options = this.props.options;
     var language = this.props.language;
+    var savedOptions = this.props.savedOptions;
     var $rows=[];
     var $row, $columns=[];
     var rowCounter=0, columnCounter=0, componentCounter=0;
@@ -34,10 +35,16 @@ var InputRenderer = React.createClass({
         return;
       }
       var componentLanguage = language[option.name] || {};
+      var value;
+      if(savedOptions[option.name]){
+        value = savedOptions[option.name].value;
+      }else{
+        value = option.default || "";
+      }
       var componentOption = _.extend({}, optionMap.defaultProps, {
         name: option.name,
         label: componentLanguage.label || option.name,
-        defaultValue: option.default,
+        defaultValue: value,
         placeholder: componentLanguage.tip || ""
       });
       if(option.options){

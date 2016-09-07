@@ -12,6 +12,7 @@
         "browser","jquery"
     ],
     "plugins": {
-        "node": true
+        "node": {},
+        "webpack": {}
     }
 }

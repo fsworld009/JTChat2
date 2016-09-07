@@ -27,11 +27,12 @@ function mapDispatchToProps(dispatch){
 
 var EditSite = React.createClass({
   save: function(){
-    //return; 
+    console.log("save", this);
+    var savedOptions = util.saveForm(this, this.formOptions);
+    console.log("savedOptions",savedOptions);
     this.props.saveSite({
       id: this.props.params.siteId,
-      hosts: hosts,
-      ports: ports
+      options: savedOptions
     });
   },
   render: function(){
@@ -40,6 +41,7 @@ var EditSite = React.createClass({
     var siteDef = this.props.siteDefsById.get(siteId);
     var language = this.props.language.toJS();
     var options = siteDef.get("options").toJS();
+    this.formOptions = options;
     var savedOptions = {};
     if(typeof site !== "undefined"){
       savedOptions = _.keyBy(site.get("options").toJS(), "name");
