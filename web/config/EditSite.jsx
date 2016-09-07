@@ -18,8 +18,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return {
-    saveSite: function(params){
-      dispatch(_.extend({type: "SAVE_SITE"},params));
+    updateSite: function(params){
+      dispatch(_.extend({type: "UPDATE_CONFIG"},params));
       dispatch(push("/config/site/"));
     },
   };
@@ -27,10 +27,9 @@ function mapDispatchToProps(dispatch){
 
 var EditSite = React.createClass({
   save: function(){
-    console.log("save", this);
     var savedOptions = util.saveForm(this, this.formOptions);
-    console.log("savedOptions",savedOptions);
-    this.props.saveSite({
+    this.props.updateSite({
+      category: "sites",
       id: this.props.params.siteId,
       options: savedOptions
     });

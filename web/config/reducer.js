@@ -45,25 +45,26 @@ var reducer = function(state, action){
     if(action.type === "SAVE_LANG"){
         state = state.withMutations(function(state){
             state.set("langCode",action.langCode);
-            state.set("saving","saving");
             var currentLangCode = state.get("langCode");
             state.set("currentLanguage", state.getIn(["languagesByCode",currentLangCode]));
+            state.set("saving","saving");
         });
     }
-    if(action.type === "SAVE_SITE"){
-        var target = state.getIn(["sitesById", action.id]);
+    if(action.type === "UPDATE_CONFIG"){
+        var category = action.category;
+        var target = state.getIn([category+"ById", action.id]);
         var newRecord = false;
         if(!target){
             newRecord = true;
         }
         state = state.withMutations(function(state){
-            state.setIn(["sitesById", action.id], Immutable.fromJS({
-                ["id"]: action.id,
+            state.setIn([category+"ById", action.id], Immutable.fromJS({
+                id: action.id,
                 options: action.options
             }));
             if(newRecord){
-                var newList = state.get("sites").push(action.id);
-                state.set("sites", newList);
+                var newList = state.get(category).push(action.id);
+                state.set(category, newList);
             }
             state.set("saving","saving");
         });
