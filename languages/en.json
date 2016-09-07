@@ -3,8 +3,16 @@
   "langCode": "en",
   "version": "0.0.1",
   "title": "JTChat 2 Configuration",
+  "loading": "Loading",
   "status": {
     "title": "Status"
+  },
+  "common": {
+    "editTitle": "Edit %name%",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "site": {
     "title": "Site",
