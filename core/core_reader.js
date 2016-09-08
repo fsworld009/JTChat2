@@ -54,24 +54,21 @@ function readThemeFiles(){
                 database.get("themes").push(json).value();
             });
         }).then(function(){
-            database.set("themesById", database.get("themes").keyBy("id").value()).value();
+            //database.set("themesById", database.get("themes").keyBy("id").value()).value();
             return Promise.resolve();
         });
     });
 
 }
 
-function setLanguage(themeId, langCode, json){
+function setThemeLanguage(themeId, langCode, json){
     json = json || {};
-    var dbThemeWrapper = database.get("themesById."+ themeId);
-    if(typeof dbThemeWrapper.get("languagesByCode").value() == "undefined"){
-        dbThemeWrapper.set("languagesByCode",{}).value();
-    }
-
+    json = _.extend(json,{id: themeId} );
+    var dbThemeWrapper = database.get("themesLanguage");
     if(langCode != defaultLangCode){
-        json = _.merge({}, dbThemeWrapper.get("languagesByCode."+defaultLangCode).value(), json); 
+        json = _.extend(database.get("themesLanguage." + langCode + "." + themeId, json).value() , json);
     }
-    dbThemeWrapper.set("languagesByCode."+langCode, json).value();
+    dbThemeWrapper.set("themesLanguage." + langCode + "." + themeId, json).value();
     loadedLanguages[langCode] = true;
 }
 
@@ -84,10 +81,10 @@ function readThemeLanguage(langCode){
 
         var promise = fs.readFileAsync(jsonPath,"utf-8").then(function(json){
             json = parseJson(json, {});
-            setLanguage(themeId, langCode, json);
+            setThemeLanguage(themeId, langCode, json);
         }).error(function(e){
             console.log("failed to load ", jsonPath," reason: ", e.message);
-            setLanguage(themeId, langCode, {});
+            setThemeLanguage(themeId, langCode, {});
         });
 
         themeLangPromiseList.push(promise);
@@ -143,6 +140,7 @@ function refresh(){
         database.set("themes",[]).value();
         return readThemeFiles();
     }).then(function(){
+        database.set("themesLanguage",{}).value();
         return readThemeLanguage(defaultLangCode);
     }).then(function(){
         if(currentLangCode != defaultLangCode){
@@ -151,8 +149,8 @@ function refresh(){
             return Promise.resolve();
         }
     }).then(function(){
-        console.log("load end");
-        console.log(loadedLanguages);
+        //console.log("load end");
+        //console.log(loadedLanguages);
         //console.log(database.get("themesById.default.languages").value());
         return Promise.resolve();
     });
@@ -188,13 +186,12 @@ function getThemes(langCode){
 };
 
 
-/*refresh().then(function(){
-    console.log(getLanguages());
-    getThemes("zh-tw").then(function(themes){
-        console.log(themes.themesById.default.languagesByCode);
-    });
+/*currentLangCode = 'zh-tw';
+refresh().then(function(){
+    console.log(database.get("languages").value());
+    console.log(database.get("themes").value());
+    console.log(database.get("themesLanguage").value());
 });*/
-
 refresh();
 module.exports = {
     refresh: refresh,
