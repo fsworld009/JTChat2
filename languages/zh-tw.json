@@ -3,12 +3,19 @@
   "langCode": "zh-tw",
   "version": "0.0.1",
   "title": "JTChat 2 設定",
+  "loading": "讀取中",
   "status": {
     "title": "狀態"
   },
+  "common": {
+    "editTitle": "編輯 %name%",
+    "edit": "編輯",
+    "delete": "刪除",
+    "save": "儲存",
+    "cancel": "取消"
+  },
   "site": {
     "title": "網站",
-    "editTitle": "編輯 %name%",
     "sitesById" : {
       "twitch" : {
         "name": "抽筋電視",

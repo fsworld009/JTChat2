@@ -30,7 +30,7 @@ var EditProfile = require("./EditProfile.jsx");
 var UrlGenerator = require("./UrlGenerator.jsx");
 
 import {saveConfig} from './ajax.js';
-
+import {lang} from "./language.js";
 
 
 
@@ -44,7 +44,7 @@ var App = React.createClass({
       languageMenu = (<span></span>);
       mainMenu = (<span></span>);
       content = (
-        <div><i className="fa fa-spin fa-spinner"></i> Loading...</div>
+        <div><i className="fa fa-spin fa-spinner"></i> {lang("loading") || "Loading"}...</div>
       );
     }else{
       if(this.props.saving){
@@ -59,7 +59,7 @@ var App = React.createClass({
     return (
       <div>
         <div style={{margin:"5px"}}>
-          <h1 className="ui header">JTChat2 Configuration</h1>
+          <h1 className="ui header">{lang("title")}</h1>
         </div>
         {languageMenu}
         {mainMenu}

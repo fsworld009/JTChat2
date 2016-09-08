@@ -7,12 +7,12 @@ var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
 import {saveConfig} from './ajax.js';
+import {lang} from "./language.js";
 
 function mapStateToProps(state){
   return {
     sitesById: state.get("sitesById"),
-    siteDefsById: state.get("siteDefsById"),
-    language: state.getIn(["currentLanguage","site"])
+    siteDefsById: state.get("siteDefsById")
   };
 }
 
@@ -38,16 +38,16 @@ var EditSite = React.createClass({
     var siteId = this.props.params.siteId;
     var site = this.props.sitesById.get(siteId);
     var siteDef = this.props.siteDefsById.get(siteId);
-    var language = this.props.language.toJS();
+    var language = lang("site.sitesById."+siteId, true);
     var options = siteDef.get("options").toJS();
     this.formOptions = options;
     var savedOptions = {};
     if(typeof site !== "undefined"){
       savedOptions = _.keyBy(site.get("options").toJS(), "name");
     }
-    var optionsLanguage = language.sitesById[siteId].options || {};
+    var optionsLanguage = language("options") || {};
     return (
-        <Segment title={language.editTitle.replace("%name%",language.sitesById[siteId].name)}>
+        <Segment title={lang("common.editTitle").replace("%name%",language("name"))}>
           <SegmentItem>
             <div className="ui grid" match="content">
               <Form>
@@ -55,8 +55,8 @@ var EditSite = React.createClass({
               </Form>
             </div>
             <div match="extra">
-              <Button className="green" pull-right="true" onClick={this.save}>Save</Button>
-              <Button className="" pull-right="true" route="/config/site/">Cancel</Button>
+              <Button className="green" pull-right="true" onClick={this.save}>{lang("common.save")}</Button>
+              <Button className="" pull-right="true" route="/config/site/">{lang("common.cancel")}</Button>
               <br/><br/>
             </div>
           </SegmentItem>

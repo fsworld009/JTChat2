@@ -8,12 +8,11 @@ var currentLangCode;
 
 function wrapLang(Wrapper){
     return function(path, wrapperOnly){
-        var stringPath = currentLangCode + "." + path;
-        var childWrapper = Wrapper.get(stringPath);
+        var childWrapper = Wrapper.get(path);
         if(!wrapperOnly){
             var value = childWrapper.value();
             if(typeof value == "undefined"){
-                console.info("No string:", stringPath);
+                console.info("No string:", path);
                 return "";
             }else{
                 return value;
@@ -25,7 +24,8 @@ function wrapLang(Wrapper){
 }
 
 function lang(path, wrapperOnly){
-    return wrapLang(langDB)(path, wrapperOnly);
+    var stringPath = currentLangCode + "." + path;
+    return wrapLang(langDB)(stringPath, wrapperOnly);
 }
 
 function setLang(langCode, root, json){

@@ -5,14 +5,14 @@ import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 var InputViewRenderer = require("./InputViewRenderer.jsx");
+import {lang} from "./language.js";
 
 function mapStateToProps(state){
   return {
     sitesById: state.get("sitesById"),
     sites: state.get("sites"),
     siteDefsById: state.get("siteDefsById"),
-    siteDefs: state.get("siteDefs"),
-    language: state.getIn(["currentLanguage","site"])
+    siteDefs: state.get("siteDefs")
   };
 }
 
@@ -40,7 +40,7 @@ var Site = React.createClass({
           <div match="content" className="ui grid">
             <InputViewRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}/>
           </div>
-          <IconButton match="extra" iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+siteId}></IconButton>
+          <IconButton match="extra" iconClass="fa fa-pencil" className="green" pull-right="true" popup-content={lang("common.edit")} route={"/config/site/edit/"+siteId}></IconButton>
       </SegmentItem>
     );
   }
@@ -52,7 +52,7 @@ var Sites = React.createClass({
     var siteDefsById = this.props.siteDefsById;
     var sitesById = this.props.sitesById;
     var view = this;
-    var language = this.props.language.toJS();
+    var language = lang("site");
     return (
       <Segment title={ language.title }>
         <Items>

@@ -16,7 +16,6 @@
   },
   "site": {
     "title": "Site",
-    "editTitle": "Edit %name%",
     "sitesById" : {
       "twitch" : {
         "name": "Twitch.tv",
