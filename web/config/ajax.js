@@ -4,7 +4,7 @@ var $ = require('jquery');
 //const store = require('./store.js');
 //console.log("ajax store",store);
 //store.dispatch(loadConfig());
-import {setLang, refreshLang} from "./language.js";
+import {setLang, setLangCode, refreshLang} from "./language.js";
 
 function doSaveConfig(saveJson){
     _.forEach(saveJson, function(value, key){
@@ -31,6 +31,7 @@ function saveConfig(state){
         profilesById: stateJson.profilesById,
         langCode: stateJson.langCode
     };
+    setLangCode(stateJson.langCode);
     doSaveConfig(saveJson);
     return function(dispatch){
         $.ajax({
@@ -127,6 +128,7 @@ function loadConfig(){
         var currentLangCode;
         $.getJSON("/profiles/", function(data){
             currentLangCode = data.langCode || "en";
+            setLangCode(currentLangCode);
             parseStore(data);
             dispatch({
                 type: "LOAD_CONFIG",
@@ -177,5 +179,6 @@ module.exports = {
     loadThemes: loadThemes,
     loadLanguages: loadLanguages,
     loadSiteDefs: loadSiteDefs,
+    loadThemesLanguage: loadThemesLanguage,
     getId: getId
 };

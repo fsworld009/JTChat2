@@ -5,9 +5,9 @@ var _ = require("lodash");
 import { connect } from 'react-redux';
 import {Dropdown} from "./Semantic_Form.jsx";
 import {Link} from "react-router";
+import {lang} from "./language.js";
 function mapStateToProps(state){
   return {
-    language: state.get("currentLanguage")
   };
 }
 
@@ -18,12 +18,11 @@ function mapDispatchToProps(dispatch){
 var rootPath = "/config/";
 var MainMenu = React.createClass({
   render: function(){
-    var language = this.props.language.toJS();
     
     var menuItems = _.map(["status","site","user","theme","profile","url"], function(path){
       return {
         path: path,
-        label: language[path].title
+        label: lang(path+".title")
       };
     });
 

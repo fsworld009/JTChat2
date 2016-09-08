@@ -5,13 +5,11 @@ var $ = require("jquery");
 var _ = require("lodash");
 import { connect } from 'react-redux';
 import {Dropdown} from "./Semantic_Form.jsx";
-import {loadThemes} from "./ajax.js";
+import {loadThemesLanguage} from "./ajax.js";
 function mapStateToProps(state){
   return {
     langCode: state.get("langCode"),
     languages: state.get("languages"),
-    languagesByCode: state.get("languagesByCode"),
-    loadedLanguages: state.get("loadedLanguages")
   };
 }
 
@@ -25,7 +23,7 @@ function mapDispatchToProps(dispatch){
         type: "SAVE_LANG",
         langCode: langCode
       });
-      dispatch(loadThemes(langCode));
+      dispatch(loadThemesLanguage(langCode));
     }
   };
 
@@ -38,8 +36,7 @@ var LanguageMenu = React.createClass({
     if(inEdit){
       className = "disabled";
     }
-    var languages = _.map(this.props.languages.toArray(), function(langCode){
-      var languageObj = this.props.languagesByCode.get(langCode).toJS();
+    var languages = _.map(this.props.languages.toJS(), function(languageObj){
       return {
         value: languageObj.langCode,
         label: languageObj.name

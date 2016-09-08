@@ -4,6 +4,7 @@ import {LOCATION_CHANGE}  from "react-router-redux";
 var Immutable = require('immutable');
 import {INIT}  from "redux";
 import {getId} from "./ajax.js";
+import {setLang} from "./language.js";
 
 //id, hosts, ports
 var updateSite = function(state, action){
@@ -45,8 +46,7 @@ var reducer = function(state, action){
     if(action.type === "SAVE_LANG"){
         state = state.withMutations(function(state){
             state.set("langCode",action.langCode);
-            var currentLangCode = state.get("langCode");
-            state.set("currentLanguage", state.getIn(["languagesByCode",currentLangCode]));
+            setLang(action.langCode);
             state.set("saving","saving");
         });
     }
@@ -71,10 +71,17 @@ var reducer = function(state, action){
     }
     if(action.type === "LOAD_THEMES"){
         state = state.withMutations(function(state){
-            state.setIn(["load","themes"], action.loadingThemes);
+            state.setIn(["load","themes"], action.loading);
             //state.merge({themes: action.themes, themesById: action.themesById});
         });
     }
+    if(action.type === "LOAD_THEMES_LANGUAGE"){
+        state = state.withMutations(function(state){
+            state.setIn(["load","themesLanguage"], action.loading);
+            //state.merge({themes: action.themes, themesById: action.themesById});
+        });
+    }
+
     if(action.type === "LOAD_LANGUAGES"){
         state = state.withMutations(function(state){
             state.setIn(["load","languages"], action.loading);

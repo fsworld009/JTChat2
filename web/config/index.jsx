@@ -40,7 +40,7 @@ var rootPath = "/config/";
 var App = React.createClass({
   render: function(){
     var content, languageMenu, mainMenu;
-    if(true || this.props.loading){
+    if(this.props.loading){
       languageMenu = (<span></span>);
       mainMenu = (<span></span>);
       content = (

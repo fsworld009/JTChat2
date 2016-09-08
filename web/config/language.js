@@ -2,14 +2,22 @@ var _ = require("lodash");
 var lowdb = require("lowdb");
 
 
-var langDB = lowdb();
+var langDB;
 var currentLangCode;
+//var hasLangMap;
 
 function wrapLang(Wrapper){
     return function(path, wrapperOnly){
-        var childWrapper = Wrapper.get(currentLangCode + "." + path);
+        var stringPath = currentLangCode + "." + path;
+        var childWrapper = Wrapper.get(stringPath);
         if(!wrapperOnly){
-            return childWrapper.value();
+            var value = childWrapper.value();
+            if(typeof value == "undefined"){
+                console.info("No string:", stringPath);
+                return "";
+            }else{
+                return value;
+            }
         }else{
             return wrapLang(childWrapper);
         }
@@ -22,17 +30,18 @@ function lang(path, wrapperOnly){
 
 function setLang(langCode, root, json){
     langDB.set(langCode + "." + root, json).value();
-    console.log("database", langDB.value());
 }
 
 function refreshLang(){
     langDB = lowdb();
+    //hasLangMap = {};
 }
 
 function setLangCode(langCode){
     currentLangCode = langCode;
 }
 
+refreshLang();
 module.exports= {
     lang: lang,
     setLang: setLang,
