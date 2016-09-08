@@ -4,6 +4,7 @@ var $ = require('jquery');
 //const store = require('./store.js');
 //console.log("ajax store",store);
 //store.dispatch(loadConfig());
+import {setLang, refreshLang} from "./language.js";
 
 function doSaveConfig(saveJson){
     _.forEach(saveJson, function(value, key){
@@ -102,11 +103,16 @@ function loadLanguages(){
             loading: "loading"
         });
         $.getJSON("/languages/", function(data){
+            _.each(data, function(langData){
+                var langCode = langData.langCode;
+                _.each(langData, function(json, root){
+                    setLang(langCode, root, json);
+                });
+            });
             dispatch({
                 type: "LOAD_LANGUAGES",
                 loading: "loaded",
-                languages: _.map(data, "langCode"),
-                languagesByCode: _.keyBy(data, "langCode")
+                languages: data
             });
         });
     };
@@ -118,38 +124,52 @@ function loadConfig(){
             type: "LOAD_CONFIG",
             loading: "loading"
         });
+        var currentLangCode;
         $.getJSON("/profiles/", function(data){
+            currentLangCode = data.langCode || "en";
             parseStore(data);
             dispatch({
                 type: "LOAD_CONFIG",
                 loading: "loaded",
                 profiles: data
             });
-        }).then(function(data){
-            loadLanguages()(dispatch);
-            var langCode = data.langCode || "en";
-            loadThemes(data.langCode)(dispatch);
+        }).then(function(){
+            loadThemesLanguage(currentLangCode)(dispatch);
         });
     };
 }
 
-function loadThemes(langCode){
+function loadThemes(){
     return function(dispatch){
         dispatch({
             type: "LOAD_THEMES",
-            loadingThemes: "loading"
+            loading: "loading"
         });
-        $.getJSON("/themes/"+langCode + "/", function(data){
+        $.getJSON("/themes/", function(data){
             dispatch({
                 type: "LOAD_THEMES",
-                loadingThemes: "loaded",
-                themes: _.map(data, "id"),
-                themesById: _.keyBy(data, "id"),
-                langCode: langCode
+                loading: "loaded"
             });
         });
     };
 }   
+
+function loadThemesLanguage(langCode){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_THEMES_LANGUAGE",
+            loading: "loading"
+        });
+        $.getJSON("/themesLanguage/"+langCode, function(data){
+            setLang(langCode, "themeLang", data);
+            dispatch({
+                type: "LOAD_THEMES_LANGUAGE",
+                loading: "loaded"
+            });
+        });
+    };
+
+}
 
 module.exports = {
     saveConfig: saveConfig,

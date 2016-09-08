@@ -72,15 +72,16 @@ var reducer = function(state, action){
     if(action.type === "LOAD_THEMES"){
         state = state.withMutations(function(state){
             state.setIn(["load","themes"], action.loadingThemes);
-            state.merge({themes: action.themes, themesById: action.themesById});
+            //state.merge({themes: action.themes, themesById: action.themesById});
         });
     }
     if(action.type === "LOAD_LANGUAGES"){
         state = state.withMutations(function(state){
             state.setIn(["load","languages"], action.loading);
-            state.merge({languages: action.languages, languagesByCode: action.languagesByCode});
-            var currentLangCode = state.get("langCode");
-            state.set("currentLanguage", state.getIn(["languagesByCode",currentLangCode]));
+            state.merge({languages: action.languages});
+            //state.merge({languages: action.languages, languagesByCode: action.languagesByCode});
+            //var currentLangCode = state.get("langCode");
+            //state.set("currentLanguage", state.getIn(["languagesByCode",currentLangCode]));
         });
     }
     if(action.type === "LOAD_SITE_DEFS"){

@@ -14,6 +14,7 @@ var initialState=Immutable.fromJS({
     load: {
         config: "loading",
         themes: "loading",
+        themesLanguage: "loading",
         languages: "loading",
         siteDefs: "loading"
     }
@@ -27,6 +28,7 @@ const history = syncHistoryWithStore(browserHistory, store, {
   }
 });
 store.dispatch(loadConfig());
-//store.dispatch(loadLanguages());
+store.dispatch(loadLanguages());
+store.dispatch(loadThemes());
 store.dispatch(loadSiteDefs());
 module.exports = store;

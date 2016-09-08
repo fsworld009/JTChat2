@@ -68,7 +68,7 @@ function setThemeLanguage(themeId, langCode, json){
     json = _.extend(json,{id: themeId} );
     var dbThemeWrapper = database.get("themesLanguage");
     if(langCode != defaultLangCode){
-        json = _.extend(dbThemeWrapper.get(defaultLangCode + "." + themeId).value() , json);
+        json = _.extend({}, dbThemeWrapper.get(defaultLangCode + "." + themeId).value() , json);
     }
     dbThemeWrapper.set(langCode + "." + themeId, json).value();
     loadedThemeLanguage[langCode] = true;
