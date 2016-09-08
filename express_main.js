@@ -43,14 +43,6 @@ app.get("/profiles/", function(req, res, next){
     });
 });
 
-//old
-app.get("/themes/", function(req, res, next){
-    theme_reader.refresh().then(function(){
-        res.setHeader('Content-Type', 'application/json');
-        res.send(theme_reader.get());
-    });
-});
-
 app.get("/siteDefs/", function(req, res, next){
     var responseJson = {error: true};
     fs.readFileAsync(basePath + "/core/siteDefs.json","utf-8").then(function(data){
@@ -64,20 +56,26 @@ app.get("/siteDefs/", function(req, res, next){
     });
 });
 
-
-
-app.get("/themes/:langCode", function(req, res, next){
-    core_reader.getThemes(req.params.langCode).then(function(themes){
+app.get("/themesLanguage/:langCode", function(req, res, next){
+    core_reader.getThemesLanguage(req.params.langCode).then(function(themeLanguage){
         res.setHeader('Content-Type', 'application/json');
-        res.send(themes);
+        res.send(themeLanguage);
     });
 });
 
 app.get("/languages/", function(req, res, next){
-    res.setHeader('Content-Type', 'application/json');
-    res.send(core_reader.getLanguages());
+    core_reader.getLanguages().then(function(languages){
+        res.setHeader('Content-Type', 'application/json');
+        res.send(languages);
+    });
 });
 
+app.get("/themes/", function(req, res, next){
+    core_reader.getThemes().then(function(themes){
+        res.setHeader('Content-Type', 'application/json');
+        res.send(themes);
+    });
+});
 app.get("/refresh/", function(req, res, next){
     core_reader.refresh().then(function(){
         res.setHeader('Content-Type', 'application/json');
