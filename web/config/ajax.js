@@ -95,25 +95,6 @@ function loadConfig(){
     };
 }
 
-function loadSiteDefs(){
-    return function(dispatch){
-        dispatch({
-            type: "LOAD_DATABASE",
-            loadKey: "siteDefs",
-            loading: "loading"
-        });
-        $.getJSON("/siteDefs/", function(data){
-            setDB("siteDefs", data);
-            dispatch({
-                type: "LOAD_DATABASE",
-                loadKey: "siteDefs",
-                loading: "loaded",
-            });
-        });
-    };
-}
-
-
 function loadLanguages(){
     return function(dispatch){
         dispatch({
@@ -139,7 +120,23 @@ function loadLanguages(){
     };
 }
 
-
+function loadSiteDefs(){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_DATABASE",
+            loadKey: "siteDefs",
+            loading: "loading"
+        });
+        $.getJSON("/siteDefs/", function(data){
+            setDB("siteDefs", data);
+            dispatch({
+                type: "LOAD_DATABASE",
+                loadKey: "siteDefs",
+                loading: "loaded",
+            });
+        });
+    };
+}
 
 function loadThemes(){
     return function(dispatch){
@@ -149,6 +146,7 @@ function loadThemes(){
             loading: "loading"
         });
         $.getJSON("/themes/", function(data){
+            setDB("themes", data);
             dispatch({
                 type: "LOAD_DATABASE",
                 loadKey: "themes",

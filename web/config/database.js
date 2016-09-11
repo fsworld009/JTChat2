@@ -3,7 +3,7 @@ var lowdb = require("lowdb");
 
 var database;
 var langDB;
-var currentLangCode;
+var currentLangCode = "en";
 //var hasLangMap;
 
 function wrapLang(Wrapper){
