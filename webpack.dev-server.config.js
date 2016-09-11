@@ -40,7 +40,8 @@ var config = {
             { test: require.resolve("react-dom"), loader: "expose?ReactDOM" },
             { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
             { test: require.resolve("lodash"), loader: "expose?_" },
-            { test: path.resolve(__dirname, 'web/config/store.js'), loaders: ["expose?store","babel-loader?presets[]=react,presets[]=es2015" ]}
+            { test: path.resolve(__dirname, 'web/config/store.js'), loaders: ["expose?store","babel-loader?presets[]=react,presets[]=es2015" ]},
+            { test: path.resolve(__dirname, 'web/config/database.js'), loaders: ["expose?database","babel-loader?presets[]=react,presets[]=es2015" ]}
         ]
     },
     plugins: [

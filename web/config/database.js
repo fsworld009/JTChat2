@@ -1,7 +1,7 @@
 var _ = require("lodash");
 var lowdb = require("lowdb");
 
-
+var database;
 var langDB;
 var currentLangCode;
 //var hasLangMap;
@@ -32,8 +32,13 @@ function setLang(langCode, root, json){
     langDB.set(langCode + "." + root, json).value();
 }
 
+function refresh(){
+    database = lowdb();
+}
+
 function refreshLang(){
-    langDB = lowdb();
+    database.set("languages",{}).value();
+    langDB = database.get("languages");
     //hasLangMap = {};
 }
 
@@ -41,11 +46,13 @@ function setLangCode(langCode){
     currentLangCode = langCode;
 }
 
+refresh();
 refreshLang();
 module.exports= {
     lang: lang,
     setLang: setLang,
     refreshLang: refreshLang,
-    setLangCode: setLangCode
+    setLangCode: setLangCode,
+    database: database
 };
 
