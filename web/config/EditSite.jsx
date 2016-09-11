@@ -7,12 +7,11 @@ var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
 import {saveConfig} from './ajax.js';
-import {lang} from "./database.js";
+import {lang, getDB} from "./database.js";
 
 function mapStateToProps(state){
   return {
-    sitesById: state.get("sitesById"),
-    siteDefsById: state.get("siteDefsById")
+    sitesById: state.get("sitesById")
   };
 }
 
@@ -37,9 +36,9 @@ var EditSite = React.createClass({
   render: function(){
     var siteId = this.props.params.siteId;
     var site = this.props.sitesById.get(siteId);
-    var siteDef = this.props.siteDefsById.get(siteId);
+    var siteDef = getDB("siteDefs",siteId);
     var language = lang("site.sitesById."+siteId, true);
-    var options = siteDef.get("options").toJS();
+    var options = siteDef.options || [];
     this.formOptions = options;
     var savedOptions = {};
     if(typeof site !== "undefined"){
