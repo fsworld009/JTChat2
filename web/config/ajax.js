@@ -4,7 +4,7 @@ var $ = require('jquery');
 //const store = require('./store.js');
 //console.log("ajax store",store);
 //store.dispatch(loadConfig());
-import {setLang, setLangList, setLangCode, setDB, getDatabase} from "./database.js";
+import {lang, setLang, setLangList, setLangCode, setDB, getDatabase} from "./database.js";
 
 function doSaveConfig(saveJson){
     _.forEach(saveJson, function(value, key){
@@ -159,10 +159,21 @@ function loadThemes(){
 function loadThemesLanguage(langCode){
     return function(dispatch){
         dispatch({
-            type: "LOAD_DATABASE",
+        type: "LOAD_DATABASE",
             loadKey: "themesLanguage",
             loading: "loading"
         });
+        var themeLang = lang("themeLang");
+        if(themeLang){
+            //if themeLang already exists, don't call the service
+            //only trigger dispatches for rerendering
+            dispatch({
+                type: "LOAD_DATABASE",
+                loadKey: "themesLanguage",
+                loading: "loaded"
+            });
+            return;
+        }
         $.getJSON("/themesLanguage/"+langCode, function(data){
             setLang(langCode, "themeLang", data);
             dispatch({

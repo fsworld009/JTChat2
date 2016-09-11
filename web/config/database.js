@@ -81,6 +81,7 @@ module.exports= {
     getDB: getDatabase,
     refresh: refresh,
     setLangCode: setLangCode,
-    database: database
+    database: database,
+    getCurrLangCode: function(){return currentLangCode;}
 };
 
