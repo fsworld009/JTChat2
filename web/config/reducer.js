@@ -43,7 +43,7 @@ var reducer = function(state, action){
     if(action.type === "SAVE_CONFIG"){
         return state.set("saving",action.saving);
     }
-    if(action.type === "SAVE_LANG"){
+    if(action.type === "UPDATE_LANG"){
         state = state.withMutations(function(state){
             state.set("langCode",action.langCode);
             setLang(action.langCode);
@@ -69,32 +69,9 @@ var reducer = function(state, action){
             state.set("saving","saving");
         });
     }
-    if(action.type === "LOAD_THEMES"){
+    if(action.type === "LOAD_DATABASE"){
         state = state.withMutations(function(state){
-            state.setIn(["load","themes"], action.loading);
-            //state.merge({themes: action.themes, themesById: action.themesById});
-        });
-    }
-    if(action.type === "LOAD_THEMES_LANGUAGE"){
-        state = state.withMutations(function(state){
-            state.setIn(["load","themesLanguage"], action.loading);
-            //state.merge({themes: action.themes, themesById: action.themesById});
-        });
-    }
-
-    if(action.type === "LOAD_LANGUAGES"){
-        state = state.withMutations(function(state){
-            state.setIn(["load","languages"], action.loading);
-            state.merge({languages: action.languages});
-            //state.merge({languages: action.languages, languagesByCode: action.languagesByCode});
-            //var currentLangCode = state.get("langCode");
-            //state.set("currentLanguage", state.getIn(["languagesByCode",currentLangCode]));
-        });
-    }
-    if(action.type === "LOAD_SITE_DEFS"){
-        state = state.withMutations(function(state){
-            state.setIn(["load","siteDefs"], action.loading);
-            state.merge({siteDefs: action.siteDefs, siteDefsById: action.siteDefsById});
+            state.setIn(["load",action.loadKey], action.loading);
         });
     }
     return state;

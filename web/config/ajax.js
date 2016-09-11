@@ -4,7 +4,7 @@ var $ = require('jquery');
 //const store = require('./store.js');
 //console.log("ajax store",store);
 //store.dispatch(loadConfig());
-import {setLang, setLangCode, refreshLang} from "./database.js";
+import {setLang, setLangList, setLangCode, setSiteDefs} from "./database.js";
 
 function doSaveConfig(saveJson){
     _.forEach(saveJson, function(value, key){
@@ -79,46 +79,6 @@ function parseStore(store){
     });
 }
 
-function loadSiteDefs(){
-    return function(dispatch){
-        dispatch({
-            type: "LOAD_SITE_DEFS",
-            loading: "loading"
-        });
-        $.getJSON("/siteDefs/", function(data){
-            dispatch({
-                type: "LOAD_SITE_DEFS",
-                loading: "loaded",
-                siteDefs: _.map(data, "id"),
-                siteDefsById: _.keyBy(data, "id")
-            });
-        });
-    };
-}
-
-
-function loadLanguages(){
-    return function(dispatch){
-        dispatch({
-            type: "LOAD_LANGUAGES",
-            loading: "loading"
-        });
-        $.getJSON("/languages/", function(data){
-            _.each(data, function(langData){
-                var langCode = langData.langCode;
-                _.each(langData, function(json, root){
-                    setLang(langCode, root, json);
-                });
-            });
-            dispatch({
-                type: "LOAD_LANGUAGES",
-                loading: "loaded",
-                languages: data
-            });
-        });
-    };
-}
-
 function loadConfig(){
     return function(dispatch){
         dispatch({
@@ -141,15 +101,63 @@ function loadConfig(){
     };
 }
 
+function loadSiteDefs(){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_DATABASE",
+            loadKey: "siteDefs",
+            loading: "loading"
+        });
+        $.getJSON("/siteDefs/", function(data){
+            setSiteDefs(data);
+            dispatch({
+                type: "LOAD_DATABASE",
+                loadKey: "siteDefs",
+                loading: "loaded",
+            });
+        });
+    };
+}
+
+
+function loadLanguages(){
+    return function(dispatch){
+        dispatch({
+            type: "LOAD_DATABASE",
+            loadKey: "languages",
+            loading: "loading"
+        });
+        $.getJSON("/languages/", function(data){
+            data = data || [];
+            setLangList(data);
+            _.each(data, function(langData){
+                var langCode = langData.langCode;
+                _.each(langData, function(json, root){
+                    setLang(langCode, root, json);
+                });
+            });
+            dispatch({
+                type: "LOAD_DATABASE",
+                loadKey: "languages",
+                loading: "loaded",
+            });
+        });
+    };
+}
+
+
+
 function loadThemes(){
     return function(dispatch){
         dispatch({
-            type: "LOAD_THEMES",
+            type: "LOAD_DATABASE",
+            loadKey: "themes",
             loading: "loading"
         });
         $.getJSON("/themes/", function(data){
             dispatch({
-                type: "LOAD_THEMES",
+                type: "LOAD_DATABASE",
+                loadKey: "themes",
                 loading: "loaded"
             });
         });
@@ -159,13 +167,15 @@ function loadThemes(){
 function loadThemesLanguage(langCode){
     return function(dispatch){
         dispatch({
-            type: "LOAD_THEMES_LANGUAGE",
+            type: "LOAD_DATABASE",
+            loadKey: "themesLanguage",
             loading: "loading"
         });
         $.getJSON("/themesLanguage/"+langCode, function(data){
             setLang(langCode, "themeLang", data);
             dispatch({
-                type: "LOAD_THEMES_LANGUAGE",
+                type: "LOAD_DATABASE",
+                loadKey: "themesLanguage",
                 loading: "loaded"
             });
         });

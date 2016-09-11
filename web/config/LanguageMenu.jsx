@@ -6,10 +6,10 @@ var _ = require("lodash");
 import { connect } from 'react-redux';
 import {Dropdown} from "./Semantic_Form.jsx";
 import {loadThemesLanguage} from "./ajax.js";
+import {getLangList} from "./database.js";
 function mapStateToProps(state){
   return {
-    langCode: state.get("langCode"),
-    languages: state.get("languages"),
+    langCode: state.get("langCode")
   };
 }
 
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch){
       var $input = $this.find("[name=lang]");
       var langCode = $input.val();
       dispatch({
-        type: "SAVE_LANG",
+        type: "UPDATE_LANG",
         langCode: langCode
       });
       dispatch(loadThemesLanguage(langCode));
@@ -36,7 +36,7 @@ var LanguageMenu = React.createClass({
     if(inEdit){
       className = "disabled";
     }
-    var languages = _.map(this.props.languages.toJS(), function(languageObj){
+    var languages = _.map(getLangList(), function(languageObj){
       return {
         value: languageObj.langCode,
         label: languageObj.name

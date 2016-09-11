@@ -2,7 +2,7 @@ var _ = require("lodash");
 var lowdb = require("lowdb");
 
 var database;
-var langDB;
+var langDB, siteDefsDB, themesDB, themesLanguageDB;
 var currentLangCode;
 //var hasLangMap;
 
@@ -28,30 +28,66 @@ function lang(path, wrapperOnly){
     return wrapLang(langDB)(stringPath, wrapperOnly);
 }
 
-function setLang(langCode, root, json){
-    langDB.set(langCode + "." + root, json).value();
-}
-
-function refresh(){
-    database = lowdb();
-}
-
-function refreshLang(){
-    database.set("languages",{}).value();
-    langDB = database.get("languages");
-    //hasLangMap = {};
-}
-
 function setLangCode(langCode){
     currentLangCode = langCode;
 }
 
+function setLang(langCode, root, json){
+    langDB.set(langCode + "." + root, json).value();
+}
+
+function setLangList(languages) {
+    database.set("langList", languages).value();
+}
+
+function getLangList(){
+    return database.get("langList").value();
+}
+
+function setSiteDefs(siteDefs){
+    siteDefsDB.set("siteDefs",_.map(siteDefs, "id")).value();
+    siteDefsDB.set("sitesById", _.keyBy(siteDefs, "id")).value();
+}
+
+function getSiteDef(id, wrapperOnly){
+    var wrapper;
+    if (typeof id == "undefined") {
+        wrapper = siteDefsDB.get("siteDefs");
+    }else{
+        wrapper = siteDefsDB.get("siteDefsDB." + id);
+    }
+    if(wrapperOnly){
+    }
+}
+
+function refresh(){
+    database = lowdb();
+    refreshLang();
+    refreshSiteDefs();
+}
+
+function refreshLang(){
+    database.set("lang",{}).value();
+    langDB = database.get("lang");
+    //hasLangMap = {};
+}
+
+function refreshSiteDefs(){
+    database.set("siteDefs",{}).value();
+    siteDefsDB = database.get("siteDefs");
+}
+
+
+
+
 refresh();
-refreshLang();
 module.exports= {
     lang: lang,
     setLang: setLang,
-    refreshLang: refreshLang,
+    setLangList: setLangList,
+    getLangList: getLangList,
+    setSiteDefs: setSiteDefs,
+    refresh: refresh,
     setLangCode: setLangCode,
     database: database
 };
