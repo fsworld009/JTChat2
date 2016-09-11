@@ -4,7 +4,7 @@ var $ = require('jquery');
 //const store = require('./store.js');
 //console.log("ajax store",store);
 //store.dispatch(loadConfig());
-import {setLang, setLangList, setLangCode, setSiteDefs} from "./database.js";
+import {setLang, setLangList, setLangCode, setDB, getDatabase} from "./database.js";
 
 function doSaveConfig(saveJson){
     _.forEach(saveJson, function(value, key){
@@ -21,17 +21,11 @@ function doSaveConfig(saveJson){
 
 function saveConfig(state){
     //console.log("store",store2);
-    var stateJson = state.toJS();
-    var saveJson = {
-        users: stateJson.users,
-        usersById: stateJson.usersById,
-        sites: stateJson.sites,
-        sitesById: stateJson.sitesById,
-        profiles: stateJson.profiles,
-        profilesById: stateJson.profilesById,
-        langCode: stateJson.langCode
-    };
-    setLangCode(stateJson.langCode);
+    var saveJson = state.toJS();
+    delete saveJson.load;
+    delete saveJson.routing;
+    delete saveJson.saving;
+    setLangCode(saveJson.langCode);
     doSaveConfig(saveJson);
     return function(dispatch){
         $.ajax({
@@ -109,7 +103,7 @@ function loadSiteDefs(){
             loading: "loading"
         });
         $.getJSON("/siteDefs/", function(data){
-            setSiteDefs(data);
+            setDB("siteDefs", data);
             dispatch({
                 type: "LOAD_DATABASE",
                 loadKey: "siteDefs",
