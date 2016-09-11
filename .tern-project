@@ -1,11 +1,11 @@
 {
   "loadEagerly": [
-      "./node_modules/lodash/lodash.js",
-      "./node_modules/react/dist/react.js",
-      "./node_modules/react-dom/react-dom.js",
-      "./web/js/semantic.js"
+      "node_modules/lodash/lodash.js",
+      "node_modules/react/dist/react.js",
+      "node_modules/react-dom/react-dom.js",
+      "web/js/semantic.js"
     ],
-    "exclude": [
+    "dontLoad": [
         "node_modules/**"
     ],
     "libs": [

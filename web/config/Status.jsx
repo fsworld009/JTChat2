@@ -14,7 +14,6 @@ function mapDispatchToProps(dispatch){
 
 var Status = React.createClass({
   render: function(){
-    console.log(this.props);
     return (<div>Status</div>);
   }
 });
