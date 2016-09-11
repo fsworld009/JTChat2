@@ -4,7 +4,7 @@ var $ = require('jquery');
 //const store = require('./store.js');
 //console.log("ajax store",store);
 //store.dispatch(loadConfig());
-import {setLang, setLangCode, refreshLang} from "./language.js";
+import {setLang, setLangCode, refreshLang} from "./database.js";
 
 function doSaveConfig(saveJson){
     _.forEach(saveJson, function(value, key){

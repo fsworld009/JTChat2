@@ -5,7 +5,7 @@ import {Form, TextInput, TextInputList, Textarea} from "./Semantic_Form.jsx";
 var _ = require("lodash");
 var util = require("./util.js");
 var InputViewRenderer = require("./InputViewRenderer.jsx");
-import {lang} from "./language.js";
+import {lang} from "./database.js";
 
 function mapStateToProps(state){
   return {

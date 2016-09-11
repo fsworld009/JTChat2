@@ -5,7 +5,7 @@ var _ = require("lodash");
 import { connect } from 'react-redux';
 import {Dropdown} from "./Semantic_Form.jsx";
 import {Link} from "react-router";
-import {lang} from "./language.js";
+import {lang} from "./database.js";
 function mapStateToProps(state){
   return {
   };

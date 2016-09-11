@@ -4,7 +4,7 @@ import {LOCATION_CHANGE}  from "react-router-redux";
 var Immutable = require('immutable');
 import {INIT}  from "redux";
 import {getId} from "./ajax.js";
-import {setLang} from "./language.js";
+import {setLang} from "./database.js";
 
 //id, hosts, ports
 var updateSite = function(state, action){

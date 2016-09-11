@@ -7,7 +7,7 @@ var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
 import {saveConfig} from './ajax.js';
-import {lang} from "./language.js";
+import {lang} from "./database.js";
 
 function mapStateToProps(state){
   return {

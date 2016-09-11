@@ -30,7 +30,7 @@ var EditProfile = require("./EditProfile.jsx");
 var UrlGenerator = require("./UrlGenerator.jsx");
 
 import {saveConfig} from './ajax.js';
-import {lang} from "./language.js";
+import {lang} from "./database.js";
 
 
 
