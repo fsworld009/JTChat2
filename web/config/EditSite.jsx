@@ -40,9 +40,9 @@ var EditSite = React.createClass({
     var language = lang("site.sitesById."+siteId, true);
     var options = siteDef.options || [];
     this.formOptions = options;
-    var savedOptions = [];
+    var savedOptions = {};
     if(typeof site !== "undefined"){
-      savedOptions = site.get("options").toJS();
+      savedOptions = site.toJS();
     }
     var optionsLanguage = language("options") || {};
     return (

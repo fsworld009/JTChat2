@@ -9,14 +9,13 @@ var InputViewRenderer = React.createClass({
   propTypes: {
     "options" : React.PropTypes.array.isRequired,
     "language": React.PropTypes.object.isRequired,
-    "savedOptions" : React.PropTypes.array
+    "savedOptions" : React.PropTypes.object
   },
 
   render: function(){
     var options = this.props.options;
     var language = this.props.language;
-    var savedOptions = this.props.savedOptions || [];
-    savedOptions = _.keyBy(savedOptions, "name");
+    var savedOptions = this.props.savedOptions || {};
     var $rows=[];
     var $row, $columns=[];
     var rowCounter=0, columnCounter=0, componentCounter=0;
@@ -27,7 +26,7 @@ var InputViewRenderer = React.createClass({
       var label = componentLanguage.label || option.name;
       var value="";
       if(savedOptions[option.name]){
-        value = savedOptions[option.name].value;
+        value = savedOptions[option.name];
       }else{
         value = option.default || "";
       }

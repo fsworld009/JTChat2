@@ -10,12 +10,14 @@ function doSaveConfig(saveJson){
     _.forEach(saveJson, function(value, key){
         var originalKey = key.replace(/ById$/g, "");
         if(originalKey !== key && saveJson[originalKey]){
-            saveJson[originalKey] = _.values(value);
+            saveJson[originalKey] = _.map(saveJson[originalKey], function(id){
+                return saveJson[key][id];
+            });
             delete saveJson[key];
         }
-        if(!(value instanceof Array) && typeof value == "object"){
+        /*if(!(value instanceof Array) && typeof value == "object"){
             doSaveConfig(value);
-        }
+        }*/
     });
 }
 

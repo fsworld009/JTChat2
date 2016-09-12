@@ -58,10 +58,8 @@ var reducer = function(state, action){
             newRecord = true;
         }
         state = state.withMutations(function(state){
-            state.setIn([category+"ById", action.id], Immutable.fromJS({
-                id: action.id,
-                options: action.options
-            }));
+            var savedObject = _.extend({}, {id: action.id}, action.options);
+            state.setIn([category+"ById", action.id], Immutable.fromJS(savedObject));
             if(newRecord){
                 var newList = state.get(category).push(action.id);
                 state.set(category, newList);

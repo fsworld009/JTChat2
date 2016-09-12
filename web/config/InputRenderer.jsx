@@ -9,7 +9,7 @@ var InputRenderer = React.createClass({
   propTypes: {
     "options" : React.PropTypes.array.isRequired,
     "language": React.PropTypes.object.isRequired,
-    "savedOptions" : React.PropTypes.array
+    "savedOptions" : React.PropTypes.object
   },
 
   optionMap: {
@@ -25,8 +25,7 @@ var InputRenderer = React.createClass({
   render: function(){
     var options = this.props.options;
     var language = this.props.language;
-    var savedOptions = this.props.savedOptions || [];
-    savedOptions = _.keyBy(savedOptions, "name");
+    var savedOptions = this.props.savedOptions || {};
     var $rows=[];
     var $row, $columns=[];
     var rowCounter=0, columnCounter=0, componentCounter=0;
@@ -39,7 +38,7 @@ var InputRenderer = React.createClass({
       var componentLanguage = language[option.name] || {};
       var value;
       if(savedOptions[option.name]){
-        value = savedOptions[option.name].value;
+        value = savedOptions[option.name];
       }else{
         value = option.default || "";
       }
@@ -61,7 +60,6 @@ var InputRenderer = React.createClass({
       columnCounter++;
 
       componentCounter++;
-      console.log(componentCounter);
       if(columnCounter>=2 || (columnCounter < 2 && componentCounter==options.length)){
         $row = (<div key={rowCounter} className="two column row">{$columns}</div>);
         $rows.push($row);

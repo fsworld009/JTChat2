@@ -27,9 +27,9 @@ var Site = React.createClass({
     var siteId = siteDef.id;
     var language = this.props.language;
     var options = siteDef.options || [];
-    var savedOptions = [];
+    var savedOptions = {};
     if(typeof site !== "undefined"){
-      savedOptions = site.get("options").toJS();
+      savedOptions = site.toJS();
     }
     var optionsLanguage = language.options || {};
     return (

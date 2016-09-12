@@ -33,7 +33,7 @@ util.getJqueryDom = function(ReactComponent){
 
 util.saveForm = function(ReactComponent, formOptions){
     var $this = util.getJqueryDom(ReactComponent);
-    var savedOptions = [];
+    var savedOptions = {};
     _.each(formOptions, function(option){
         var name = option.name;
         var type = option.type;
@@ -54,10 +54,7 @@ util.saveForm = function(ReactComponent, formOptions){
                 savedValue = value;
                 break;
         }
-        savedOptions.push({
-            name: option.name,
-            value: savedValue
-        });
+        savedOptions[option.name] = savedValue;
     });
     return savedOptions;
 };
