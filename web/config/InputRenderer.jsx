@@ -9,7 +9,7 @@ var InputRenderer = React.createClass({
   propTypes: {
     "options" : React.PropTypes.array.isRequired,
     "language": React.PropTypes.object.isRequired,
-    "savedOptions" : React.PropTypes.object
+    "savedOptions" : React.PropTypes.array
   },
 
   optionMap: {
@@ -25,7 +25,8 @@ var InputRenderer = React.createClass({
   render: function(){
     var options = this.props.options;
     var language = this.props.language;
-    var savedOptions = this.props.savedOptions;
+    var savedOptions = this.props.savedOptions || [];
+    savedOptions = _.keyBy(savedOptions, "name");
     var $rows=[];
     var $row, $columns=[];
     var rowCounter=0, columnCounter=0, componentCounter=0;
