@@ -12,7 +12,8 @@
     "edit": "編輯",
     "delete": "刪除",
     "save": "儲存",
-    "cancel": "取消"
+    "cancel": "取消",
+    "search": "搜尋"
   },
   "site": {
     "title": "網站",
@@ -31,7 +32,10 @@
     }
   },
   "user": {
-    "title": "帳號"
+    "title": "帳號",
+    "username": "帳號",
+    "password": "密碼",
+    "displayName": "顯示名稱"
   },
   "theme": {
     "title": "主題"

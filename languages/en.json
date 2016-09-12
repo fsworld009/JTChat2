@@ -12,7 +12,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "search": "Search"
   },
   "site": {
     "title": "Site",
@@ -34,7 +35,10 @@
     }
   },
   "user": {
-    "title": "User"
+    "title": "User",
+    "username": "Username",
+    "password": "Password",
+    "displayName": "Display Name"
   },
   "theme": {
     "title": "Title"

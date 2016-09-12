@@ -3,6 +3,13 @@
   "sites": [
   ],
   "users": [
+    {
+      "id": 1,
+      "siteId" : "twitch",
+      "username" : "justinfan12345",
+      "password" : "kappa",
+      "displayName" : "(Anonymous)"
+    }
   ],
 
   "profiles": [
