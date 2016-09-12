@@ -8,6 +8,7 @@
     "title": "狀態"
   },
   "common": {
+    "newTitle": "新增 %name%",
     "editTitle": "編輯 %name%",
     "edit": "編輯",
     "delete": "刪除",

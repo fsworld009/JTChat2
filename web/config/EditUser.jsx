@@ -1,17 +1,17 @@
 var React = require("react");
 import { connect } from 'react-redux';
-import {Segment, IconButton, Button} from "./Semantic.jsx";
+import {Segment, SegmentItem, IconButton, Button} from "./Semantic.jsx";
 import {Form, TextInput, Dropdown} from "./Semantic_Form.jsx";
+var InputRenderer = require("./InputRenderer.jsx");
 var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
 import {saveConfig} from './ajax.js';
+import {lang, getDB} from "./database.js";
 
 function mapStateToProps(state){
   return {
-    sitesById: state.get("sitesById"),
     usersById: state.get("usersById"),
-    users: state.get("users")
   };
 }
 
@@ -43,55 +43,48 @@ var EditUser = React.createClass({
     var userId = this.props.params.userId;
     var user;
     var renderProperties;
+    var language = lang("user", true);
+    var siteIdList = getDB("siteDefs");
+    var options = [
+      {"name": "displayName", "type": "text", "default": ""},
+      {"name": "siteId", "type": "select", "options": siteIdList, "default": siteIdList[0]}
+    ];
+
+    var siteOptionsLabel = {};
+    _.each(siteIdList, function(siteId){
+      siteOptionsLabel[siteId] = lang("site.sitesById."+siteId+".name");
+    });
+
+    var optionsLanguage = {
+      "displayName" : {"label": language("displayName")},
+      "siteId" : { "label": lang("site.title"), options: siteOptionsLabel }
+    };
+
+    var title, savedOptions;
     if(typeof userId == "undefined"){
       //new
-      renderProperties = {
-        title: "New"
-      };
+      title= lang("common.newTitle").replace("%name%",language("title"));
+      savedOptions={};
     }else{
-      renderProperties = {
-        title: "Edit"
-      };
-      user = this.props.usersById.get(userId);
-      _.extend(renderProperties, user.toObject());
-    
+      title= lang("common.editTitle").replace("%name%",language("title"));
+      savedOptions = this.props.usersById.get(userId).toJS();
+      savedOptions = _.keyBy(site.get("options").toJS(), "name");
     }
-    console.log(renderProperties);
+    console.log("savedOptions", savedOptions);
     return (
-        <Segment title={renderProperties.title + " User"}>
-          <Form>
-            <div className="content">
-              <div className="description">
-                <div className="ui grid">
-                  <div className="two column row">
-                    <div className="column">
-                      <Dropdown label="Site" name="site"/>
-                    </div>
-                    <div className="column">
-                      <TextInput name="displayName" label="Display Name" defaultValue={renderProperties.displayName}/>
-                    </div>
-                  </div>
-                  <div className="two column row">
-                    <div className="column">
-                      <TextInput name="username" label="Username" defaultValue={renderProperties.username}/>
-                    </div>
-                    <div className="column">
-                      <TextInput name="password" label="Password" password="true"/>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="ui red message">
-                <p>Password will be saved as plain text file</p>
-              </div>
-              <div className="extra">
-                <br/><br/>
-                <Button className="green" pull-right="true" onClick={this.save}>Save</Button>
-                <Button className="" pull-right="true" route="/config/user/">Cancel</Button>
-                <br/><br/>
-              </div>
+        <Segment title={title}>
+          <SegmentItem>
+            <div className="" match="content">
+              <Form>
+                <InputRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}></InputRenderer>
+              </Form>
             </div>
-          </Form>
+            <div match="extra">
+              <Button className="green" pull-right="true" onClick={this.save}>{lang("common.save")}</Button>
+              <Button className="" pull-right="true" route="/config/user/">{lang("common.cancel")}</Button>
+              <br/><br/>
+            </div>
+          </SegmentItem>
         </Segment>
       );
   }

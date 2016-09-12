@@ -8,6 +8,7 @@
     "title": "Status"
   },
   "common": {
+    "newTitle": "New %name%",
     "editTitle": "Edit %name%",
     "edit": "Edit",
     "delete": "Delete",

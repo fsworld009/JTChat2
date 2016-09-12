@@ -48,7 +48,7 @@ var EditSite = React.createClass({
     return (
         <Segment title={lang("common.editTitle").replace("%name%",language("name"))}>
           <SegmentItem>
-            <div className="ui grid" match="content">
+            <div className="" match="content">
               <Form>
                 <InputRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}></InputRenderer>
               </Form>

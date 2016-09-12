@@ -15,6 +15,7 @@ var InputRenderer = React.createClass({
   optionMap: {
     number: {comp: TextInput, defaultProps:{}},
     text: {comp: TextInput, defaultProps:{}},
+    password: {comp: TextInput, defaultProps:{password: true}},
     toggle: {comp: Toggle, defaultProps:{}},
     select: {comp: Dropdown, defaultProps:{}},
     multiselect: {comp: Dropdown, defaultProps: {multiselect: true}},
@@ -59,6 +60,7 @@ var InputRenderer = React.createClass({
       columnCounter++;
 
       componentCounter++;
+      console.log(componentCounter);
       if(columnCounter>=2 || (columnCounter < 2 && componentCounter==options.length)){
         $row = (<div key={rowCounter} className="two column row">{$columns}</div>);
         $rows.push($row);
@@ -70,7 +72,7 @@ var InputRenderer = React.createClass({
     }.bind(this));
 
     return (
-      <div className="ui vertically padded grid">{$rows}</div>
+      <div className="ui grid">{$rows}</div>
     );
   }
 });

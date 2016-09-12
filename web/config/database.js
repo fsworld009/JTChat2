@@ -6,9 +6,14 @@ var langDB;
 var currentLangCode = "en";
 //var hasLangMap;
 
-function wrapLang(Wrapper){
+function wrapLang(wrapper){
     return function(path, wrapperOnly){
-        var childWrapper = Wrapper.get(path);
+        var childWrapper;
+        if(path){
+            childWrapper = wrapper.get(path);
+        }else{
+            childWrapper = wrapper;
+        }
         if(!wrapperOnly){
             var value = childWrapper.value();
             if(typeof value == "undefined"){
