@@ -37,7 +37,7 @@ var InputRenderer = React.createClass({
       }
       var componentLanguage = language[option.name] || {};
       var value;
-      if(savedOptions[option.name]){
+      if(savedOptions[option.name] && option.type != "password"){
         value = savedOptions[option.name];
       }else{
         value = option.default || "";

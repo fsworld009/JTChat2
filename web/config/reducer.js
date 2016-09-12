@@ -1,4 +1,5 @@
 var _ = require("lodash");
+var $ = require("jquery");
 var actions = require('./actions.js');
 import {LOCATION_CHANGE}  from "react-router-redux";
 var Immutable = require('immutable');
@@ -53,15 +54,19 @@ var reducer = function(state, action){
     if(action.type === "UPDATE_CONFIG"){
         var category = action.category;
         var target = state.getIn([category+"ById", action.id]);
-        var newRecord = false;
+        var newRecord = false, id = action.id;
         if(!target){
             newRecord = true;
+            id = Number(_.max(state.get(category).toJS()) || 0) + 1;
+        }else if($.isNumeric(id)){
+            //make sure convert back to number
+            id = Number(id);
         }
         state = state.withMutations(function(state){
-            var savedObject = _.extend({}, {id: action.id}, action.options);
-            state.setIn([category+"ById", action.id], Immutable.fromJS(savedObject));
+            var savedObject = _.extend({}, {id: id}, action.options);
+            state.setIn([category+"ById", id], Immutable.fromJS(savedObject));
             if(newRecord){
-                var newList = state.get(category).push(action.id);
+                var newList = state.get(category).push(id);
                 state.set(category, newList);
             }
             state.set("saving","saving");

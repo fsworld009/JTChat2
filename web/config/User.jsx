@@ -40,7 +40,6 @@ var User = React.createClass({
     users = users.map(function(userId) {
       return usersById[userId] || {};
     });
-    console.log("users", users);
 
     var options = {
       data: users,
@@ -64,7 +63,7 @@ var User = React.createClass({
     return (
       <Segment style={{position:"relative"}} title={language.title}>
         <DataTable className="selectable" options={options}></DataTable>
-        <div style={{position: "absolute", left: "1em", top: "1em"}}><IconButton iconClass="fa fa-plus" className="green" popup-content="New" route={"/config/user/new/"}></IconButton></div>
+        <div style={{position: "absolute", left: "1em", top: "1em"}}><IconButton iconClass="fa fa-plus" className="green" popup-content={lang("common.new")} route={"/config/user/new/"}></IconButton></div>
       </Segment>
     );
   }

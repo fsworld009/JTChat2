@@ -17,7 +17,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return {
-    updateSite: function(params){
+    updateConfig: function(params){
       dispatch(_.extend({type: "UPDATE_CONFIG"},params));
       dispatch(push("/config/site/"));
     },
@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch){
 var EditSite = React.createClass({
   save: function(){
     var savedOptions = util.saveForm(this, this.formOptions);
-    this.props.updateSite({
+    this.props.updateConfig({
       category: "sites",
       id: this.props.params.siteId,
       options: savedOptions

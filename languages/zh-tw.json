@@ -36,7 +36,9 @@
     "title": "帳號",
     "username": "帳號",
     "password": "密碼",
-    "displayName": "顯示名稱"
+    "displayName": "顯示名稱",
+    "passwordTip": "不修改密碼時請留白",
+    "passwordWarning": "密碼會以純文字型式儲存"
   },
   "theme": {
     "title": "主題"

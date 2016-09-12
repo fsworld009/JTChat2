@@ -39,7 +39,9 @@
     "title": "User",
     "username": "Username",
     "password": "Password",
-    "displayName": "Display Name"
+    "displayName": "Display Name",
+    "passwordTip": "Leave blank if password is not changed",
+    "passwordWarning": "Password will be saved as plain text file"
   },
   "theme": {
     "title": "Title"

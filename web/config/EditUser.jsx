@@ -17,37 +17,38 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return {
-    saveUser: function(params){
-      dispatch(_.extend({type: "SAVE_SITE"},params));
+    updateConfig: function(params){
+      dispatch(_.extend({type: "UPDATE_CONFIG"},params));
       dispatch(push("/config/user/"));
     },
+
   };
 }
 
 var EditUser = React.createClass({
   save: function(){
-    var hosts = this.refs.hosts.val();
-    hosts = hosts? hosts.split("\n") : [];
-    var ports = this.refs.ports.val();
-    ports = ports? ports.split("\n") : [];
-    ports = _.map(ports, Number);
-    this.props.saveSite({
-      id: this.props.params.siteId,
-      hosts: hosts,
-      ports: ports
+    var originalSavedOptions = this.originalSavedOptions;
+    var savedOptions = util.saveForm(this, this.formOptions, originalSavedOptions);
+    this.props.updateConfig({
+      category: "users",
+      id: this.props.params.userId,
+      options: savedOptions
     });
   },
+
   render: function(){
     //params: from react-router
     //sitesById: from redux (provided by EditSiteContainer)
     var userId = this.props.params.userId;
-    var user;
+    var user = this.props.usersById.get(String(userId));
     var renderProperties;
     var language = lang("user", true);
     var siteIdList = getDB("siteDefs");
     var options = [
       {"name": "displayName", "type": "text", "default": ""},
-      {"name": "siteId", "type": "select", "options": siteIdList, "default": siteIdList[0]}
+      {"name": "siteId", "type": "select", "options": siteIdList, "default": siteIdList[0]},
+      {"name": "username", "type": "text", "default": ""},
+      {"name": "password", "type": "password", "default": ""},
     ];
 
     var siteOptionsLabel = {};
@@ -57,7 +58,9 @@ var EditUser = React.createClass({
 
     var optionsLanguage = {
       "displayName" : {"label": language("displayName")},
-      "siteId" : { "label": lang("site.title"), options: siteOptionsLabel }
+      "siteId" : { "label": lang("site.title"), options: siteOptionsLabel },
+      "username" : {"label": language("username")},
+      "password" : {"label": language("password"), "tip": language("passwordTip")}
     };
 
     var title, savedOptions;
@@ -67,10 +70,11 @@ var EditUser = React.createClass({
       savedOptions={};
     }else{
       title= lang("common.editTitle").replace("%name%",language("title"));
-      savedOptions = this.props.usersById.get(userId).toJS();
-      savedOptions = _.keyBy(site.get("options").toJS(), "name");
+      savedOptions = user.toJS();
     }
-    console.log("savedOptions", savedOptions);
+
+    this.formOptions = options;
+    this.originalSavedOptions = savedOptions;
     return (
         <Segment title={title}>
           <SegmentItem>
@@ -84,7 +88,11 @@ var EditUser = React.createClass({
               <Button className="" pull-right="true" route="/config/user/">{lang("common.cancel")}</Button>
               <br/><br/>
             </div>
+            
           </SegmentItem>
+          <div className="ui red message">
+            <p>{language("passwordWarning")}</p>
+          </div>
         </Segment>
       );
   }

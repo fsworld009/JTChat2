@@ -31,7 +31,7 @@ util.getJqueryDom = function(ReactComponent){
     return $(ReactDOM.findDOMNode(ReactComponent));
 };
 
-util.saveForm = function(ReactComponent, formOptions){
+util.saveForm = function(ReactComponent, formOptions, originalSavedOptions){
     var $this = util.getJqueryDom(ReactComponent);
     var savedOptions = {};
     _.each(formOptions, function(option){
@@ -54,7 +54,11 @@ util.saveForm = function(ReactComponent, formOptions){
                 savedValue = value;
                 break;
         }
-        savedOptions[option.name] = savedValue;
+        if(option.type == "password" && savedValue == ""){
+            savedOptions[option.name] = originalSavedOptions[option.name] || "";
+        }else{
+            savedOptions[option.name] = savedValue;
+        }
     });
     return savedOptions;
 };
