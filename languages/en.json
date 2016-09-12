@@ -10,6 +10,7 @@
   "common": {
     "newTitle": "New %name%",
     "editTitle": "Edit %name%",
+    "new": "New",
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
