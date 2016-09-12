@@ -33,6 +33,8 @@ var InputViewRenderer = React.createClass({
 
       if(typeof value == "boolean"){
         value = value? "On" : "Off";
+      }else if(option.type == "password"){
+        value = "*****";
       }
       if(option.options){
         if(value instanceof Array){

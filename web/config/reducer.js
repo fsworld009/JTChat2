@@ -59,7 +59,7 @@ var reducer = function(state, action){
             newRecord = true;
             id = Number(_.max(state.get(category).toJS()) || 0) + 1;
         }else if($.isNumeric(id)){
-            //make sure convert back to number
+            //make sure id converts back to number
             id = Number(id);
         }
         state = state.withMutations(function(state){
@@ -71,6 +71,21 @@ var reducer = function(state, action){
             }
             state.set("saving","saving");
         });
+    }
+    if(action.type === "DELETE_CONFIG_OBJ"){
+        var category = action.category;
+        var target = state.getIn([category+"ById", action.id]);
+        if (target){
+            state = state.withMutations(function(state){
+                var mapByIdState = state.get(category + "ById").delete(action.id);
+                state.set(category + "ById", mapByIdState);
+                var idListState = state.get(category).filter(function(id) {
+                    return id != action.id;
+                });
+                state.set(category, idListState);
+                state.set("saving","saving");
+            });
+        }
     }
     if(action.type === "LOAD_DATABASE"){
         state = state.withMutations(function(state){

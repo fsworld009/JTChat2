@@ -105,7 +105,7 @@ ReactDOM.render(
         <Route path="site/edit/:siteId" component={EditSite}/>
         <Route path="user" component={User}/>
         <Route path="user/new/" component={EditUser}/>
-        <Route path="user/edit/:userId" component={EditUser}/>
+        <Route path="user/:mode/:userId" component={EditUser}/>
         <Route path="theme" component={Theme}/>
         <Route path="profile" component={Profile}/>
         <Route path="profile/new/" component={EditProfile}/>

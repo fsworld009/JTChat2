@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Segment, SegmentItem, IconButton, Button} from "./Semantic.jsx";
 import {Form, TextInput, Dropdown} from "./Semantic_Form.jsx";
 var InputRenderer = require("./InputRenderer.jsx");
+var InputViewRenderer = require("./InputViewRenderer.jsx");
 var _ = require("lodash");
 var util = require("./util.js");
 import { push } from 'react-router-redux';
@@ -22,6 +23,11 @@ function mapDispatchToProps(dispatch){
       dispatch(push("/config/user/"));
     },
 
+    deleteConfigObj: function(params){
+      dispatch(_.extend({type: "DELETE_CONFIG_OBJ"},params));
+      dispatch(push("/config/user/"));
+    },
+
   };
 }
 
@@ -36,12 +42,24 @@ var EditUser = React.createClass({
     });
   },
 
+  deleteObj: function(){
+    this.props.deleteConfigObj({
+      category: "users",
+      id: this.props.params.userId
+    });
+
+  },
+
   render: function(){
     //params: from react-router
     //sitesById: from redux (provided by EditSiteContainer)
-    var userId = this.props.params.userId;
+    //
+    //
+    var params = this.props.params;
+    var mode = params.mode;
+
+    var userId = params.userId;
     var user = this.props.usersById.get(String(userId));
-    var renderProperties;
     var language = lang("user", true);
     var siteIdList = getDB("siteDefs");
     var options = [
@@ -69,30 +87,61 @@ var EditUser = React.createClass({
       title= lang("common.newTitle").replace("%name%",language("title"));
       savedOptions={};
     }else{
-      title= lang("common.editTitle").replace("%name%",language("title"));
+      var stringPath = "common." + mode + "Title";
+      title= lang(stringPath).replace("%name%",language("title"));
       savedOptions = user.toJS();
     }
 
     this.formOptions = options;
     this.originalSavedOptions = savedOptions;
+
+    var $content, $warning;
+
+    if(mode == "delete"){
+      $content = (
+        <SegmentItem>
+          <div className="" match="content">
+            <Form>
+              <InputViewRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}></InputViewRenderer>
+            </Form>
+          </div>
+          <div match="extra">
+            <Button className="red" pull-right="true" onClick={this.deleteObj}>{lang("common.confirm")}</Button>
+            <Button className="" pull-right="true" route="/config/user/">{lang("common.cancel")}</Button>
+            <br/><br/>
+          </div>
+        </SegmentItem>
+      );
+      $warning = null;
+    }else{
+      $content = (
+        <SegmentItem>
+          <div className="" match="content">
+            <Form>
+              <InputRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}></InputRenderer>
+            </Form>
+          </div>
+          <div match="extra">
+            <Button className="green" pull-right="true" onClick={this.save}>{lang("common.save")}</Button>
+            <Button className="" pull-right="true" route="/config/user/">{lang("common.cancel")}</Button>
+            <br/><br/>
+          </div>
+        </SegmentItem>
+      );
+
+      $warning = (
+        <div className="ui red message">
+          <p>{language("passwordWarning")}</p>
+        </div>
+      );
+    
+    }
+
+
     return (
         <Segment title={title}>
-          <SegmentItem>
-            <div className="" match="content">
-              <Form>
-                <InputRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}></InputRenderer>
-              </Form>
-            </div>
-            <div match="extra">
-              <Button className="green" pull-right="true" onClick={this.save}>{lang("common.save")}</Button>
-              <Button className="" pull-right="true" route="/config/user/">{lang("common.cancel")}</Button>
-              <br/><br/>
-            </div>
-            
-          </SegmentItem>
-          <div className="ui red message">
-            <p>{language("passwordWarning")}</p>
-          </div>
+          {$content}
+          {$warning}
         </Segment>
       );
   }
