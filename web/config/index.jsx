@@ -104,12 +104,10 @@ ReactDOM.render(
         <Route path="site" component={Site} />
         <Route path="site/edit/:siteId" component={EditSite}/>
         <Route path="user" component={User}/>
-        <Route path="user/new/" component={EditUser}/>
-        <Route path="user/:mode/:userId" component={EditUser}/>
+        <Route path="user/:mode/(:userId)" component={EditUser}/>
         <Route path="theme" component={Theme}/>
         <Route path="profile" component={Profile}/>
-        <Route path="profile/new/" component={EditProfile}/>
-        <Route path="profile/edit/:profileId" component={EditProfile}/>
+        <Route path="profile/:mode/(:profileId)" component={EditProfile}/>
         <Route path="url" component={UrlGenerator}/>
         <Route path="*" component={Status}/>
         <IndexRoute component={Status} />

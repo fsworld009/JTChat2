@@ -19,6 +19,15 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return {
+    updateConfig: function(params){
+      dispatch(_.extend({type: "UPDATE_CONFIG"},params));
+      dispatch(push("/config/profile/"));
+    },
+
+    deleteConfigObj: function(params){
+      dispatch(_.extend({type: "DELETE_CONFIG_OBJ"},params));
+      dispatch(push("/config/profile/"));
+    },
   };
 }
 
@@ -29,7 +38,24 @@ var EditProfile = React.createClass({
       themeId: null
     };
   },
+
   save: function(){
+    var originalSavedOptions = this.originalSavedOptions;
+    var savedOptions = util.saveForm(this, this.formOptions);
+    this.props.updateConfig({
+      category: "profiles",
+      id: this.props.params.profileId,
+      options: savedOptions
+    });
+
+  },
+  
+  deleteObj: function(){
+    this.props.deleteConfigObj({
+      category: "profiles",
+      id: this.props.params.profileId
+    });
+
   },
 
   selectTheme: function(){
@@ -43,14 +69,30 @@ var EditProfile = React.createClass({
     var params = this.props.params;
     var mode = params.mode;
     var profileId = params.profileId;
-    var profile = this.props.profilesById.get(String(profile));
+    var profile = this.props.profilesById.get(String(profileId));
     var themeLang = lang("themeLang", true);
     var themeIdList = getDB("themes");
     var language = lang("profile", true);
 
+
+    var title, savedOptions;
+    if(typeof profileId == "undefined"){
+      //new
+      title= lang("common.newTitle").replace("%name%",language("title"));
+      savedOptions={};
+    }else{
+      var stringPath = "common." + mode + "Title";
+      title= lang(stringPath).replace("%name%",language("title"));
+      savedOptions = profile.toJS();
+    }
+
+
+    var themeId = this.state.themeId || savedOptions.themeId;
+    console.log("themeId", themeId);
+
     var options = [
       {"name": "displayName", "type": "text", "default": ""},
-      {"name": "themeId", "type": "select", "options": themeIdList, "default": themeIdList[0], disabled: (this.state.themeId? true: false)},
+      {"name": "themeId", "type": "select", "options": themeIdList, "default": themeIdList[0], disabled: (themeId? true: false)},
     ];
 
     var themeOptionsLabel = {};
@@ -63,24 +105,15 @@ var EditProfile = React.createClass({
       "themeId" : { "label": lang("theme.title"), options: themeOptionsLabel },
     };
 
-    if(this.state.themeId){
+    if(themeId){
       //append theme options after selecting the theme
-      var themeId = this.state.themeId;
       var themeDB = getDB("themes", themeId);
       options = options.concat(themeDB.options || []);
       _.extend(optionsLanguage, themeLang(themeId + ".options"));
     }
 
-    var title, savedOptions;
-    if(typeof userId == "undefined"){
-      //new
-      title= lang("common.newTitle").replace("%name%",language("title"));
-      savedOptions={};
-    }else{
-      var stringPath = "common." + mode + "Title";
-      title= lang(stringPath).replace("%name%",language("title"));
-      savedOptions = profile.toJS();
-    }
+    this.originalSavedOptions = savedOptions;
+    this.formOptions = options;
 
     var $content, $continue = null;
     if(mode == "delete"){
@@ -99,8 +132,7 @@ var EditProfile = React.createClass({
         </SegmentItem>
       );
     }else{
-      console.log("state", this.state);
-      if(this.state.themeId){
+      if(themeId){
         $continue = (
             <Button className="green" pull-right="true" onClick={this.save}>{lang("common.save")}</Button>
         );
