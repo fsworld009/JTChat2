@@ -48,6 +48,9 @@ var InputRenderer = React.createClass({
         defaultValue: value,
         placeholder: componentLanguage.tip || ""
       });
+      if(option.disabled){
+        componentOption.disabled = true;
+      }
       if(option.options){
         componentOption.options = _.map(option.options, function(value){
           var label = componentLanguage.options? componentLanguage.options[value]||value : value;

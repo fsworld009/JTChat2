@@ -50,7 +50,7 @@ var EditProfile = React.createClass({
 
     var options = [
       {"name": "displayName", "type": "text", "default": ""},
-      {"name": "themeId", "type": "select", "options": themeIdList, "default": themeIdList[0]},
+      {"name": "themeId", "type": "select", "options": themeIdList, "default": themeIdList[0], disabled: (this.state.themeId? true: false)},
     ];
 
     var themeOptionsLabel = {};

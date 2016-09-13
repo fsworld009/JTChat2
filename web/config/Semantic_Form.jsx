@@ -207,7 +207,8 @@ SemanticUI.Dropdown = React.createClass({
     "defaultValue": React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]),
     "options": React.PropTypes.array,
     "onChange" : React.PropTypes.func,
-    "multiselect" : React.PropTypes.bool
+    "multiselect" : React.PropTypes.bool,
+    "disabled": React.PropTypes.bool
   },
 
 
@@ -235,7 +236,8 @@ SemanticUI.Dropdown = React.createClass({
   render: function(){
     var multi = this.props.multiselect? "multiple" : "";
     var className = util.mergeClassName(this, ["ui search selection dropdown", this.props.className],{
-       multiselect: {"true" : "multiple"}
+      multiselect: {"true" : "multiple"},
+      disabled: {"true" : "disabled"}
     });
     var defaultValue = this.props.defaultValue;
     if(defaultValue instanceof Array){
