@@ -50,7 +50,6 @@ var Sites = React.createClass({
     var sitesById = this.props.sitesById;
     var view = this;
     var language = lang("site");
-    var siteDefsWrapper = getDB("siteDefs");
     return (
       <Segment title={ language.title }>
         <Items>

@@ -3,16 +3,10 @@ import { connect } from 'react-redux';
 import {Segment, SegmentItem, Items, IconButton} from './Semantic.jsx';
 var _ = require("lodash");
 var util = require("./util.js");
+import {lang, getDB} from "./database.js";
 
 function mapStateToProps(state){
-  var loadStatus = state.getIn(["load,themes"]);
-
-
-  return {
-    loadStatus: loadStatus,
-    themes: state.get("themes"),
-    themesById: state.get("themesById")
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch){
@@ -22,16 +16,13 @@ function mapDispatchToProps(dispatch){
 var Theme = React.createClass({
   render: function(){
     var theme = this.props.theme;
-    //<img match="image" src={site.get("logo")} alt={site.get("displayName")} />
-    //<IconButton match="extra" iconClass="fa fa-pencil" className="green" pull-right="true" popup-content="Edit" route={"/config/site/edit/"+siteId}></IconButton>
-    //<BulletList items={site.get("hosts").toArray()} />
-    var language = theme.getIn(["language","en"]);
+    var language = this.props.language;
     return (
-      <SegmentItem title={language.getIn(["theme","displayName"]) + " (" + theme.get("version") + ")"}>
+      <SegmentItem title={language.name + " (" + theme.version + ")"}>
           <div match="content" className="ui grid">
             <div className="row">
               <div className="twelve column">
-                {language.getIn(["theme","description"])}
+                { language.description }
               </div>
             </div>
           </div>
@@ -52,13 +43,15 @@ var Themes = React.createClass({
 
   render: function(){
     var themeMap = this.props.themesById;
+    var language = lang("theme");
     return (
-      <Segment title="Theme">
+      <Segment title={ language.title }>
         <Items>
           {
-            util.listToComponents(this.props.themes.toArray(), function(id, key){
-              var theme = themeMap.get(id);
-              return (<Theme key={key} theme={theme}/>);
+            util.listToComponents(getDB("themes"), function(id, key){
+              var theme = getDB("themes",id);
+              var themeLang = lang("themeLang."+id);
+              return (<Theme key={key} theme={theme} language={themeLang}/>);
             })
           }
         </Items>

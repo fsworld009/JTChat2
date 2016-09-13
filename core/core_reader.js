@@ -49,6 +49,7 @@ function readThemeFiles(){
                 }
             }
         });
+        themeJsonFileList.sort();
         return Promise.map(themeJsonFileList, function(jsonPath){
             return fs.readFileAsync(jsonPath,"utf-8").then(function(json){
                 json = parseJson(json, {});
