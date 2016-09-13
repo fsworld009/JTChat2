@@ -30,35 +30,34 @@ var InputViewRenderer = React.createClass({
       }else{
         value = option.default;
       }
-
-      if(typeof value == "boolean"){
-        value = value? "On" : "Off";
-      }else if(option.type == "password"){
-        value = "*****";
-      }else if (!value){
-        value = "";
-      }
-      if(option.options){
-        if(value instanceof Array){
-          value = _.map(value, function(savedVar){
-            var label = componentLanguage.options? componentLanguage.options[savedVar]||savedVar : savedVar;
-            return label;
-          });
-        }else{
-            value = componentLanguage.options? componentLanguage.options[value]||value : value;
-        }
-      }
-
-      if(value instanceof Array){
-        value = value.join(", ");
-      }
-
+      switch(option.type){
+        case "select": case "multiselect":
+          if(value instanceof Array){
+            value = _.map(value, function(savedVar){
+              var label = componentLanguage.options? componentLanguage.options[savedVar]||savedVar : savedVar;
+              return label;
+            });
+            value = value.join(", ");
+          }else{
+              value = componentLanguage.options? componentLanguage.options[value]||value : value;
+          }
+          break;
+        case "password" :
+          value = "*****";
+          break;
+        case "toggle":
+          value = value? "ON" : "OFF";
+          break;
+        default:
+          break;
       
+      }
+
       var $component = (
         <div>
           {label} : {value}
         </div>);
-      var $column = (<div key={rowCounter + "-" + columnCounter} className="column" style={{paddingBottom: "15px"}}>{$component}</div>);
+      var $column = (<div key={rowCounter + "-" + columnCounter} className="column" >{$component}</div>);
       $columns.push($column);
       columnCounter++;
 

@@ -65,9 +65,9 @@ var reducer = function(state, action){
         }
         state = state.withMutations(function(state){
             var savedObject = _.extend({}, {id: id}, action.options);
-            state.setIn([category+"ById", id], Immutable.fromJS(savedObject));
+            state.setIn([category+"ById", String(id)], Immutable.fromJS(savedObject));
             if(newRecord){
-                var newList = state.get(category).push(id);
+                var newList = state.get(category).push(String(id));
                 state.set(category, newList);
             }
             state.set("saving","saving");
@@ -93,6 +93,7 @@ var reducer = function(state, action){
             state.setIn(["load",action.loadKey], action.loading);
         });
     }
+    console.log("return state",state.toJS());
     return state;
 };
 

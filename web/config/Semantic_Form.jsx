@@ -295,7 +295,6 @@ SemanticUI.Toggle = React.createClass({
     $checkbox.checkbox('destroy');
   },
   render: function(){
-    console.log("toggle", this.props);
       return (
         <SemanticUI.FormField label={this.props.label}>
           <div className="ui toggle checkbox">

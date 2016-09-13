@@ -23,16 +23,18 @@ var Profile = React.createClass({
   render: function(){
     var profile = this.props.profile;
     var profileId = profile.get("id");
+    var displayName = profile.get("displayName");
     var themeDef = this.props.themeDef;
     var themeLang = this.props.themeLang;
     var language = this.props.language;
     var options = [
       {"name": "displayName", "type": "text"},
-      {"name": "themeId", "type": "select"}
+      {"name": "themeId", "type": "select", options: []}
     ];
     options = options.concat(themeDef.options || []);
     var savedOptions = profile.toJS() || {};
     var optionsLanguage = _.extend({}, language.options, themeLang("options"), {
+      displayName: {"label": language.displayName},
       themeId: {
         label: lang("theme.title"),
         options: {[savedOptions.themeId] : themeLang("name")}
@@ -40,7 +42,7 @@ var Profile = React.createClass({
     });
 
     return (
-      <SegmentItem title={language.name}>
+      <SegmentItem title={displayName}>
           <div match="content" className="ui grid">
             <InputViewRenderer options={options} language={optionsLanguage} savedOptions={savedOptions}/>
           </div>
