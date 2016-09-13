@@ -40,7 +40,17 @@ var InputRenderer = React.createClass({
       if(savedOptions[option.name] && option.type != "password"){
         value = savedOptions[option.name];
       }else{
-        value = option.default || "";
+        value = option.default;
+      }
+      if(typeof value == "undefined"){
+        switch(option.type){
+          case "toggle":
+            value = false;
+            break;
+          default:
+            value = "";
+            break;
+        }
       }
       var componentOption = _.extend({}, optionMap.defaultProps, {
         name: option.name,

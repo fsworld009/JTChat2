@@ -59,7 +59,7 @@ SemanticUI.TextInput = React.createClass({
     "label" : React.PropTypes.string.isRequired,
     "name" : React.PropTypes.string.isRequired,
     "placeholder" : React.PropTypes.string,
-    "defaultValue": React.PropTypes.string,
+    "defaultValue": React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     "onChange" : React.PropTypes.func,
     "password" : React.PropTypes.bool
   },

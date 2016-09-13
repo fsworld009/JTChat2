@@ -63,6 +63,14 @@ var EditProfile = React.createClass({
       "themeId" : { "label": lang("theme.title"), options: themeOptionsLabel },
     };
 
+    if(this.state.themeId){
+      //append theme options after selecting the theme
+      var themeId = this.state.themeId;
+      var themeDB = getDB("themes", themeId);
+      options = options.concat(themeDB.options || []);
+      _.extend(optionsLanguage, themeLang(themeId + ".options"));
+    }
+
     var title, savedOptions;
     if(typeof userId == "undefined"){
       //new
@@ -98,7 +106,7 @@ var EditProfile = React.createClass({
         );
       }else{
         $continue = (
-            <Button className="green" pull-right="true" onClick={this.selectTheme}>{lang("common.confirm")}</Button>
+            <Button className="blue" pull-right="true" onClick={this.selectTheme}>{lang("common.confirm")}</Button>
         );
       }
       $content = (

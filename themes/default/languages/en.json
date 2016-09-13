@@ -3,7 +3,7 @@
   "description" : "Description",
   "options" : {
     "maxNumOfLines" : {"label": "Max number of messages", "tip" : "Max number of messages"},
-    "hasChatInput": {"label": "Enable Chat Input", "tip": "Input box"},
+    "hasChatInput": {"label": "Enable Chat Input", "tip": "Have a input box on the bottom of the screen"},
     "bgColor": {"label": "Background Color", "tip": ""},
     "textColor": {"label": "Text Color", "tip": ""},
     "userColor": {"label": "User Color", "tip": ""},

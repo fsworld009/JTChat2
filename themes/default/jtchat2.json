@@ -10,15 +10,6 @@
     {"name": "sysColor", "type": "color", "default": "#ffcccc"},
     {"name": "useUserCustomColor", "type": "toggle", "default": true},
     {"name": "clearBannedMsg", "type": "toggle", "default": true},
-    {"name": "allowClearChat", "type": "toggle", "default": true},
-    {"name": "textareaDummy", "type": "textarea", "default": "Textarea\nsecond line"},
-    {"name": "textDummy", "type": "text", "default": "Text"},
-    {"name": "optionDummy", "type": "select",
-      "options":["option1","option2","option3"], "default": "option2" 
-    },
-    {"name": "multiOptionDummy", "type": "multiselect",
-      "options":["option1","option2","option3","option4","option5"], "default": ["option2" ,"option5"]
-    }
-
+    {"name": "allowClearChat", "type": "toggle", "default": true}
   ]
 }
