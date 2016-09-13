@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Segment, SegmentItem, Items, IconButton} from './Semantic.jsx';
 var _ = require("lodash");
 var util = require("./util.js");
+import {lang, getDB} from "./database.js";
 
 function mapStateToProps(state){
   return {
@@ -33,9 +34,10 @@ var Profiles = React.createClass({
 
   render: function(){
     var profileMap = this.props.profilesById;
+    var language = lang("profile");
     return (
-      <Segment title="Theme Profile">
-        <IconButton iconClass="fa fa-plus" className="green" popup-content="New" route={"/config/profile/new/"}></IconButton>
+      <Segment title={language.title}>
+        <IconButton iconClass="fa fa-plus" className="green" popup-content={lang("common.new")} route={"/config/profile/new/"}></IconButton>
         <Items>
           {
             util.listToComponents(this.props.profiles.toArray(), function(id, key){

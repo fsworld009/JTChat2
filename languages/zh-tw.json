@@ -47,7 +47,8 @@
     "title": "主題"
   },
   "profile":{
-    "title": "主題設定"
+    "title": "主題設定",
+    "displayName": "設定名稱"
   },
   "url": {
     

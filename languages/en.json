@@ -47,10 +47,11 @@
     "passwordWarning": "Password will be saved as plain text file"
   },
   "theme": {
-    "title": "Title"
+    "title": "Theme"
   },
   "profile":{
-    "title": "Theme Profile"
+    "title": "Theme Profile",
+    "displayName": "Profile Name"
   },
   "url": {
     "title": "URL Generator"
