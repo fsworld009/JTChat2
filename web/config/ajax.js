@@ -57,7 +57,7 @@ function getId(value){
 
 function getValue(value){
     if(typeof value == "object" && value.id){
-        return value.id;
+        return String(value.id);    //always use string as key
     }else{
         return value;
     }
@@ -68,7 +68,7 @@ function parseStore(store){
         if(value instanceof Array){
             store[key + "ById"] = _.keyBy(value, getId);
             store[key] = _.map(value, getValue);
-            parseStore(store[key + "ById"]);
+            //parseStore(store[key + "ById"]);
         }/*else if(typeof value == "object"){
             parseStore(value);
         }*/

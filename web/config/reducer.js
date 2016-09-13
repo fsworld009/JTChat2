@@ -57,7 +57,8 @@ var reducer = function(state, action){
         var newRecord = false, id = action.id;
         if(!target){
             newRecord = true;
-            id = Number(_.max(state.get(category).toJS()) || 0) + 1;
+            var idList = _.map(state.get(category).toJS() || [], Number);
+            id = (_.max(idList) || 0) + 1;
         }else if($.isNumeric(id)){
             //make sure id converts back to number
             id = Number(id);
