@@ -61,6 +61,9 @@ var InputRenderer = React.createClass({
       if(option.disabled){
         componentOption.disabled = true;
       }
+      if(option.onChange){
+        componentOption.onChange = option.onChange;
+      }
       if(option.options){
         componentOption.options = _.map(option.options, function(value){
           var label = componentLanguage.options? componentLanguage.options[value]||value : value;

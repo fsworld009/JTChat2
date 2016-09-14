@@ -61,13 +61,14 @@ SemanticUI.TextInput = React.createClass({
     "placeholder" : React.PropTypes.string,
     "defaultValue": React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     "onChange" : React.PropTypes.func,
-    "password" : React.PropTypes.bool
+    "password" : React.PropTypes.bool,
+    "readOnly" : React.PropTypes.string
   },
   render: function(){
     var inputType = this.props.password? "password" : "text";
     return (
       <SemanticUI.FormField label={this.props.label}>
-          <input name={this.props.name} className="ui input" type={inputType} placeholder={this.props.placeholder} defaultValue={this.props.defaultValue} onChange={this.props.onChange}/>
+          <input readOnly={this.props.readOnly} name={this.props.name} className="ui input" type={inputType} placeholder={this.props.placeholder} defaultValue={this.props.defaultValue} onChange={this.props.onChange}/>
       </SemanticUI.FormField>
     );
   }

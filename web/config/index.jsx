@@ -32,6 +32,29 @@ var UrlGenerator = require("./UrlGenerator.jsx");
 import {saveConfig} from './ajax.js';
 import {lang} from "./database.js";
 
+function mapStateToProps(state){
+  var loadingStatus = state.get("load").toObject();
+  var loading = false;
+  _.each(loadingStatus, function(status){
+    loading = loading || (status === "loading");
+  });
+  var saving = state.get("saving") == "saving";
+  console.log("loading", loading, loadingStatus);
+  return {
+    loading: loading,
+    saving: saving,
+    state: state
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    saveConfig: function(store){
+      dispatch(saveConfig(store));
+    }
+  };
+}
+
 
 
 
@@ -71,29 +94,6 @@ var App = React.createClass({
   }
 
 });
-
-function mapStateToProps(state){
-  var loadingStatus = state.get("load").toObject();
-  var loading = false;
-  _.each(loadingStatus, function(status){
-    loading = loading || (status === "loading");
-  });
-  var saving = state.get("saving") == "saving";
-  console.log("loading", loading, loadingStatus);
-  return {
-    loading: loading,
-    saving: saving,
-    state: state
-  };
-}
-
-function mapDispatchToProps(dispatch){
-  return {
-    saveConfig: function(store){
-      dispatch(saveConfig(store));
-    }
-  };
-}
 
 var AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 

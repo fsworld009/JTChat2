@@ -33,7 +33,6 @@ function mapDispatchToProps(dispatch){
 
 var EditProfile = React.createClass({
   getInitialState: function(){
-    console.log("getInitialState", this.props);
     return {
       themeId: null
     };
