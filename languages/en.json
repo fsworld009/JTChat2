@@ -54,6 +54,9 @@
     "displayName": "Profile Name"
   },
   "url": {
-    "title": "URL Generator"
+    "title": "URL Generator",
+    "generate": "Generate",
+    "generatedUrl": "Generated URL",
+    "copy": "Copy"
   }
 }

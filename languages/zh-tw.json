@@ -51,6 +51,9 @@
     "displayName": "設定名稱"
   },
   "url": {
-    
+    "title": "網址產生器",
+    "generate": "產生網址",
+    "generatedUrl": "生成網址",
+    "copy": "複製"
   }
 }

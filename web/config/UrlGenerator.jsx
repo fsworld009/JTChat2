@@ -26,7 +26,9 @@ function mapDispatchToProps(dispatch){
 var UrlGenerator = React.createClass({
   getInitialState: function(){
     return {
-      siteId: null
+        siteId: null,
+        profileId: null,
+        userId: null
     };
   },
 
@@ -35,7 +37,33 @@ var UrlGenerator = React.createClass({
     var $site = $this.find("input[name=siteId]");
     //dirty hack
     $this.find("input[name=userId]").parents(".selection").dropdown("clear");
-    this.setState({siteId: $site.val()});
+      this.setState({
+          siteId: $site.val(),
+          userId: false
+      });
+  },
+
+  selectUser: function(){
+    this.setState({userId: true});
+  },
+
+  selectProfile: function(){
+    this.setState({profileId: true});
+  },
+
+  generateUrl: function(){
+    var $this = util.getJqueryDom(this);
+    var userId = $this.find("input[name=userId]").val();
+    var profileId = $this.find("input[name=profileId]").val();
+    var urlBase = window.location.href.replace(window.location.pathname,"/chat/");
+    urlBase += "?profileId=" + profileId + "&userId=" + userId;
+    $this.find("input[name=url]").val(urlBase);
+  },
+
+  copyUrl: function(){
+    var $this = util.getJqueryDom(this);
+    $this.find("input[name=url]").trigger("select");
+    document.execCommand('copy');
   },
 
   render: function(){
@@ -46,8 +74,8 @@ var UrlGenerator = React.createClass({
     
     var options = [
       {"name": "siteId", "type": "select", "options": [], onChange: this.selectSite},
-      {"name": "userId", "type": "select", "options": []},
-      {"name": "profileId", "type": "select", "options": [] }
+      {"name": "userId", "type": "select", "options": [], onChange: this.selectUser},
+      {"name": "profileId", "type": "select", "options": [], onChange: this.selectProfile},
     ];
 
     var optionsLanguage = {
@@ -77,8 +105,7 @@ var UrlGenerator = React.createClass({
       optionsLanguage.profileId.options[profileId] = this.props.profilesById.get(profileId).get("displayName");
     }.bind(this));
 
-
-
+    var disabled = !(this.state.siteId && this.state.profileId && this.state.userId);
 
     return (
       <Segment title={lang("url.title")}>
@@ -86,8 +113,22 @@ var UrlGenerator = React.createClass({
           <div className="" match="content">
             <Form>
               <InputRenderer options={options} language={optionsLanguage} savedOptions={{}}></InputRenderer>
-            <Button className="green" pull-right="true" onClick={this.save}>{lang("common.save")}</Button>
-              <TextInput name="url" label="Output Url" readOnly="readOnly"></TextInput>
+              <div className="ui grid">
+                <div className="row">
+                  <div className="column sixteen wide">
+                    <Button className={"blue " + (disabled? "disabled":"")} pull-right="true" onClick={this.generateUrl}>{lang("url.generate")}</Button>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="column fourteen wide">
+                    <TextInput name="url" label={lang("url.generatedUrl")} readOnly="readOnly">
+                    </TextInput>
+                  </div>
+                  <div className="column two wide" style={{paddingTop: "20px", paddingLeft: 0}}>
+                    <Button className="green" pull-right="true" onClick={this.copyUrl}>{lang("url.copy")}</Button>
+                  </div>
+                </div>
+              </div>
             </Form>
           </div>
           <div match="extra">
