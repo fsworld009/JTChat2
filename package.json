@@ -15,7 +15,8 @@
     "react-router-redux": "^4.0.0",
     "redux": "^3.3.1",
     "redux-thunk": "^2.1.0",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "webworker-threads": "^0.7.8"
   },
   "devDependencies": {
     "babel-core": "^6.7.4",
