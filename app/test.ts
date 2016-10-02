@@ -2,18 +2,8 @@
 //import $ from "jquery";
 //import _ from "lodash";
 
-import {Low, LowFactory} from "lowdb";
+import LowDB = require("lowdb");
 
-
-let a : string | undefined = undefined;
-let $test : JQuery = $("aaa").append("");
-
-a = "111";
-a = a+a;
-
-$test.append("");
-_.max([1,2]);
-
-let db: Low = new LowFactory();
+let db: LowDB.Low = LowDB();
 db.setState({test: "test"});
 console.log(db.getState());
