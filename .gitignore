@@ -3,3 +3,4 @@
 /node_modules/
 /web/bundle/
 /semantic/dist/
+/app/*.js

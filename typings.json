@@ -1,0 +1,11 @@
+{
+  "globalDependencies": {
+    "bluebird": "registry:dt/bluebird#3.0.0+20160928162057",
+    "jquery": "registry:dt/jquery#1.10.0+20160929162922",
+    "lodash": "registry:dt/lodash#4.14.0+20160919145112"
+  },
+  "dependencies": {
+    "lowdb": "github:fsworld009/lowdb/lowdb.d.ts#b18232bd365fb41c4f7dd8e13b6aeb07fa0b948a",
+    "lowdb_origin": "github:typicode/lowdb/lowdb.d.ts#f997028160ada903ca1b7992620e972fc09915ca"
+  }
+}

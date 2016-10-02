@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/fsworld009/lowdb/b18232bd365fb41c4f7dd8e13b6aeb07fa0b948a/lowdb.d.ts",
+    "raw": "github:fsworld009/lowdb/lowdb.d.ts#b18232bd365fb41c4f7dd8e13b6aeb07fa0b948a",
+    "typings": "https://raw.githubusercontent.com/fsworld009/lowdb/b18232bd365fb41c4f7dd8e13b6aeb07fa0b948a/lowdb.d.ts"
+  }
+}
