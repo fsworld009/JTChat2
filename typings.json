@@ -1,8 +1,10 @@
 {
   "globalDependencies": {
     "bluebird": "registry:dt/bluebird#3.0.0+20160928162057",
+    "github-electron": "registry:dt/github-electron#1.4.2+20161006163813",
     "jquery": "registry:dt/jquery#1.10.0+20160929162922",
-    "lodash": "registry:dt/lodash#4.14.0+20160919145112"
+    "lodash": "registry:dt/lodash#4.14.0+20160919145112",
+    "node": "registry:dt/node#6.0.0+20161008175459"
   },
   "dependencies": {
     "lowdb": "github:fsworld009/lowdb/lowdb.d.ts#beee4a4d980bac1767811babf732c527079f7c49",
