@@ -1,5 +1,7 @@
 {
-  "name": "jtchat2",
+  "name": "JTChat2",
+  "version": "0.1.0",
+  "main": "app/main.js",
   "private": true,
   "dependencies": {
     "bluebird": "^3.4.0",
@@ -80,6 +82,7 @@
     "dev-pack": "webpack --config webpack.dev-server.config.js",
     "build": "webpack --config webpack-production.config.js --progress --profile --colors",
     "old-dev-server": "webpack-dev-server --config webpack.dev-server.config.js --inline --progress --colors --hot",
-    "dev-server": "cross-env NODE_ENV=development supervisor -w express_main.js,views/,core/core_reader.js -i client express_main"
+    "dev-server": "cross-env NODE_ENV=development supervisor -w express_main.js,views/,core/core_reader.js -i client express_main",
+    "app" : "electron ."
   }
 }
