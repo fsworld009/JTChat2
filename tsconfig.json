@@ -10,6 +10,7 @@
     "typings/globals/node/index.d.ts",
     "typings/globals/bluebird/index.d.ts",
     "typings/globals/github-electron/index.d.ts",
+    "typings/globals/express/index.d.ts",
     "typings/globals/jquery/index.d.ts",
     "typings/globals/lodash/index.d.ts",
     "typings/modules/lowdb/index.d.ts",
