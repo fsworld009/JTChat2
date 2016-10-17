@@ -1,6 +1,7 @@
 /profiles/*.json
-+/profiles/default.json
+!/profiles/default.json
 /node_modules/
 /web/bundle/
 /semantic/dist/
 /app/*.js
+!/app/bluebird_promisifyAll.js
