@@ -2,8 +2,8 @@
 //import $ from "jquery";
 //import _ from "lodash";
 
-import LowDB = require("lowdb");
+import Lowdb = require("lowdb");
 
-let db: LowDB.Low = LowDB();
+let db: Lowdb.Low = Lowdb();
 db.setState({test: "test"});
 console.log(db.getState());

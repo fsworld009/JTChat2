@@ -8,7 +8,7 @@
     "node": "registry:dt/node#6.0.0+20161008175459"
   },
   "dependencies": {
-    "lowdb": "github:fsworld009/lowdb/lowdb.d.ts#beee4a4d980bac1767811babf732c527079f7c49",
+    "lowdb": "github:fsworld009/lowdb/lowdb.d.ts#8b3917fdce2c255ea135ec644ed704ef9f48d33a",
     "lowdb_origin": "github:typicode/lowdb/lowdb.d.ts#f997028160ada903ca1b7992620e972fc09915ca"
   }
 }
