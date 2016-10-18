@@ -1,8 +1,10 @@
 import Promise = require('bluebird');
+import path = require('path');
+
 import {fs} from './bluebird_promisifyAll.js';
 import {Stats} from 'fs';
 
-import path = require('path');
+
 import _ = require('lodash');
 import Lowdb = require('lowdb');
 
@@ -204,7 +206,7 @@ refresh().then(function(){
     console.log(database.get("themesLanguage").value());
 });*/
 refresh();
-module.exports = {
+export = {
     refresh: refresh,
     getLanguages: getLanguages,
     getThemes: getThemes,

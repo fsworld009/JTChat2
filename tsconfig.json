@@ -4,21 +4,13 @@
       "strictNullChecks": true,
       "noImplicitThis": true,
       "noUnusedLocals": true,
-      "noUnusedParameters": true
+      "noUnusedParameters": false
   },
-  "files": [
-    "typings/globals/node/index.d.ts",
-    "typings/globals/bluebird/index.d.ts",
-    "typings/globals/github-electron/index.d.ts",
-    "typings/globals/express-serve-static-core/index.d.ts",
-    "typings/globals/mime/index.d.ts",
-    "typings/globals/serve-static/index.d.ts",
-    "typings/globals/express/index.d.ts",
-    "typings/globals/jquery/index.d.ts",
-    "typings/globals/lodash/index.d.ts",
-    "typings/modules/lowdb/index.d.ts",
-    "app/test.ts",
-    "app/json_reader.ts",
-    "app/main.ts"
+  "include":[
+    "typings/**/index.d.ts",
+    "app/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
