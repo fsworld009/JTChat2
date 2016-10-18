@@ -2,10 +2,13 @@
   "globalDependencies": {
     "bluebird": "registry:dt/bluebird#3.0.0+20160928162057",
     "express": "registry:dt/express#4.0.0+20160708185218",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20161012061536",
     "github-electron": "registry:dt/github-electron#1.4.2+20161006163813",
     "jquery": "registry:dt/jquery#1.10.0+20160929162922",
     "lodash": "registry:dt/lodash#4.14.0+20160919145112",
-    "node": "registry:dt/node#6.0.0+20161008175459"
+    "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "node": "registry:dt/node#6.0.0+20161008175459",
+    "serve-static": "registry:dt/serve-static#0.0.0+20160606155157"
   },
   "dependencies": {
     "lowdb": "github:fsworld009/lowdb/lowdb.d.ts#8b3917fdce2c255ea135ec644ed704ef9f48d33a",
