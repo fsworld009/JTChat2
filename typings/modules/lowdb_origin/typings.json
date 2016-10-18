@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/typicode/lowdb/f997028160ada903ca1b7992620e972fc09915ca/lowdb.d.ts",
-    "raw": "github:typicode/lowdb/lowdb.d.ts#f997028160ada903ca1b7992620e972fc09915ca",
-    "typings": "https://raw.githubusercontent.com/typicode/lowdb/f997028160ada903ca1b7992620e972fc09915ca/lowdb.d.ts"
-  }
-}

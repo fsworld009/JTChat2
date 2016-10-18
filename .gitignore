@@ -3,5 +3,6 @@
 /node_modules/
 /web/bundle/
 /semantic/dist/
+/typings/
 /app/*.js
 !/app/bluebird_promisifyAll.js
